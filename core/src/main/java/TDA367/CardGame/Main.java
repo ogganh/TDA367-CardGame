@@ -1,5 +1,7 @@
 package TDA367.CardGame;
 
+import TDA367.CardGame.Views.StartView;
+import TDA367.CardGame.Views.ViewInterface;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +12,13 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
 
+    StartView startView = new StartView();
+
     @Override
     public void create() {
         batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        //image = new Texture("libgdx.png");
+
     }
 
     @Override
