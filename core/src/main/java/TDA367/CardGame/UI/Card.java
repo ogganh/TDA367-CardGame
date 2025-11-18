@@ -17,6 +17,7 @@ public class Card implements UIElement{
         sprite.draw(batch);
     }
 
+    // TODO: Lerp liknande setposition
     @Override
     public void SetPosition(float x, float y) {
         sprite.setPosition(x , y);
@@ -32,5 +33,13 @@ public class Card implements UIElement{
     @Override
     public Vector2 GetSize() {
         return new Vector2(sprite.getWidth(), sprite.getHeight());
+    }
+
+    public void SetOrigin(float x, float y){
+        sprite.setOrigin(x,y);
+
+    }
+    public void SetRotation(float angle){
+        sprite.setRotation(angle);
     }
 }
