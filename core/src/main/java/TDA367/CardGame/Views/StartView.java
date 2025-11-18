@@ -14,12 +14,23 @@ public class StartView implements ViewInterface{
 
     @Override
     public void CreateView() {
-        uiElementList.add(new Button(new Vector2(0,0),new Texture("libgdx.png")));
+        //uiElementList.add(new Button(new Vector2(0,0),new Texture("libgdx.png")));
     }
+
+    @Override
+    public void Update() {
+
+    }
+
+    @Override
+    public void MouseUpdate(Vector2 mousePosition) {
+
+    }
+
     @Override
     public void Draw(SpriteBatch batch) {
         for (int i = 0; i < uiElementList.size(); i++) {
-            uiElementList.get(i).Draw(batch);
+            //uiElementList.get(i).Draw(batch);
         }
     }
 
