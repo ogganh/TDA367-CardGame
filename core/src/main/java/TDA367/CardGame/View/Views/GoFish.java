@@ -1,7 +1,7 @@
-package TDA367.CardGame.Views;
+package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.UI.Card;
-import TDA367.CardGame.UI.UIElement;
+import TDA367.CardGame.View.UI.Card;
+import TDA367.CardGame.View.UI.UIElement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class GoFish implements ViewInterface {
     // Specifically for go fish
-    List<UIElement> cardHand = new ArrayList<>();
+    List<Card> cardHand = new ArrayList<>();
     List<Card> opponentHand = new ArrayList<>();
     Sprite deck;
 
@@ -32,6 +32,8 @@ public class GoFish implements ViewInterface {
     int selected;
     Vector2 mousePosition = new Vector2(0,0);
     float angle = 0;
+
+    // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
     public GoFish() {
     }
@@ -63,7 +65,6 @@ public class GoFish implements ViewInterface {
         if (Gdx.input.isKeyPressed(Input.Keys.R)){
             if (!cardHand.isEmpty()){
                 cardHand.remove(cardHand.size()-1);
-
             }
         }
 

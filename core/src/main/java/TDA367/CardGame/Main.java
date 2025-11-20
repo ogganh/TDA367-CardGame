@@ -1,11 +1,12 @@
 package TDA367.CardGame;
 
-import TDA367.CardGame.Views.GoFish;
-import TDA367.CardGame.Views.StartView;
-import TDA367.CardGame.Views.ViewInterface;
+import TDA367.CardGame.View.Views.MainView;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,23 +20,20 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch spriteBatch;
     FitViewport viewport;
 
-    private Texture image;
 
-    StartView startView = new StartView();
-    Sprite test;
-
-    GoFish fish;
+    BitmapFont font;
+    MainView mainView;
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
+
+        font = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);
+
+        font.getData().setScale(0.5f);
         viewport = new FitViewport(1980 / 4, 1080 / 4);
+        mainView = new MainView(font,viewport);
 
-        image = new Texture("card_textures/1.2 Poker cards.png");
-
-        test = new Sprite(image, 48,64);
-        fish = new GoFish();
-        fish.CreateView();
     }
 
     @Override
@@ -47,34 +45,24 @@ public class Main extends ApplicationAdapter {
     }
 
     private void input() {
-
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            mainView.GoFish();
+        }
     }
 
     private void logic() {
-        Vector3 cursorPosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-        Vector3 worldPosition = viewport.unproject(cursorPosition);
-
-        fish.MouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
-        fish.Update();
+        mainView.Update();
     }
 
     private void draw() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
 
-        viewport.apply();
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        spriteBatch.begin();
-
-        fish.Draw(spriteBatch);
-
-        //test.draw(spriteBatch);
-        spriteBatch.end();
+        mainView.Draw(spriteBatch);
     }
 
     @Override
     public void dispose() {
         spriteBatch.dispose();
-        image.dispose();
     }
 
     @Override

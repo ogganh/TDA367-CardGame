@@ -1,4 +1,4 @@
-package TDA367.CardGame.UI;
+package TDA367.CardGame.View.UI;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

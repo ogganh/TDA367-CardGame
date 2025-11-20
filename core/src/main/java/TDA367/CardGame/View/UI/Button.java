@@ -1,0 +1,43 @@
+package TDA367.CardGame.View.UI;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+
+public class Button implements UIElement {
+    BitmapFont font;
+    String text;
+    Vector2 position;
+    GlyphLayout layout;
+
+    public Button(BitmapFont font, String text) {
+        this.font = font;
+        this.text = text;
+        layout = new GlyphLayout(font, text);
+    }
+
+    @Override
+    public void Draw(SpriteBatch batch) {
+
+        font.setColor(new Color(255,255,255,255));
+        font.draw(batch, text, position.x - layout.width / 2, position.y);
+    }
+
+    @Override
+    public void SetPosition(float x, float y) {
+        position = new Vector2(x,y);
+    }
+
+    @Override
+    public Vector2 GetPosition() {
+        return null;
+    }
+
+    @Override
+    public Vector2 GetSize() {
+        return null;
+    }
+}
