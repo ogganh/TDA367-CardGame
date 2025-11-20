@@ -7,17 +7,17 @@ import java.util.List;
 // Aktiva spelaren frågar "har du x"
 //om motståndaren har kortet ger den ifrån sig det, om inte svarar man "finns i sjön, turen gåt vidare till nästa spelare"
 //metoder som förväntas finnas i deck: -isEmpty(), shuffle(), deck.draw(),
-//metoder i player klassen: add_card_to_hand(), has<-rank(), give_all_of_rank(), collect_books(),get_books_count()
+//metoder i player klassen: add_card_to_hand(), has<-rank(), give_all_of_rank(), collect_books(),get_books_count(), player.size();
 
 
 
 public class GoFishRules {
 
     private final List<Player> players;
-    private final Deck deck;
+    private final CardDeck deck;
     private int current_player_index = 0;
 
-    public GoFishRules(List<Player> players, Deck deck) {
+    public GoFishRules(List<Player> players, CardDeck deck) {
         if (players.size() != 2) {
             throw new IllegalArgumentException("GofishGame require 2 players");
         }
@@ -26,13 +26,13 @@ public class GoFishRules {
     }
 
     public void start_game() {
-        deck.shuffle();
+        deck.shuffle_deck();
         int cards_per_player = 7;
 
         for (int i = 0; i < cards_per_player; i++) {
             for (Player player : players) {
-                if (!deck.isEmpty()) {
-                    Card drawn = deck.draw();
+                if (!deck.size() > 0) {
+                    Card drawn = deck.remove_card();
                     player.add_card_to_hand(drawn);
                 }
             }
@@ -46,7 +46,7 @@ public class GoFishRules {
     }
 
     public boolean is_game_over() {
-        return deck.isEmpty();
+        return deck.size() == 0;
     }
 
     public void take_turn(Rank requestedRank) {
