@@ -8,5 +8,6 @@ public interface UIElement {
     void SetPosition(float x, float y);
     Vector2 GetPosition();
     Vector2 GetSize();
-
+    void SetOrigin(float x, float y);
+    void SetRotation(float angle);
 }

@@ -40,4 +40,14 @@ public class Button implements UIElement {
     public Vector2 GetSize() {
         return null;
     }
+
+    @Override
+    public void SetOrigin(float x, float y) {
+
+    }
+
+    @Override
+    public void SetRotation(float angle) {
+
+    }
 }
