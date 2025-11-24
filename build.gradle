@@ -27,7 +27,14 @@ allprojects {
 
 configure(subprojects) {
   apply plugin: 'java-library'
-  sourceCompatibility = 8
+  sourceCompatibility = 21
+
+  // Prefer using a Java toolchain so Gradle can select or install a matching JDK.
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(21)
+    }
+  }
 
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
   // The article can be helpful when using assets.txt in your project.
@@ -51,6 +58,14 @@ configure(subprojects) {
 
   compileJava {
     options.incremental = true
+  }
+
+  dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+  }
+
+  test {
+    useJUnitPlatform()
   }
 }
 
