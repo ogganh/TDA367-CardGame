@@ -1,3 +1,6 @@
+package TDA367.CardGame.model.card_logic;
+import java.util.ArrayList;
+
 public class Hand implements PlayableStackInterface {
 
     ArrayList<Card> cardsInHand;
@@ -22,6 +25,11 @@ public class Hand implements PlayableStackInterface {
     @Override
     public int size() {
         return cardsInHand.size();
+    }
+
+    @Override
+    public void shuffle_deck() {
+        // Hand does not need to be shuffled
     }
 
     

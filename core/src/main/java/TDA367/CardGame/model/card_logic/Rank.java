@@ -1,3 +1,5 @@
+package TDA367.CardGame.model.card_logic;
+
 public enum Rank {
     TWO,
     THREE,

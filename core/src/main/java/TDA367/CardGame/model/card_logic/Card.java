@@ -1,3 +1,5 @@
+package TDA367.CardGame.model.card_logic;
+
 public class Card {
 
     private final String suit;
@@ -8,4 +10,11 @@ public class Card {
         this.rank = rank;
     }
     
+    public String getSuit() {
+        return suit;
+    }
+
+    public String getRank() {
+        return rank;
+    }
 }
