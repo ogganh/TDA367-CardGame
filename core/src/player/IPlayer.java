@@ -1,0 +1,11 @@
+package core.src.player;
+import core.src.card_logic.Card;
+
+import java.util.List;
+
+public interface IPlayer {
+    String get_name();
+    void add_card(Card card);
+    void remove_card(Card card);
+    List<Card> get_hand();
+}
