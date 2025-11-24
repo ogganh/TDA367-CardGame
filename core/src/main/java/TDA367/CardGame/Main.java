@@ -1,5 +1,7 @@
 package TDA367.CardGame;
 
+import TDA367.CardGame.View.Views.CardConversion;
+import TDA367.CardGame.View.Views.GoFish;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.gameLogic.GameContext;
 import TDA367.CardGame.gameLogic.strategies.GoFishStrategy;
@@ -103,6 +105,21 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         mainView.Update();
+
+        // Select card on mouse click
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            GoFish currentView = (GoFish) mainView.currentView;
+            
+            currentView.SelectCard();
+
+            CardConversion converter = new CardConversion();
+            
+            String rank = converter.IntToRank(currentView.GetSelectedCard());
+            
+            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", rank, "HEARTS"));
+            
+            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for " + rank + "s");
+        }
     }
 
     private void draw() {
@@ -114,11 +131,6 @@ public class Main extends ApplicationAdapter {
     @Override
     public void dispose() {
         spriteBatch.dispose();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height, true); // true centers the camera
     }
 
     @Override

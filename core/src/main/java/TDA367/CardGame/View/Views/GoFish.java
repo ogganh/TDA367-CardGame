@@ -1,6 +1,8 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.Card;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,11 +13,13 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-public class GoFish implements ViewInterface {
+public class GoFish implements GoFishInterface {
     // Specifically for go fish
     List<Card> cardHand = new ArrayList<>();
-    List<Card> opponentHand = new ArrayList<>();
+    List<UIElement> opponentHand = new ArrayList<>();
+    List<Integer> opponentHands = new ArrayList<>();
     Sprite deck;
 
     //TEMP
@@ -25,12 +29,22 @@ public class GoFish implements ViewInterface {
     int cardHeight = 64;
     Texture atlas;
     Texture deckOfCardsAtlas;
+
+    // skicka dessa till en settings klass
     float cardSpace = 10;
     float cardLift = 20;
+    float cardYPos = -10;
+
+
     Boolean check = true;
+    int hovered;
     int selected;
     Vector2 mousePosition = new Vector2(0,0);
     float angle = 0;
+
+
+
+     //fishController
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
@@ -47,20 +61,79 @@ public class GoFish implements ViewInterface {
 
         for (int j = 0; j < 1; j++) {
             for (int i = 0; i < 3; i++) {
-                cardHand.add(new Card(new Sprite(atlas, cardWidth * i, 0 ,cardWidth, cardHeight)));
+                cardHand.add(new Card(new Sprite(atlas, cardWidth * i, 0 ,cardWidth, cardHeight), i));
 
             }
         }
         for (int i = 0; i < 3; i++) {
-            opponentHand.add(new Card(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight)));
+            opponentHand.add(UIElementFactory.CreateCard(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight), -1));
         }
     }
+    int temp = 0;
     @Override
     public void Update() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.A)){
-            cardHand.add(new Card(new Sprite(atlas, 0, 0 ,48,64)));
+        //TempInput();
+
+        //hovered = MathUtils.clamp(hovered,0,cardHand.size() -1);
+
+
+        hovered = -1;
+
+        for (int i = 0; i < cardHand.size(); i++) {
+            float xPos = CardsXPosition(cardHand.size(), i);
+
+            if (mousePosition.y < 64) {
+                if (i == cardHand.size()-1) {
+                    if (mousePosition.x > xPos && mousePosition.x < xPos + cardHand.get(i).GetSize().x) {
+                        hovered = i;
+                    }
+                }
+                else {
+                    if (mousePosition.x > xPos && mousePosition.x < CardsXPosition(cardHand.size(), i +1)) {
+                        hovered = i;
+                    }
+                }
+            }
+
+
+            if (i == hovered){
+                cardHand.get(i).SetPosition(
+                    xPos,
+                    cardLift + cardYPos);
+            }
+            else {
+                cardHand.get(i).SetPosition(
+                    xPos, cardYPos
+                );
+            }
+
         }
+
+        for (int i = 0; i < opponentHand.size(); i++) {
+            float xPos = CardsXPosition(opponentHand.size(), i);
+            Vector2 pos = opponentHand.get(i).GetPosition();
+
+
+            opponentHand.get(i).SetOrigin(-pos.x + screenWidth/2, -pos.y + screenHeight/2 );
+            opponentHand.get(i).SetRotation(angle);
+            opponentHand.get(i).SetPosition(xPos, screenHeight - opponentHand.get(i).GetSize().y);
+        }
+
+    }
+
+    private void TempInput(){
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            if(hovered != -1){
+                SelectCard();
+            }
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.A)){
+            Random rand = new Random();
+            AddCard(rand.nextInt(0, 51));
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.R)){
             if (!cardHand.isEmpty()){
                 cardHand.remove(cardHand.size()-1);
@@ -78,52 +151,8 @@ public class GoFish implements ViewInterface {
         if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) &&  !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             check = true;
         }
-
-        selected = MathUtils.clamp(selected,0,cardHand.size() -1);
-
-
-        selected = -1;
-
-        for (int i = 0; i < cardHand.size(); i++) {
-            float xPos = CardsXPosition(cardHand.size(), i);
-
-            if (mousePosition.y < 64) {
-                if (i == cardHand.size()-1) {
-                    if (mousePosition.x > xPos && mousePosition.x < xPos + cardHand.get(i).GetSize().x) {
-                        selected = i;
-                    }
-                }
-                else {
-                    if (mousePosition.x > xPos && mousePosition.x < CardsXPosition(cardHand.size(), i +1)) {
-                        selected = i;
-                    }
-                }
-            }
-
-
-            if (i == selected){
-                cardHand.get(i).SetPosition(
-                    xPos,
-                    cardLift);
-            }
-            else {
-                cardHand.get(i).SetPosition(
-                    xPos,
-                    0);
-            }
-
-        }
-        for (int i = 0; i < opponentHand.size(); i++) {
-            float xPos = CardsXPosition(opponentHand.size(), i);
-            Vector2 pos = opponentHand.get(i).GetPosition();
-
-
-            opponentHand.get(i).SetOrigin(-pos.x + screenWidth/2, -pos.y + screenHeight/2 );
-            opponentHand.get(i).SetRotation(angle);
-            opponentHand.get(i).SetPosition(xPos, screenHeight - opponentHand.get(i).GetSize().y);
-        }
-
     }
+
     float CardsXPosition(int amountOfCards, int index){
         float maxMargin = screenWidth / (cardSpace + amountOfCards);
         float handWidth = MathUtils.clamp((amountOfCards) * maxMargin, 0, screenWidth);
@@ -139,12 +168,54 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Draw(SpriteBatch batch) {
+        if (selected == -1){
+            deck.setPosition(0,deck.getY());
+
+        }
         for (int i = 0; i < cardHand.size(); i++) {
+            if (selected == i){
+                deck.setPosition(cardHand.get(i).GetPosition().x,deck.getY());
+            }
             cardHand.get(i).Draw(batch);
         }
         for (int i = 0; i < opponentHand.size(); i++) {
             opponentHand.get(i).Draw(batch);
         }
         deck.draw(batch);
+    }
+    @Override
+    public void AddCards(List<Integer> cards){
+        for (int i = 0; i < cards.size(); i++) {
+            AddCard(cards.get(i));
+        }
+    }
+    @Override
+    public void AddCard(int index){
+        int y = index / 13;
+        int x = index % 13;
+
+        cardHand.add(new Card(new Sprite(atlas, x * 48, y * 64 ,48,64), index));
+    }
+    @Override
+    public void ResetHand(){
+        cardHand.clear();
+    }
+    @Override
+    public void SetOpponentscards(List<Integer> cards){
+        for (int i = 0; i < cards.size(); i++) {
+            SetOpponentCard(cards.get(i), i);
+        }
+    }
+
+    public void SetOpponentCard(int amountOfCards, int opponent){
+        opponentHands.set(opponent, amountOfCards);
+    }
+    @Override
+    public void SelectCard(){
+        selected = hovered;
+    }
+    @Override
+    public int GetSelectedCard(){
+        return  cardHand.get(selected).GetIndex();
     }
 }
