@@ -26,6 +26,11 @@ public class CardDeck extends AbstractCardPile implements PlayableStackInterface
         }
     }
 
+    // TIllagd av Linus
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
 
 /* 
  * Ha två decks på ett bord som du kan shuffla shuffla 

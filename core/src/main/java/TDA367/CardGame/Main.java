@@ -3,6 +3,10 @@ package TDA367.CardGame;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.gameLogic.GameContext;
 import TDA367.CardGame.gameLogic.strategies.GoFishStrategy;
+import TDA367.CardGame.model.PlayerAction;
+import TDA367.CardGame.model.player.GoFishUserPlayer;
+import TDA367.CardGame.model.card_logic.CardDeck;
+import TDA367.CardGame.model.card_logic.Card;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -23,6 +27,9 @@ public class Main extends ApplicationAdapter {
     BitmapFont font;
     MainView mainView;
 
+    GoFishUserPlayer player1;
+    GoFishUserPlayer player2;
+
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
@@ -33,7 +40,12 @@ public class Main extends ApplicationAdapter {
         viewport = new FitViewport(1980 / 4, 1080 / 4);
         mainView = new MainView(font,viewport);
 
-        gameContext = new GameContext(new GoFishStrategy());
+        player1 = new GoFishUserPlayer("Player 1");
+        player2 = new GoFishUserPlayer("Player 2");
+
+        CardDeck deck = new CardDeck();
+
+        gameContext = new GameContext(new GoFishStrategy(java.util.Arrays.asList(player1, player2), deck));
     }
 
     @Override
@@ -47,6 +59,39 @@ public class Main extends ApplicationAdapter {
     private void input() {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
             mainView.GoFish();
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
+            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", "ACE", "HEARTS"));
+            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for ACEs");
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", "TWO", "HEARTS"));
+            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for TWOs");
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
+            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", "THREE", "HEARTS"));
+            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+111) + " asked for THREEs");
+        }
+
+
+
+        // LOG HANDS FOR DEBUGGING
+        if (Gdx.input.isKeyPressed(Input.Keys.PAGE_UP)){
+            Gdx.app.log("Player1Hand", "---------Player-1-----------");
+            Gdx.app.log("Player1Hand", "Hand size: " + Integer.toString(player1.get_hand().size()));
+            for (Card card : player1.get_hand()){
+                Gdx.app.log("Player1Hand", card.getRank() + " of " + card.getSuit());
+            }
+            Gdx.app.log("Player1Hand", "----------------------------");
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.PAGE_DOWN)){
+            Gdx.app.log("Player2Hand", "---------Player-2-----------");
+            Gdx.app.log("Player2Hand", "Hand size: " + Integer.toString(player2.get_hand().size()));
+            for (Card card : player2.get_hand()){
+                Gdx.app.log("Player2Hand", card.getRank() + " of " + card.getSuit());
+            }
+            Gdx.app.log("Player1Hand", "----------------------------");
         }
     }
 
