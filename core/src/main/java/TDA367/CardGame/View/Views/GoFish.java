@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GoFish implements ViewInterface {
+public class GoFish implements GoFishInterface {
     // Specifically for go fish
     List<Card> cardHand = new ArrayList<>();
     List<UIElement> opponentHand = new ArrayList<>();
@@ -73,7 +73,7 @@ public class GoFish implements ViewInterface {
     @Override
     public void Update() {
 
-        TempInput();
+        //TempInput();
 
         //hovered = MathUtils.clamp(hovered,0,cardHand.size() -1);
 
@@ -183,33 +183,39 @@ public class GoFish implements ViewInterface {
         }
         deck.draw(batch);
     }
-
+    @Override
     public void AddCards(List<Integer> cards){
         for (int i = 0; i < cards.size(); i++) {
             AddCard(cards.get(i));
         }
     }
+    @Override
     public void AddCard(int index){
         int y = index / 13;
         int x = index % 13;
 
         cardHand.add(new Card(new Sprite(atlas, x * 48, y * 64 ,48,64), index));
     }
+    @Override
     public void ResetHand(){
         cardHand.clear();
     }
+    @Override
     public void SetOpponentscards(List<Integer> cards){
         for (int i = 0; i < cards.size(); i++) {
             SetOpponentCard(cards.get(i), i);
         }
     }
+
     public void SetOpponentCard(int amountOfCards, int opponent){
         opponentHands.set(opponent, amountOfCards);
     }
+    @Override
     public void SelectCard(){
         selected = hovered;
     }
-    public int Guess(){
+    @Override
+    public int GetSelectedCard(){
         return  cardHand.get(selected).GetIndex();
     }
 }
