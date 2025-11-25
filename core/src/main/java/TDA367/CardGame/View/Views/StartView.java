@@ -1,6 +1,9 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.Button;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +13,7 @@ import java.util.List;
 
 public class StartView implements ViewInterface{
 
-    List<Button> buttons = new ArrayList<>();
+    List<UIElement> buttons = new ArrayList<>();
     BitmapFont font;
 
     //TEMP
@@ -23,9 +26,9 @@ public class StartView implements ViewInterface{
 
     @Override
     public void CreateView() {
-        buttons.add(new Button(font, "Start Game"));
-        buttons.add(new Button(font, "Join Game"));
-        buttons.add(new Button(font, "Exit"));
+        buttons.add(UIElementFactory.CreateButton(font, "Start Game"));
+        buttons.add(UIElementFactory.CreateButton(font, "Join Game"));
+        buttons.add(UIElementFactory.CreateButton(font, "Exit"));
         for (int i = 0; i < buttons.size(); i++) {
             buttons.get(i).SetPosition(screenWidth/2, screenHeight /2 - 30 * i + 30);
         }

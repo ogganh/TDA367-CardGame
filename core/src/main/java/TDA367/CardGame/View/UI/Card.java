@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Card implements UIElement{
     private Sprite sprite;
-    public Card(Sprite sprite) {
+    private int index;
+    public Card(Sprite sprite, int index) {
         this.sprite = sprite;
+        this.index = index;
         //this.sprite.setOriginCenter();
 
     }
@@ -41,5 +43,8 @@ public class Card implements UIElement{
     }
     public void SetRotation(float angle){
         sprite.setRotation(angle);
+    }
+    public int GetIndex(){
+        return index;
     }
 }

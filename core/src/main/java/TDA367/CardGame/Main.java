@@ -1,5 +1,7 @@
 package TDA367.CardGame;
 
+import TDA367.CardGame.View.Views.CardConversion;
+import TDA367.CardGame.View.Views.GoFish;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.gameLogic.GameContext;
 import TDA367.CardGame.gameLogic.strategies.GoFishStrategy;
@@ -10,11 +12,17 @@ import TDA367.CardGame.model.card_logic.Card;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -97,6 +105,21 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         mainView.Update();
+
+        // Select card on mouse click
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            GoFish currentView = (GoFish) mainView.currentView;
+            
+            currentView.SelectCard();
+
+            CardConversion converter = new CardConversion();
+            
+            String rank = converter.IntToRank(currentView.GetSelectedCard());
+            
+            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", rank, "HEARTS"));
+            
+            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for " + rank + "s");
+        }
     }
 
     private void draw() {

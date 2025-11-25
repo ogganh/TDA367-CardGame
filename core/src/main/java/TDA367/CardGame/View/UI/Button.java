@@ -3,6 +3,7 @@ package TDA367.CardGame.View.UI;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -38,5 +39,15 @@ public class Button implements UIElement {
     @Override
     public Vector2 GetSize() {
         return null;
+    }
+
+    @Override
+    public void SetOrigin(float x, float y) {
+
+    }
+
+    @Override
+    public void SetRotation(float angle) {
+
     }
 }
