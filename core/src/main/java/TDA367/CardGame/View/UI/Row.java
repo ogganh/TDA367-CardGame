@@ -6,20 +6,16 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Panel {
+public class Row implements UIElement{
     private Vector2 position;
-    private int height;
     private int width;
-    private List<UIElement> UIElements;
+    private List<UIElement> UIElements = new ArrayList<>();
 
-    //private List<Vector2> relativePositions = new ArrayList<>();
-    public Panel(Vector2 position, int width, int height) {
-        this.position = position;
-        this.height = height;
+    public Row(Vector2 position ,int width) {
         this.width = width;
-
-        UIElements = new ArrayList<>();
+        this.position = position;
     }
+
     public void AddUIElement(UIElement element){
         UIElements.add(element);
         SpaceElements();
@@ -30,19 +26,40 @@ public class Panel {
     }
     private void SpaceElements(){
         int amountElements = UIElements.size();
-        int heightMargin = height / amountElements;
         int widthMargin = width / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).SetPosition(position.x + widthMargin * i, position.y + heightMargin * i);
+            UIElements.get(i).SetPosition(position.x + widthMargin * i, position.y);
         }
     }
-    public void SetPosition(int x, int y){
-        position = new Vector2(x,y);
+
+    @Override
+    public void Draw(SpriteBatch batch) {
+
     }
-    public void Draw(SpriteBatch batch){
-        for (UIElement uiElement : UIElements) {
-            uiElement.Draw(batch);
-        }
+
+    @Override
+    public void SetPosition(float x, float y) {
+
+    }
+
+    @Override
+    public Vector2 GetPosition() {
+        return null;
+    }
+
+    @Override
+    public Vector2 GetSize() {
+        return null;
+    }
+
+    @Override
+    public void SetOrigin(float x, float y) {
+
+    }
+
+    @Override
+    public void SetRotation(float angle) {
+
     }
 }
