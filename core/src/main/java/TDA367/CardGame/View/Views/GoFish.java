@@ -18,12 +18,13 @@ import java.util.Random;
 public class GoFish implements GoFishInterface {
     // Specifically for go fish
     List<Card> cardHand = new ArrayList<>();
+    Sprite outline;
     List<UIElement> opponentHand = new ArrayList<>();
     List<Integer> opponentHands = new ArrayList<>();
     Sprite deck;
 
     //TEMP
-    float screenWidth = 495;
+    float screenWidth = 495 / 2;
     float screenHeight = 270;
     int cardWidth = 48;
     int cardHeight = 64;
@@ -56,6 +57,7 @@ public class GoFish implements GoFishInterface {
         atlas = new Texture("card_textures/1.2 Poker cards.png");
         deckOfCardsAtlas = new Texture("card_textures/Deck of cards ( full cards ).png");
 
+        outline = new Sprite(atlas,624, 64, 64,80);
         deck = new Sprite(deckOfCardsAtlas, 48, 64 ,49,80);
         deck.setPosition(screenWidth /2 - deck.getWidth()/2, screenHeight /2 - deck.getHeight()/2);
 
@@ -169,12 +171,13 @@ public class GoFish implements GoFishInterface {
     @Override
     public void Draw(SpriteBatch batch) {
         if (selected == -1){
-            deck.setPosition(0,deck.getY());
-
+            //deck.setPosition(0,deck.getY());
+            //outline.setPosition(0,deck.getY());
         }
         for (int i = 0; i < cardHand.size(); i++) {
             if (selected == i){
-                deck.setPosition(cardHand.get(i).GetPosition().x,deck.getY());
+                outline.setPosition(cardHand.get(i).GetPosition().x - 8,cardHand.get(i).GetPosition().y -8);
+                outline.draw(batch);
             }
             cardHand.get(i).Draw(batch);
         }

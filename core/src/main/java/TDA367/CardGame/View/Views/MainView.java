@@ -26,6 +26,15 @@ public class MainView {
         currentView = new GoFish();
         currentView.CreateView();
     }
+    public void Rules(){
+        currentView = new RulesView(font);
+        currentView.CreateView();
+    }
+    public void MiddleScreen(){
+        currentView = new MiddleScreen(font);
+        currentView.CreateView();
+    }
+
     public void Update(){
         Vector3 cursorPosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
         Vector3 worldPosition = viewPort.unproject(cursorPosition);
