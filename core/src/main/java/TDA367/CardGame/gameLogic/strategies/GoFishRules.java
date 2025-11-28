@@ -19,6 +19,7 @@ public class GoFishRules implements GameStrategy {
     private final List<GoFishUserPlayer> players;
     private final CardDeck deck;
     private final TurnManager turnManager;
+    private GameState state;
 
     public GoFishRules(List<? extends UserPlayer> players, CardDeck deck) {
         if (players.size() < 2) {
@@ -40,6 +41,7 @@ public class GoFishRules implements GameStrategy {
 
     @Override
     public void setup(GameState state) {
+        this.state = state;
         deck.shuffle_deck();
         int cards_per_player = 7;
 
@@ -75,9 +77,11 @@ public class GoFishRules implements GameStrategy {
 
     public void endTurn() {
         turnManager.next(); // metod i turnManger som byter aktiv spelare
+        state.SetCurrentPlayer((state.GetCurrentPlayer()+1)%state.getPlayers().size());
     }
 
     public void endGame() {
+
     }
 
     public void handleTurn(int opponentIndex, Rank requestedRank) {

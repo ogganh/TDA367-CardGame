@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.Views;
 
+import TDA367.CardGame.controller.GameState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,8 +23,8 @@ public class MainView {
         currentView = new StartView(font);
         currentView.CreateView();
     }
-    public void GoFish(){
-        currentView = new GoFish();
+    public void GoFish(GameState state){
+        currentView = new GoFish(state);
         currentView.CreateView();
     }
     public void Rules(){

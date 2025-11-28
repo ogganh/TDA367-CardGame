@@ -3,6 +3,7 @@ package TDA367.CardGame.View.Views;
 import TDA367.CardGame.View.UI.Card;
 import TDA367.CardGame.View.UI.UIElement;
 import TDA367.CardGame.View.UI.UIElementFactory;
+import TDA367.CardGame.controller.GameState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,7 @@ public class GoFish implements GoFishInterface {
     Sprite deck;
 
     //TEMP
-    float screenWidth = 495 / 2;
+    float screenWidth = 495;
     float screenHeight = 270;
     int cardWidth = 48;
     int cardHeight = 64;
@@ -44,16 +45,20 @@ public class GoFish implements GoFishInterface {
     float angle = 0;
 
 
-
+    GameState state;
      //fishController
+     CardConversion conversion;
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
-    public GoFish() {
+    public GoFish(GameState state) {
+        this.state = state;
+        conversion = new CardConversion();
     }
 
     @Override
     public void CreateView() {
+
         atlas = new Texture("card_textures/1.2 Poker cards.png");
         deckOfCardsAtlas = new Texture("card_textures/Deck of cards ( full cards ).png");
 
@@ -68,6 +73,15 @@ public class GoFish implements GoFishInterface {
     int temp = 0;
     @Override
     public void Update() {
+        ResetHand();
+
+        int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
+
+        for (int i = 0; i < size; i++) {
+            String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
+            String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
+            AddCard(conversion.CardToInt(suit,rank));
+        }
 
         //TempInput();
 

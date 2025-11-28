@@ -22,8 +22,8 @@ public class GoFishInputStrategy implements InputStrategy {
 
             Gdx.app.log("GoFishRules", gameController.getGameContext().getCurrentPlayer().get_name() + " asked " + gameController.getGameContext().getState().getPlayers().get((gameController.getGameContext().getCurrentPlayerIndex()+1) % 2).get_name() + " for rank " + requestedRank);
             gameController.getGameContext().handleTurn(new PlayerAction(targetPlayerIndex, "REQUEST", requestedRank, requestedSuit));
-            
-            gameController.setCurrentView(ViewType.MIDDLE_SCREEN);
+
+            //gameController.setCurrentView(ViewType.MIDDLE_SCREEN);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {

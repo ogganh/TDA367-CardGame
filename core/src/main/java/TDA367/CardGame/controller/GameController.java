@@ -61,7 +61,7 @@ public class GameController {
                 inputController.setStrategy(new StartViewInputStrategy(this));
                 break;
             case GO_FISH:
-                view.GoFish();
+                view.GoFish(gameContext.getState());
 
                 // Cast current view to GoFish
                 GoFish goFishView = (GoFish) view.currentView;
@@ -69,17 +69,17 @@ public class GameController {
                 // --- Current player ---
 
                 // Get current player's hand.
-                List<Card> playerHand = gameContext.getState()
-                        .getPlayers()
-                        .get(gameContext.getCurrentPlayerIndex())
-                        .get_hand();
-
-                // Convert cards to indices for the view.
-                List<Integer> cardIndices = new ArrayList<>();
-                for (Card card : playerHand) {
-                    cardIndices.add(cardConversion.CardToInt(card.getSuit(), card.getRank()));
-                }
-                goFishView.AddCards(cardIndices);
+//                List<Card> playerHand = gameContext.getState()
+//                        .getPlayers()
+//                        .get(gameContext.getCurrentPlayerIndex())
+//                        .get_hand();
+//
+//                // Convert cards to indices for the view.
+//                List<Integer> cardIndices = new ArrayList<>();
+//                for (Card card : playerHand) {
+//                    cardIndices.add(cardConversion.CardToInt(card.getSuit(), card.getRank()));
+//                }
+//                goFishView.AddCards(cardIndices);
 
                 inputController.setStrategy(new GoFishInputStrategy(this));
                 break;

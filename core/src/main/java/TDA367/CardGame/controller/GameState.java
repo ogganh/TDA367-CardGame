@@ -11,6 +11,10 @@ import java.util.ArrayList;
 public class GameState {
     private Map<String, CardDeck> piles = new HashMap<>();
     private List<UserPlayer> players = new ArrayList<>();
+    private int currentPlayer = 0;
+
+    public int GetCurrentPlayer(){return currentPlayer;}
+    public void SetCurrentPlayer(int player){ currentPlayer = player;}
 
     public void addPile(String name, CardDeck pile) {
         piles.put(name, pile);
