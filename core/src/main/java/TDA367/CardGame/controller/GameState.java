@@ -1,4 +1,4 @@
-package TDA367.CardGame.model;
+package TDA367.CardGame.controller;
 
 import TDA367.CardGame.model.card_logic.CardDeck;
 import TDA367.CardGame.model.player.UserPlayer;
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class GameState {
     private Map<String, CardDeck> piles = new HashMap<>();
     private List<UserPlayer> players = new ArrayList<>();
-    private int currentPlayerIndex = 0;
 
     public void addPile(String name, CardDeck pile) {
         piles.put(name, pile);
@@ -27,9 +26,5 @@ public class GameState {
 
     public List<UserPlayer> getPlayers() {
         return players;
-    }
-
-    public int getCurrentPlayerIndex() {
-        return currentPlayerIndex;
     }
 }

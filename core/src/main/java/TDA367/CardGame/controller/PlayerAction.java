@@ -1,6 +1,4 @@
-package TDA367.CardGame.model;
-
-import TDA367.CardGame.model.card_logic.Card;
+package TDA367.CardGame.controller;
 
 public class PlayerAction {
     private int playerIndex;

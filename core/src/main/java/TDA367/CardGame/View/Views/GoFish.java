@@ -61,12 +61,6 @@ public class GoFish implements GoFishInterface {
         deck = new Sprite(deckOfCardsAtlas, 48, 64 ,49,80);
         deck.setPosition(screenWidth /2 - deck.getWidth()/2, screenHeight /2 - deck.getHeight()/2);
 
-        for (int j = 0; j < 1; j++) {
-            for (int i = 0; i < 3; i++) {
-                cardHand.add(new Card(new Sprite(atlas, cardWidth * i, 0 ,cardWidth, cardHeight), i));
-
-            }
-        }
         for (int i = 0; i < 3; i++) {
             opponentHand.add(UIElementFactory.CreateCard(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight), -1));
         }

@@ -1,17 +1,18 @@
 package TDA367.CardGame.gameLogic;
 
+import TDA367.CardGame.controller.GameState;
+import TDA367.CardGame.controller.PlayerAction;
 import TDA367.CardGame.gameLogic.strategies.GameStrategy;
-import TDA367.CardGame.model.GameState;
-import TDA367.CardGame.model.PlayerAction;
+import TDA367.CardGame.model.player.UserPlayer;
 
 public class GameContext {
     private GameStrategy rules;
     private GameState state;
 
     // A constructor to initialize with a specific strategy (GameRules)
-    public GameContext(GameStrategy rules) {
+    public GameContext(GameState state, GameStrategy rules) {
         this.rules = rules;
-        this.state = new GameState();
+        this.state = state;
         rules.setup(state);
     }
 
@@ -30,9 +31,15 @@ public class GameContext {
     }
 
     public int getCurrentPlayerIndex() {
-        return state.getCurrentPlayerIndex();
+        return rules.getCurrentPlayerIndex();
+    }
+
+    public UserPlayer getCurrentPlayer() {
+        return state.getPlayers().get(getCurrentPlayerIndex());
     }
 
     // Getter for the current game state
     public GameState getState() { return state; }
+
+    public GameStrategy getRules() { return rules; }
 }
