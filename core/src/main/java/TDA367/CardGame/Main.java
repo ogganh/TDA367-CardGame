@@ -23,11 +23,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import javax.swing.text.View;
+
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
  * platforms.
  */
-public class Main extends ApplicationAdapter {
+public class Main extends ApplicationAdapter implements ViewController {
     private SpriteBatch spriteBatch;
     FitViewport viewport;
 
@@ -49,7 +51,7 @@ public class Main extends ApplicationAdapter {
 
         font.getData().setScale(0.5f);
         viewport = new FitViewport(1980 / 4, 1080 / 4);
-        mainView = new MainView(font, viewport);
+        mainView = new MainView(font, viewport, this);
 
         player1 = new GoFishUserPlayer("Player 1");
         player2 = new GoFishUserPlayer("Player 2");
@@ -69,7 +71,7 @@ public class Main extends ApplicationAdapter {
 
     private void input() {
         if (Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            mainView.GoFish();
+            mainView.GoFish(this);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1)) {
@@ -109,21 +111,23 @@ public class Main extends ApplicationAdapter {
 
     private void logic() {
         mainView.Update();
-
-        // Select card on mouse click
-        if(Gdx.input.justTouched()){
-            GoFish currentView = (GoFish) mainView.currentView;
-            
-            currentView.SelectCard();
-
-            CardConversion converter = new CardConversion();
-            
-            String rank = converter.IntToRank(currentView.GetSelectedCard());
-            
-            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", rank, "HEARTS"));
-            
-            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for " + rank + "s");
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            mainView.currentView.MouseClick();
         }
+        // Select card on mouse click
+//        if(Gdx.input.justTouched()){
+//            GoFish currentView = (GoFish) mainView.currentView;
+//
+//            currentView.SelectCard();
+//
+//            CardConversion converter = new CardConversion();
+//
+//            String rank = converter.IntToRank(currentView.GetSelectedCard());
+//
+//            gameContext.handleTurn(new PlayerAction(gameContext.getCurrentPlayerIndex(), "ask", rank, "HEARTS"));
+//
+//            Gdx.app.log("Action", "Player " + Integer.toString(gameContext.getCurrentPlayerIndex()+1) + " asked for " + rank + "s");
+//        }
     }
 
     private void draw() {
@@ -140,5 +144,15 @@ public class Main extends ApplicationAdapter {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true); // true centers the camera
+    }
+
+    @Override
+    public void StartGoFish() {
+        mainView.GoFish(this);
+    }
+
+    @Override
+    public void StartMenu() {
+        mainView.StartView(this);
     }
 }

@@ -1,7 +1,9 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
+import TDA367.CardGame.ViewController;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,18 +22,42 @@ public class StartView implements ViewInterface{
     float screenWidth = 495;
     float screenHeight = 270;
 
+    Button button;
+    ViewController VC;
 
-    public StartView(BitmapFont font) {
+    Vector2 mousePosition;
+
+    int test = 0;
+
+    public StartView(BitmapFont font, ViewController VC) {
         this.font = font;
+        this.VC = VC;
     }
 
     @Override
     public void CreateView() {
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 100);
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Start Game"));
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Join Game"));
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Exit"));
+        button = new Button(font, "Start Game", 100,100);
 
+        button.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action(){
+                VC.StartGoFish();
+            }
+        });
+
+        button.SetPosition(screenWidth/2, screenHeight /2);
+
+
+
+
+
+//        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 100);
+//        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Start Game"));
+//        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Join Game"));
+//        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Exit"));
+
+//        Gdx.app.log( String.valueOf(test), "---------Player-1-----------");
+//        test++;
 
 
 //        for (int i = 0; i < buttons.size(); i++) {
@@ -41,16 +67,20 @@ public class StartView implements ViewInterface{
 
     @Override
     public void Update() {
-
     }
 
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
-
+        this.mousePosition = mousePosition;
     }
 
     @Override
     public void Draw(SpriteBatch batch) {
-        buttons.Draw(batch);
+        //buttons.Draw(batch);
+        button.Draw(batch);
+    }
+
+    public void MouseClick(){
+        button.ClickCheck(mousePosition);
     }
 }

@@ -13,10 +13,29 @@ public class Button implements UIElement {
     Vector2 position;
     GlyphLayout layout;
 
-    public Button(BitmapFont font, String text) {
+    float width;
+    float height;
+
+    ButtonAction action;
+
+
+    public Button(BitmapFont font, String text, float width, float height) {
         this.font = font;
         this.text = text;
+        this.width = width;
+        this.height = height;
+
         layout = new GlyphLayout(font, text);
+    }
+
+    public void ClickCheck(Vector2 mousePos){
+        if (mousePos == null) return;
+
+        if (mousePos.x > position.x && mousePos.x < position.x + width){
+            if (mousePos.y > position.y && mousePos.y < position.y + height){
+                action.Action();
+            }
+        }
     }
 
     @Override
@@ -49,5 +68,8 @@ public class Button implements UIElement {
     @Override
     public void SetRotation(float angle) {
 
+    }
+    public void ChangeAction(ButtonAction action){
+        this.action  = action;
     }
 }

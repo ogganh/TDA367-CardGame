@@ -52,6 +52,11 @@ public class RulesView implements ViewInterface {
     }
 
     @Override
+    public void MouseClick() {
+
+    }
+
+    @Override
     public void MouseUpdate(Vector2 mousePosition) {
 
     }

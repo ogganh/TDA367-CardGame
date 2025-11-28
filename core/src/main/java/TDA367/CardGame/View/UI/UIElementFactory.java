@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class UIElementFactory {
     public static UIElement CreateButton(BitmapFont font, String text){
-        return new Button(font, text);
+        return new Button(font, text, 0, 0);
     }
     public static UIElement CreateText(BitmapFont font, String text){
         return new Text(font, text);

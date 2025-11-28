@@ -3,6 +3,7 @@ package TDA367.CardGame.View.Views;
 import TDA367.CardGame.View.UI.Card;
 import TDA367.CardGame.View.UI.UIElement;
 import TDA367.CardGame.View.UI.UIElementFactory;
+import TDA367.CardGame.ViewController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,7 @@ public class GoFish implements GoFishInterface {
     Sprite deck;
 
     //TEMP
-    float screenWidth = 495 / 2;
+    float screenWidth = 495;
     float screenHeight = 270;
     int cardWidth = 48;
     int cardHeight = 64;
@@ -43,13 +44,17 @@ public class GoFish implements GoFishInterface {
     Vector2 mousePosition = new Vector2(0,0);
     float angle = 0;
 
-
+    ViewController VC;
 
      //fishController
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
-    public GoFish() {
+    /** */
+
+
+    public GoFish(ViewController VC ) {
+        this.VC = VC;
     }
 
     @Override
@@ -77,8 +82,10 @@ public class GoFish implements GoFishInterface {
 
         //TempInput();
 
-        //hovered = MathUtils.clamp(hovered,0,cardHand.size() -1);
-
+        // TEMP
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            VC.StartMenu();
+        }
 
         hovered = -1;
 
@@ -124,13 +131,12 @@ public class GoFish implements GoFishInterface {
 
     }
 
-    private void TempInput(){
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            if(hovered != -1){
-                SelectCard();
-            }
+    @Override
+    public void MouseClick() {
+        SelectCard();
+    }
 
-        }
+    private void TempInput(){
         if (Gdx.input.isKeyPressed(Input.Keys.A)){
             Random rand = new Random();
             AddCard(rand.nextInt(0, 51));

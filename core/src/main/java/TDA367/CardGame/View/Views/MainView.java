@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.Views;
 
+import TDA367.CardGame.ViewController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,19 +12,19 @@ public class MainView {
     public ViewInterface currentView;
     BitmapFont font;
     FitViewport viewPort;
-    public MainView(BitmapFont font, FitViewport viewPort) {
+    public MainView(BitmapFont font, FitViewport viewPort, ViewController VC) {
         this.font = font;
-        currentView = new StartView(font);
+        currentView = new StartView(font, VC);
         currentView.CreateView();
         this.viewPort = viewPort;
     }
 
-    public void StartView(){
-        currentView = new StartView(font);
+    public void StartView(ViewController VC){
+        currentView = new StartView(font, VC);
         currentView.CreateView();
     }
-    public void GoFish(){
-        currentView = new GoFish();
+    public void GoFish(ViewController VC){
+        currentView = new GoFish(VC);
         currentView.CreateView();
     }
     public void Rules(){
