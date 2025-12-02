@@ -1,11 +1,13 @@
 package TDA367.CardGame.View.Views;
 
+import TDA367.CardGame.View.UI.Button;
 import TDA367.CardGame.View.UI.Card;
 import TDA367.CardGame.View.UI.UIElement;
 import TDA367.CardGame.View.UI.UIElementFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -17,6 +19,7 @@ import java.util.Random;
 
 public class GoFish implements GoFishInterface {
     // Specifically for go fish
+    private BitmapFont font;
     List<Card> cardHand = new ArrayList<>();
     Sprite outline;
     List<UIElement> opponentHand = new ArrayList<>();
@@ -38,10 +41,12 @@ public class GoFish implements GoFishInterface {
 
 
     Boolean check = true;
-    int hovered;
-    int selected;
+    int hovered = -1;
+    int selected= -1;
     Vector2 mousePosition = new Vector2(0,0);
     float angle = 0;
+
+    private Button askButton; //knapp för att fråga motståndaren om en rank
 
 
 
@@ -49,7 +54,8 @@ public class GoFish implements GoFishInterface {
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
-    public GoFish() {
+    public GoFish(BitmapFont font) { //får ett font objekt när vyn skapas, behövs för knappar osv.
+        this.font = font;
     }
 
     @Override
@@ -64,6 +70,8 @@ public class GoFish implements GoFishInterface {
         for (int i = 0; i < 3; i++) {
             opponentHand.add(UIElementFactory.CreateCard(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight), -1));
         }
+
+        askButton = (Button) UIElementFactory.CreateButton(font, "Fråga motståndaren om denna rank"); //UIElementFactory skapar ett button objekt och sparar det i askButton
     }
     int temp = 0;
     @Override
@@ -115,6 +123,31 @@ public class GoFish implements GoFishInterface {
             opponentHand.get(i).SetRotation(angle);
             opponentHand.get(i).SetPosition(xPos, screenHeight - opponentHand.get(i).GetSize().y);
         }
+
+        if (Gdx.input.justTouched()) { //användaren klickar
+            if (hovered != -1) {       // musen är över ett kort
+                SelectCard();          // välj kortet
+            }
+        }
+
+
+        // om ett kort är valt
+        // cardXPosition för att få x positionen för det valda kortet
+        //sätter askButton positionen till mitten av kortet + lite nedanför
+        //askButton.Update() hämtar musens position och kollar om knappen är klickad (isClicked()) == true)
+
+        if (selected != -1) {
+
+            float selectedCardX = CardsXPosition(cardHand.size(), selected);
+            askButton.SetPosition(
+                selectedCardX + cardWidth/2 - askButton.GetSize().x/2,
+                cardLift + cardHeight + 10
+            );
+
+            askButton.Update(mousePosition, Gdx.input.justTouched());
+        }
+
+
 
     }
 
@@ -179,6 +212,10 @@ public class GoFish implements GoFishInterface {
             opponentHand.get(i).Draw(batch);
         }
         deck.draw(batch);
+
+        if (selected != -1) { //om ett kort är valt, rita knappen
+            askButton.Draw(batch);
+        }
     }
     @Override
     public void AddCards(List<Integer> cards){
@@ -209,10 +246,27 @@ public class GoFish implements GoFishInterface {
     }
     @Override
     public void SelectCard(){
-        selected = hovered;
+        //  Tillåter avmarkering genom att klicka igen
+        // Om kortet är valt och vi klickar på det igen, avmarkera det.
+        if (selected == hovered && selected != -1) {
+            selected = -1; // Avmarkera
+        } else {
+            selected = hovered; // Välj det kort musen pekar på
+        }
     }
+
     @Override
     public int GetSelectedCard(){
         return  cardHand.get(selected).GetIndex();
+    }
+
+    @Override
+    public boolean IsAskedButtonClicked(){
+        return selected != -1 && askButton.IsClicked(); //kollar om knappen är klickad
+    }
+
+    @Override
+    public void clearSelectedCard(){ //avmarkera kortet
+        selected = -1;
     }
 }

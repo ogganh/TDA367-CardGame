@@ -22,7 +22,7 @@ public class GameContext {
 
     // Handles player actions and updates game state accordingly.
     public void handleTurn(PlayerAction action) {
-        rules.handleTurn(state, action);
+        rules.handleTurn(state, action); //skickar vidare till action till rules
     }
 
     // Ends the game and performs any necessary cleanup.

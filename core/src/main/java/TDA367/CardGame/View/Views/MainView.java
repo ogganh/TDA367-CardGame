@@ -23,7 +23,7 @@ public class MainView {
         currentView.CreateView();
     }
     public void GoFish(){
-        currentView = new GoFish();
+        currentView = new GoFish(font);
         currentView.CreateView();
     }
     public void Rules(){

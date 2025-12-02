@@ -39,8 +39,9 @@ public class GameController {
 
         // Initialize InputController with this GameController
         this.inputController = new InputController();
-        setCurrentView(ViewType.START);
         setup();
+        setCurrentView(ViewType.START);
+
     }
 
     public void setup() {
@@ -81,7 +82,7 @@ public class GameController {
                 }
                 goFishView.AddCards(cardIndices);
 
-                inputController.setStrategy(new GoFishInputStrategy(this));
+                inputController.setStrategy(new GoFishInputStrategy(this, goFishView, cardConversion));
                 break;
             case RULES:
                 view.Rules();
