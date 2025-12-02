@@ -27,7 +27,7 @@ public class GoFish implements GoFishInterface {
     Sprite deck;
 
     //TEMP
-    float screenWidth = 495 / 2;
+    float screenWidth = 495;
     float screenHeight = 270;
     int cardWidth = 48;
     int cardHeight = 64;
@@ -71,7 +71,7 @@ public class GoFish implements GoFishInterface {
             opponentHand.add(UIElementFactory.CreateCard(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight), -1));
         }
 
-        askButton = (Button) UIElementFactory.CreateButton(font, "Fråga motståndaren om denna rank"); //UIElementFactory skapar ett button objekt och sparar det i askButton
+        askButton = (Button) UIElementFactory.CreateButton(font, "ask if the opponent has a card of this rank"); //UIElementFactory skapar ett button objekt och sparar det i askButton
     }
     int temp = 0;
     @Override
