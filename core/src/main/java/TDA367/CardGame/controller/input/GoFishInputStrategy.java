@@ -1,5 +1,6 @@
 package TDA367.CardGame.controller.input;
 
+import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -9,10 +10,10 @@ import TDA367.CardGame.controller.PlayerAction;
 
 public class GoFishInputStrategy implements InputStrategy {
     GameController gameController;
+    ViewInterface view;
     public GoFishInputStrategy(GameController gameController) {
         this.gameController = gameController;
     }
-
     @Override
     public void handleInput() {
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {

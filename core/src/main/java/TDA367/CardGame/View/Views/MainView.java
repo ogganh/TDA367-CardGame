@@ -1,6 +1,7 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.controller.GameState;
+import TDA367.CardGame.controller.ViewController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,13 +14,11 @@ public class MainView {
 
     FitViewport viewPort;
     public MainView(FitViewport viewPort) {
-        currentView = new StartView();
-        currentView.CreateView();
         this.viewPort = viewPort;
     }
 
-    public void StartView(){
-        currentView = new StartView();
+    public void StartView(ViewController view){
+        currentView = new StartView(view);
         currentView.CreateView();
     }
     public void GoFish(GameState state){
@@ -38,6 +37,7 @@ public class MainView {
     public void Update(){
         Vector3 cursorPosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
         Vector3 worldPosition = viewPort.unproject(cursorPosition);
+
         currentView.MouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
         currentView.Update();
     }

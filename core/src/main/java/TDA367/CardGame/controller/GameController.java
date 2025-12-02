@@ -23,7 +23,7 @@ import TDA367.CardGame.controller.input.RulesInputStrategy;
 import TDA367.CardGame.model.card_logic.CardDeck;
 import TDA367.CardGame.model.card_logic.Card;
 
-public class GameController {
+public class GameController implements ViewController {
     private MainView view;
     private SpriteBatch spriteBatch;
 
@@ -57,8 +57,8 @@ public class GameController {
     public void setCurrentView(ViewType viewType) {
         switch (viewType) {
             case START:
-                view.StartView();
-                inputController.setStrategy(new StartViewInputStrategy(this));
+                view.StartView(this);
+                inputController.setStrategy(new StartViewInputStrategy(this, view.currentView));
                 break;
             case GO_FISH:
                 view.GoFish(gameContext.getState());
@@ -99,13 +99,19 @@ public class GameController {
     }
 
     public void update() {
-        handleInput();
         view.Update();
+        handleInput();
+
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         view.Draw(spriteBatch);
     }
 
     public void dispose() {
         spriteBatch.dispose();
+    }
+
+    @Override
+    public void SetGoFish() {
+        setCurrentView(ViewType.GO_FISH);
     }
 }

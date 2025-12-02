@@ -30,9 +30,10 @@ public class Main extends ApplicationAdapter {
         spriteBatch = new SpriteBatch();
 
         viewport = new FitViewport(1980 / 4, 1080 / 4);
-        mainView = new MainView(viewport);
 
+        mainView = new MainView(viewport);
         gameController = new GameController(mainView);
+
     }
 
     @Override

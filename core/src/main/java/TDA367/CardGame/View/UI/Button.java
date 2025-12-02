@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.UI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -18,7 +19,6 @@ public class Button implements UIElement {
     boolean hovering;
     ButtonAction action;
 
-
     /**
      * Creates a button, sprite represents the background and the area that is clickable
      * */
@@ -32,16 +32,25 @@ public class Button implements UIElement {
     public void Hover(Vector2 mousePos){
         hovering = false;
         if (mousePos == null) return;
-        if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
-
-            if (mousePos.y >  sprite.getY() - (sprite.getHeight() * (sprite.getScaleY()-1)/2) && mousePos.y < sprite.getY() + (sprite.getHeight() * (sprite.getScaleY()+1)/2)){
-                hovering = true;
-            }
-        }
+        hovering = checkHitBox(mousePos);
     }
 
-    public void ClickCheck(){
-        if (hovering) action.Action();
+    private boolean checkHitBox(Vector2 mousePos) {
+
+        if (mousePos == null) return false;
+
+        if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
+            if (mousePos.y >  sprite.getY() - (sprite.getHeight() * (sprite.getScaleY()-1)/2) && mousePos.y < sprite.getY() + (sprite.getHeight() * (sprite.getScaleY()+1)/2)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ClickCheck(Vector2 mousePos){
+        if (checkHitBox(mousePos)) {
+            action.Action();
+        }
     }
 
     @Override
@@ -83,7 +92,6 @@ public class Button implements UIElement {
     public void MouseUpdate(Vector2 mousePos) {
         Hover(mousePos);
     }
-
     public void ChangeAction(ButtonAction action){
         this.action = action;
     }

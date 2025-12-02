@@ -218,7 +218,7 @@ public class GoFish implements GoFishInterface {
             SelectCard();
             return;
         }
-        btn.ClickCheck();
+        //btn.ClickCheck();
 
 
     }
