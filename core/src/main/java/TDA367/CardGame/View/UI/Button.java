@@ -35,7 +35,7 @@ public class Button implements UIElement {
         font.draw(batch, text, position.x - layout.width / 2, position.y + layout.height / 2); // här
     }
     public void Update(Vector2 mousePos, boolean justTouched) {
-        //skapa gränser för knappen
+        //knappen klick område
         Rectangle bounds = new Rectangle(
             position.x - layout.width / 2,
             position.y - layout.height / 2,
@@ -49,7 +49,6 @@ public class Button implements UIElement {
         }
 
     }
-
     public boolean IsClicked() {
         boolean result = isClicked;
         isClicked = false;
