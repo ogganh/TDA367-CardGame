@@ -15,7 +15,7 @@ import TDA367.CardGame.model.card_logic.CardDeck;
 import TDA367.CardGame.model.gameLogic.GameContext;
 import TDA367.CardGame.model.gameLogic.strategies.GoFishRules;
 
-public class GameController {
+public class GameController implements ViewController {
     private MainView view;
     private SpriteBatch spriteBatch;
 
