@@ -2,7 +2,6 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.controller.ViewController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,9 +16,6 @@ public class StartView implements ViewInterface{
     float screenHeight = ViewInformation.screenSize.y;
 
     Texture atlas;
-    ViewController view;
-
-    public Vector2 mousePosition;
 
     MainView mainView;
 
@@ -31,10 +27,9 @@ public class StartView implements ViewInterface{
     public void CreateView() {
         atlas = new Texture("CardGameUI.png");
         ViewInformation.font.getData().setScale(0.5f);
-        mousePosition = new Vector2(0,0);
 
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 50);
-        btn = new Button(ViewInformation.font,
+        Button btn = new Button(ViewInformation.font,
             "Start Game",
                 new Sprite(atlas, 32, 0 ,16,16));
         btn.ChangeAction(new ButtonAction() {
@@ -56,8 +51,7 @@ public class StartView implements ViewInterface{
 
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
-        this.mousePosition = mousePosition;
-        btn.MouseUpdate(mousePosition);
+        buttons.MouseUpdate(mousePosition);
     }
 
     @Override

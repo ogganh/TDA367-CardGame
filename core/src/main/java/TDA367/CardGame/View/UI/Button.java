@@ -1,7 +1,6 @@
 package TDA367.CardGame.View.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -20,6 +19,7 @@ public class Button implements UIElement {
     boolean hovering = false;
     ButtonAction action;
 
+
     /**
      * Creates a button, sprite represents the background and the area that is clickable
      * */
@@ -32,14 +32,8 @@ public class Button implements UIElement {
 
     public void Hover(Vector2 mousePos){
         if (mousePos == null) return;
-        hovering = checkHitBox(mousePos);
-    }
-
-    private boolean checkHitBox(Vector2 mousePos) {
-
-        if (mousePos == null) return false;
-
         if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
+
             if (mousePos.y >  sprite.getY() - (sprite.getHeight() * (sprite.getScaleY()-1)/2) && mousePos.y < sprite.getY() + (sprite.getHeight() * (sprite.getScaleY()+1)/2)){
                 hovering = true;
             } else hovering = false;
