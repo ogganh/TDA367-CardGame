@@ -1,7 +1,7 @@
-package TDA367.CardGame.gameLogic.strategies;
+package TDA367.CardGame.model.gameLogic.strategies;
 
-import TDA367.CardGame.controller.GameState;
-import TDA367.CardGame.controller.PlayerAction;
+import TDA367.CardGame.model.GameState;
+import TDA367.CardGame.model.PlayerAction;
 
 // The strategy for the different game modes
 public interface GameStrategy {

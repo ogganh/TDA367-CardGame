@@ -1,4 +1,4 @@
-package TDA367.CardGame.gameLogic.strategies;
+package TDA367.CardGame.model.gameLogic.strategies;
 
 public class TurnManager {
     private int current_p_index = 0;

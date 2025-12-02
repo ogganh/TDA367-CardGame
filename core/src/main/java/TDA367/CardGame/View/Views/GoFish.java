@@ -2,7 +2,10 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.controller.GameState;
+import TDA367.CardGame.controller.GameController;
+import TDA367.CardGame.model.GameState;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -45,13 +48,15 @@ public class GoFish implements GoFishInterface {
 
 
     GameState state;
+    GameController controller;
      //fishController
     CardConversion conversion;
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
-    public GoFish(GameState state) {
+    public GoFish(GameState state, GameController controller) {
         this.state = state;
+        this.controller = controller;
         conversion = new CardConversion();
     }
 
@@ -76,7 +81,9 @@ public class GoFish implements GoFishInterface {
             @Override
             public void Action() {
                 // gofishinterface.guess()
-                Gdx.app.log("GoFish","guess");
+                if (selected > -1) {
+                    controller.handleAction((state.GetCurrentPlayer() + 1) % state.getPlayers().size(), "", conversion.IntToRank(GetSelectedCard()), conversion.IntToSuit(GetSelectedCard()));
+                }
             }
         });
         btn.SetScale(5,3);
@@ -90,14 +97,15 @@ public class GoFish implements GoFishInterface {
     public void Update() {
         ResetHand();
 
-        int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
-
-        for (int i = 0; i < size; i++) {
-            String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
-            String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
-            AddCard(conversion.CardToInt(suit,rank));
+        try {
+            int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
+            for (int i = 0; i < size; i++) {
+                String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
+                String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
+                AddCard(conversion.CardToInt(suit,rank));
+            }
+        } catch (Exception e) {
         }
-
 
         //TempInput();
 
@@ -198,6 +206,7 @@ public class GoFish implements GoFishInterface {
             //deck.setPosition(0,deck.getY());
             //outline.setPosition(0,deck.getY());
         }
+        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) SelectCard();
         for (int i = 0; i < cardHand.size(); i++) {
             if (selected == i){
                 outline.setPosition(cardHand.get(i).GetPosition().x - 8,cardHand.get(i).GetPosition().y -8);
@@ -214,11 +223,12 @@ public class GoFish implements GoFishInterface {
 
     @Override
     public void Click() {
+
         if (hovered != -1) {
             SelectCard();
             return;
         }
-        btn.ClickCheck();
+        btn.Click();
 
 
     }

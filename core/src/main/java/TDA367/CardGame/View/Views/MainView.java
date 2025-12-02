@@ -1,6 +1,8 @@
 package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.controller.GameState;
+import TDA367.CardGame.controller.GameController;
+import TDA367.CardGame.model.GameState;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,18 +14,32 @@ public class MainView {
     public ViewInterface currentView;
 
     FitViewport viewPort;
-    public MainView(FitViewport viewPort) {
-        currentView = new StartView();
+    private static MainView instance;
+    private GameController controller;
+    private GameState state;
+    
+
+    public MainView(FitViewport viewPort, GameState state, GameController controller) {
+        currentView = new StartView(this);
         currentView.CreateView();
         this.viewPort = viewPort;
+        instance = this;
+
+        this.controller = controller;
+        this.state = state;
     }
 
+    public GameController getController() { return controller; }
+
+    public static MainView getInstance() {
+        return instance;
+    }
     public void StartView(){
-        currentView = new StartView();
+        currentView = new StartView(this);
         currentView.CreateView();
     }
-    public void GoFish(GameState state){
-        currentView = new GoFish(state);
+    public void GoFish(){
+        currentView = new GoFish(state, controller);
         currentView.CreateView();
     }
     public void Rules(){

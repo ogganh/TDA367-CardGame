@@ -16,6 +16,10 @@ public class Card implements UIElement{
         this.index = index;
     }
 
+    public void Click(){
+        
+    }
+
     @Override
     public void Draw(SpriteBatch batch) {
         sprite.draw(batch);

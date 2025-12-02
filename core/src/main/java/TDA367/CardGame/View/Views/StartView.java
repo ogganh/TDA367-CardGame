@@ -4,15 +4,9 @@ import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import javax.swing.*;
-import javax.swing.text.View;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StartView implements ViewInterface{
 
@@ -23,8 +17,10 @@ public class StartView implements ViewInterface{
 
     Texture atlas;
 
-    public StartView() {
+    MainView mainView;
 
+    public StartView(MainView mainView) {
+        this.mainView = mainView;
     }
 
     @Override
@@ -39,7 +35,9 @@ public class StartView implements ViewInterface{
         btn.ChangeAction(new ButtonAction() {
             @Override
             public void Action() {
-
+                Gdx.app.log("StartView","Start Game button clicked");
+                mainView.getController().setup();
+                mainView.GoFish();
             }
         });
         btn.SetScale(8,3);
@@ -63,6 +61,7 @@ public class StartView implements ViewInterface{
 
     @Override
     public void Click() {
-
+        Gdx.app.log("StartView","Click event received");
+        buttons.Click();
     }
 }

@@ -57,4 +57,9 @@ public class Text implements UIElement{
     public void MouseUpdate(Vector2 mousePos) {
 
     }
+
+    @Override
+    public void Click() {
+
+    }
 }

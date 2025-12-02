@@ -1,4 +1,4 @@
-package TDA367.CardGame.controller;
+package TDA367.CardGame.model;
 
 public class PlayerAction {
     private int playerIndex;

@@ -5,11 +5,7 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.View.Views.MainView;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
-
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
@@ -17,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
  * platforms.
  */
 public class Main extends ApplicationAdapter {
-    private SpriteBatch spriteBatch;
     FitViewport viewport;
 
     BitmapFont font;
@@ -27,12 +22,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void create() {
-        spriteBatch = new SpriteBatch();
-
-        viewport = new FitViewport(1980 / 4, 1080 / 4);
-        mainView = new MainView(viewport);
-
-        gameController = new GameController(mainView);
+        gameController = new GameController();
     }
 
     @Override
@@ -47,6 +37,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true); // true centers the camera
+        gameController.getViewport().update(width, height, true); // true centers the camera
     }
 }

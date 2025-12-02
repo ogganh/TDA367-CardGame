@@ -1,8 +1,8 @@
-package TDA367.CardGame.gameLogic;
+package TDA367.CardGame.model.gameLogic;
 
-import TDA367.CardGame.controller.GameState;
-import TDA367.CardGame.controller.PlayerAction;
-import TDA367.CardGame.gameLogic.strategies.GameStrategy;
+import TDA367.CardGame.model.GameState;
+import TDA367.CardGame.model.PlayerAction;
+import TDA367.CardGame.model.gameLogic.strategies.GameStrategy;
 import TDA367.CardGame.model.player.UserPlayer;
 
 public class GameContext {
