@@ -10,4 +10,5 @@ public interface UIElement {
     Vector2 GetSize();
     void SetOrigin(float x, float y);
     void SetRotation(float angle);
+    void MouseUpdate(Vector2 mousePos);
 }

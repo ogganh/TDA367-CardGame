@@ -8,4 +8,5 @@ public interface ViewInterface {
     void Update();
     void MouseUpdate(Vector2 mousePosition);
     void Draw(SpriteBatch batch);
+    void Click();
 }

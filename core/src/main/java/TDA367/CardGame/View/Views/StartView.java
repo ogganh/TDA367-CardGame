@@ -1,42 +1,49 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
+import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import javax.swing.*;
+import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartView implements ViewInterface{
 
     Column buttons;
-    //List<UIElement> buttons = new ArrayList<>();
-    BitmapFont font;
 
-    //TEMP
-    float screenWidth = 495;
-    float screenHeight = 270;
+    float screenWidth = ViewInformation.screenSize.x;
+    float screenHeight = ViewInformation.screenSize.y;
 
+    Texture atlas;
 
-    public StartView(BitmapFont font) {
-        this.font = font;
+    public StartView() {
+
     }
 
     @Override
     public void CreateView() {
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 100);
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Start Game"));
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Join Game"));
-        buttons.AddUIElement(UIElementFactory.CreateButton(font, "Exit"));
+        atlas = new Texture("CardGameUI.png");
+        ViewInformation.font.getData().setScale(0.5f);
 
+        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 50);
+        Button btn = new Button(ViewInformation.font,
+            "Start Game",
+                new Sprite(atlas, 32, 0 ,16,16));
+        btn.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action() {
 
-
-//        for (int i = 0; i < buttons.size(); i++) {
-//            buttons.get(i).SetPosition(screenWidth/2, screenHeight /2 - 30 * i + 30);
-//        }
+            }
+        });
+        btn.SetScale(8,3);
+        buttons.AddUIElement(btn);
     }
 
     @Override
@@ -46,11 +53,16 @@ public class StartView implements ViewInterface{
 
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
-
+        buttons.MouseUpdate(mousePosition);
     }
 
     @Override
     public void Draw(SpriteBatch batch) {
         buttons.Draw(batch);
+    }
+
+    @Override
+    public void Click() {
+
     }
 }

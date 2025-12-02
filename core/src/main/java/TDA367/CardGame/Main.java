@@ -29,11 +29,8 @@ public class Main extends ApplicationAdapter {
     public void create() {
         spriteBatch = new SpriteBatch();
 
-        font = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);
-
-        font.getData().setScale(0.5f);
         viewport = new FitViewport(1980 / 4, 1080 / 4);
-        mainView = new MainView(font, viewport);
+        mainView = new MainView(viewport);
 
         gameController = new GameController(mainView);
     }

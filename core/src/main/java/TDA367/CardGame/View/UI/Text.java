@@ -12,9 +12,13 @@ public class Text implements UIElement{
     Vector2 position;
     GlyphLayout layout;
 
-    public Text( BitmapFont font, String text) {
+    /**
+     * Creates Text
+     * */
+    public Text(BitmapFont font, String text) {
         this.text = text;
         this.font = font;
+        this.position = new Vector2(0,0);
         //layout = new GlyphLayout(font, text);
     }
 
@@ -46,6 +50,11 @@ public class Text implements UIElement{
 
     @Override
     public void SetRotation(float angle) {
+
+    }
+
+    @Override
+    public void MouseUpdate(Vector2 mousePos) {
 
     }
 }

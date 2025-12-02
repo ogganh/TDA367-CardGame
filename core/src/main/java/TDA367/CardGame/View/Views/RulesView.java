@@ -1,23 +1,22 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.Text;
+import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class RulesView implements ViewInterface {
     Text text;
-    BitmapFont font;
-    float screenHeight = 270;
 
-    public RulesView(BitmapFont font) {
-        this.font = font;
+    public RulesView() {
+
     }
 
     @Override
     public void CreateView() {
-        font.getData().setScale(0.3f);
-        text = new Text(font,
+        ViewInformation.font.getData().setScale(0.3f);
+        text = new Text(ViewInformation.font,
             "Rules : Go Fish\n" +
                 "\n" +
                 "Start:\n" +
@@ -42,7 +41,7 @@ public class RulesView implements ViewInterface {
                 "   - The game ends when the pond is empty and all sets have been collected.\n" +
                 "\n" +
                 "\n");
-        text.SetPosition(0, screenHeight);
+        text.SetPosition(0, ViewInformation.screenSize.y);
 
     }
 
@@ -59,5 +58,10 @@ public class RulesView implements ViewInterface {
     @Override
     public void Draw(SpriteBatch batch) {
         text.Draw(batch);
+    }
+
+    @Override
+    public void Click() {
+
     }
 }

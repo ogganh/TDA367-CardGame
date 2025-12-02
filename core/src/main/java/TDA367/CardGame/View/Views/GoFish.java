@@ -1,8 +1,7 @@
 package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.View.UI.Card;
-import TDA367.CardGame.View.UI.UIElement;
-import TDA367.CardGame.View.UI.UIElementFactory;
+import TDA367.CardGame.View.UI.*;
+import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.controller.GameState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -22,20 +21,20 @@ public class GoFish implements GoFishInterface {
     Sprite outline;
     List<UIElement> opponentHand = new ArrayList<>();
     List<Integer> opponentHands = new ArrayList<>();
+
+    Column buttons;
+    Button btn;
+
     Sprite deck;
 
-    //TEMP
-    float screenWidth = 495;
-    float screenHeight = 270;
-    int cardWidth = 48;
-    int cardHeight = 64;
-    Texture atlas;
-    Texture deckOfCardsAtlas;
+    float screenWidth = ViewInformation.screenSize.x;
+    float screenHeight = ViewInformation.screenSize.y;
 
-    // skicka dessa till en settings klass
-    float cardSpace = 10;
-    float cardLift = 20;
-    float cardYPos = -10;
+    int cardWidth = ViewInformation.cardWidth;
+    int cardHeight = ViewInformation.cardHeight;
+
+    Texture atlas = ViewInformation.cardAtlas;
+    Texture deckOfCardsAtlas = ViewInformation.deckOfCardsAtlas;
 
 
     Boolean check = true;
@@ -47,7 +46,7 @@ public class GoFish implements GoFishInterface {
 
     GameState state;
      //fishController
-     CardConversion conversion;
+    CardConversion conversion;
 
     // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
@@ -59,8 +58,6 @@ public class GoFish implements GoFishInterface {
     @Override
     public void CreateView() {
 
-        atlas = new Texture("card_textures/1.2 Poker cards.png");
-        deckOfCardsAtlas = new Texture("card_textures/Deck of cards ( full cards ).png");
 
         outline = new Sprite(atlas,624, 64, 64,80);
         deck = new Sprite(deckOfCardsAtlas, 48, 64 ,49,80);
@@ -69,6 +66,24 @@ public class GoFish implements GoFishInterface {
         for (int i = 0; i < 3; i++) {
             opponentHand.add(UIElementFactory.CreateCard(new Sprite(atlas, 0, cardHeight * 4 ,cardWidth, cardHeight), -1));
         }
+
+        buttons = new Column(new Vector2(400, 50), 50);
+
+        btn = new Button(ViewInformation.font,
+            "Guess",
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16));
+        btn.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action() {
+                // gofishinterface.guess()
+                Gdx.app.log("GoFish","guess");
+            }
+        });
+        btn.SetScale(5,3);
+
+        buttons.AddUIElement(btn);
+
+
     }
     int temp = 0;
     @Override
@@ -82,6 +97,7 @@ public class GoFish implements GoFishInterface {
             String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
             AddCard(conversion.CardToInt(suit,rank));
         }
+
 
         //TempInput();
 
@@ -110,11 +126,11 @@ public class GoFish implements GoFishInterface {
             if (i == hovered){
                 cardHand.get(i).SetPosition(
                     xPos,
-                    cardLift + cardYPos);
+                    ViewInformation.cardLift + ViewInformation.cardYPos);
             }
             else {
                 cardHand.get(i).SetPosition(
-                    xPos, cardYPos
+                    xPos, ViewInformation.cardYPos
                 );
             }
 
@@ -164,7 +180,7 @@ public class GoFish implements GoFishInterface {
     }
 
     float CardsXPosition(int amountOfCards, int index){
-        float maxMargin = screenWidth / (cardSpace + amountOfCards);
+        float maxMargin = screenWidth / (ViewInformation.cardSpace + amountOfCards);
         float handWidth = MathUtils.clamp((amountOfCards) * maxMargin, 0, screenWidth);
         float margin = handWidth / amountOfCards;
         return MathUtils.clamp((screenWidth/2) - (handWidth /2) + margin * index,0 , screenWidth -cardWidth);
@@ -173,7 +189,7 @@ public class GoFish implements GoFishInterface {
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
         this.mousePosition = mousePosition;
-
+        buttons.MouseUpdate(mousePosition);
     }
 
     @Override
@@ -193,7 +209,20 @@ public class GoFish implements GoFishInterface {
             opponentHand.get(i).Draw(batch);
         }
         deck.draw(batch);
+        buttons.Draw(batch);
     }
+
+    @Override
+    public void Click() {
+        if (hovered != -1) {
+            SelectCard();
+            return;
+        }
+        btn.ClickCheck();
+
+
+    }
+
     @Override
     public void AddCards(List<Integer> cards){
         for (int i = 0; i < cards.size(); i++) {

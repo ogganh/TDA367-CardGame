@@ -10,17 +10,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainView {
     public ViewInterface currentView;
-    BitmapFont font;
+
     FitViewport viewPort;
-    public MainView(BitmapFont font, FitViewport viewPort) {
-        this.font = font;
-        currentView = new StartView(font);
+    public MainView(FitViewport viewPort) {
+        currentView = new StartView();
         currentView.CreateView();
         this.viewPort = viewPort;
     }
 
     public void StartView(){
-        currentView = new StartView(font);
+        currentView = new StartView();
         currentView.CreateView();
     }
     public void GoFish(GameState state){
@@ -28,11 +27,11 @@ public class MainView {
         currentView.CreateView();
     }
     public void Rules(){
-        currentView = new RulesView(font);
+        currentView = new RulesView();
         currentView.CreateView();
     }
     public void MiddleScreen(){
-        currentView = new MiddleScreen(font);
+        currentView = new MiddleScreen();
         currentView.CreateView();
     }
 

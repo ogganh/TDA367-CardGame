@@ -11,6 +11,9 @@ public class Row implements UIElement{
     private int width;
     private List<UIElement> UIElements = new ArrayList<>();
 
+    /**
+     * Creates Row for UIelements
+     * */
     public Row(Vector2 position ,int width) {
         this.width = width;
         this.position = position;
@@ -60,6 +63,11 @@ public class Row implements UIElement{
 
     @Override
     public void SetRotation(float angle) {
+
+    }
+
+    @Override
+    public void MouseUpdate(Vector2 mousePos) {
 
     }
 }

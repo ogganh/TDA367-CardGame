@@ -15,13 +15,19 @@ public class GoFishInputStrategy implements InputStrategy {
 
     @Override
     public void handleInput() {
-        if (Gdx.input.justTouched()) {
-            String requestedRank = "ACE"; // For simplicity, we hardcode the requested rank
-            String requestedSuit = "SPADES"; // Hardcoded suit, not used in Go Fish
-            int targetPlayerIndex = (gameController.getGameContext().getCurrentPlayerIndex()+1) % 2;
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 
-            Gdx.app.log("GoFishRules", gameController.getGameContext().getCurrentPlayer().get_name() + " asked " + gameController.getGameContext().getState().getPlayers().get((gameController.getGameContext().getCurrentPlayerIndex()+1) % 2).get_name() + " for rank " + requestedRank);
-            gameController.getGameContext().handleTurn(new PlayerAction(targetPlayerIndex, "REQUEST", requestedRank, requestedSuit));
+            // input -> gofishView (GoFish.click()) ->
+            // antingen: select (viewn sköter det)
+            // eller: guess -> gofishcontroller.guess(int i)
+
+
+            //String requestedRank = "ACE"; // For simplicity, we hardcode the requested rank
+            //String requestedSuit = "SPADES"; // Hardcoded suit, not used in Go Fish
+            //int targetPlayerIndex = (gameController.getGameContext().getCurrentPlayerIndex()+1) % 2;
+
+            //Gdx.app.log("GoFishRules", gameController.getGameContext().getCurrentPlayer().get_name() + " asked " + gameController.getGameContext().getState().getPlayers().get((gameController.getGameContext().getCurrentPlayerIndex()+1) % 2).get_name() + " for rank " + requestedRank);
+            //gameController.getGameContext().handleTurn(new PlayerAction(targetPlayerIndex, "REQUEST", requestedRank, requestedSuit));
 
             //gameController.setCurrentView(ViewType.MIDDLE_SCREEN);
         }
@@ -29,5 +35,7 @@ public class GoFishInputStrategy implements InputStrategy {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gameController.setCurrentView(ViewType.RULES);
         }
+
+
     }
 }

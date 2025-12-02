@@ -11,10 +11,12 @@ public class Column implements UIElement{
     private int height;
     private List<UIElement> UIElements = new ArrayList<>();
 
+    /**
+     * Creates Column for UIelements
+     * */
     public Column(Vector2 position, int height) {
         this.position = position;
         this.height = height;
-
     }
 
     public void AddUIElement(UIElement element){
@@ -66,5 +68,10 @@ public class Column implements UIElement{
     @Override
     public void SetRotation(float angle) {
 
+    }
+    public void MouseUpdate(Vector2 mousePos){
+        for (int i = 0; i < UIElements.size(); i++) {
+            UIElements.get(i).MouseUpdate(mousePos);
+        }
     }
 }

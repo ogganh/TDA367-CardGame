@@ -7,11 +7,13 @@ import com.badlogic.gdx.math.Vector2;
 public class Card implements UIElement{
     private Sprite sprite;
     private int index;
+
+    /**
+     * Creates a card
+     * */
     public Card(Sprite sprite, int index) {
         this.sprite = sprite;
         this.index = index;
-        //this.sprite.setOriginCenter();
-
     }
 
     @Override
@@ -23,8 +25,6 @@ public class Card implements UIElement{
     @Override
     public void SetPosition(float x, float y) {
         sprite.setPosition(x , y);
-
-        //sprite.setPosition(x - sprite.getWidth() / 2,y - sprite.getHeight()/2);
     }
 
     @Override
@@ -39,11 +39,16 @@ public class Card implements UIElement{
 
     public void SetOrigin(float x, float y){
         sprite.setOrigin(x,y);
-
     }
     public void SetRotation(float angle){
         sprite.setRotation(angle);
     }
+
+    @Override
+    public void MouseUpdate(Vector2 mousePos) {
+
+    }
+
     public int GetIndex(){
         return index;
     }
