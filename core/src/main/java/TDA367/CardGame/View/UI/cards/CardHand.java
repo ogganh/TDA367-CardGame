@@ -12,6 +12,8 @@ import java.util.List;
 
 public class CardHand {
     List<Card> cardHand = new ArrayList<>();
+    List<Card> oldHand = new ArrayList<>();
+
     int hovered;
     int selected;
     //Vector2 mousePosition = new Vector2(0, 0);
@@ -70,12 +72,20 @@ public class CardHand {
         }
     }
     /**
-     * Adds card to the hand, startposition is where the card will appear from.
+     * Adds card to the hand,
+     * @param index The index of the card in texture.
+     * @param startPosition The postition the card will appear from.
      * */
     public void AddCard(int index, Vector2 startPosition) {
-        for (int i = 0; i < cardHand.size(); i++) {
-            if (cardHand.get(i).GetIndex() == index) return;
+
+        for (Card card : oldHand) {
+            if (card.GetIndex() == index) {
+                cardHand.add(card);
+                return;
+            }
         }
+        // kolla om kortet inte finns
+
         int y = index / 13;
         int x = index % 13;
         Card card = new Card(new Sprite(atlas, x * 48, y * 64, 48, 64), index);
@@ -90,6 +100,11 @@ public class CardHand {
 //    }
 
     public void ResetHand() {
+        oldHand.addAll(cardHand);
+        cardHand.clear();
+    }
+    public void NextPlayer() {
+        oldHand.clear();
         cardHand.clear();
     }
     public int GetSelectIndex(){

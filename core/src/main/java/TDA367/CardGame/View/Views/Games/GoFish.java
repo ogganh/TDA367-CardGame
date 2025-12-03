@@ -102,9 +102,13 @@ public class GoFish implements ViewInterface {
     int currentPlayer = -1;
     @Override
     public void UpdateState(){
-        //update player hand
+
+
+
+
+
         if (state.GetCurrentPlayer() != currentPlayer) {
-            cardHand.ResetHand();
+            cardHand.NextPlayer();
         }
 
         // Temp ljud test
@@ -112,7 +116,8 @@ public class GoFish implements ViewInterface {
             bell.play();
         }
 
-
+        //update player hand
+        cardHand.ResetHand();
         int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
         for (int i = 0; i < size; i++) {
             String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
