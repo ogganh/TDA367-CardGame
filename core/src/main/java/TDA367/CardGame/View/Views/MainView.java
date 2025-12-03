@@ -1,5 +1,7 @@
 package TDA367.CardGame.View.Views;
 
+import TDA367.CardGame.View.Views.Games.GoFish;
+import TDA367.CardGame.View.Views.Menus.StartView;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 

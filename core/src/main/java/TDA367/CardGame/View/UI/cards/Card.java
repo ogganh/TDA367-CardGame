@@ -1,25 +1,24 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.cards;
 
+import TDA367.CardGame.View.UI.UIElement;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Card implements UIElement{
+public class Card implements UIElement {
     private Sprite sprite;
     private int index;
 
     /**
      * Creates a card
+     * @param sprite - card sprite
+     * @param index - the index of the card in the texture
      * */
     public Card(Sprite sprite, int index) {
         this.sprite = sprite;
         this.index = index;
         this.sprite.setScale(ViewInformation.cardScale);
-    }
-
-    public void Click(){
-
     }
 
     @Override
@@ -29,7 +28,8 @@ public class Card implements UIElement{
 
     /**
      * Linearly moves the card to its target position
-     *
+     * @param x - target x
+     * @param y - target y
      * */
     public void LerpPosition(float x, float y){
         Vector2 targetPosition = new Vector2(x,y);

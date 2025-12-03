@@ -1,14 +1,17 @@
-package TDA367.CardGame.View.Views;
+package TDA367.CardGame.View.Views.Games;
 
-import TDA367.CardGame.View.UI.CardHand;
+import TDA367.CardGame.View.UI.cards.CardHand;
 import TDA367.CardGame.View.UI.*;
+import TDA367.CardGame.View.UI.cards.OpponentHand;
 import TDA367.CardGame.View.ViewInformation;
+import TDA367.CardGame.View.Views.CardConversion;
+import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,9 +19,8 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
-public class GoFish implements GoFishInterface {
+public class GoFish implements ViewInterface {
     // Specifically for go fish
     CardHand cardHand = new CardHand();
     List<OpponentHand> opponentHands = new ArrayList<>();
@@ -36,6 +38,11 @@ public class GoFish implements GoFishInterface {
     GameController controller;
     CardConversion conversion;
 
+    // Temp ljud test
+    Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
+    Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
+
+
     public GoFish(GameState state, GameController controller) {
         this.state = state;
         this.controller = controller;
@@ -44,17 +51,15 @@ public class GoFish implements GoFishInterface {
 
     @Override
     public void CreateView() {
-
         // Creates the pond
         Random rand = new Random();
         for (int i = 0; i < 52; i++) {
             thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight));
 
+            // Random position and rotation
             thePond.get(i).setPosition(rand.nextFloat(screenWidth / 3,2 *screenWidth/3),rand.nextFloat(screenHeight / 4,2 *screenHeight/4));
-
             thePond.get(i).setScale(0.5f);
             thePond.get(i).setRotation(rand.nextFloat(0f,180f));
-
         }
 
         // Creates column that the buttons will be in
@@ -90,6 +95,7 @@ public class GoFish implements GoFishInterface {
 
     @Override
     public void Update() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) UpdateState();
         cardHand.Update(mousePosition);
 
     }
@@ -101,6 +107,12 @@ public class GoFish implements GoFishInterface {
             cardHand.ResetHand();
         }
 
+        // Temp ljud test
+        if (state.GetCurrentPlayer() == currentPlayer) {
+            bell.play();
+        }
+
+
         int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
         for (int i = 0; i < size; i++) {
             String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
@@ -108,6 +120,11 @@ public class GoFish implements GoFishInterface {
             cardHand.AddCard(conversion.CardToInt(suit, rank),
                 new Vector2(ViewInformation.screenSize.x/2,ViewInformation.screenSize.y/2));
         }
+
+        // Temp ljud test
+        sound.play();
+
+
         currentPlayer = state.GetCurrentPlayer();
 
         // Update opponents hands

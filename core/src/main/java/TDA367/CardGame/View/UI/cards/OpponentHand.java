@@ -1,5 +1,7 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.cards;
 
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

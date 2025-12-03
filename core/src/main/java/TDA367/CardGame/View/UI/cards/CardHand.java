@@ -1,4 +1,4 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.cards;
 
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import jdk.jfr.internal.tool.View;
 
 import java.util.ArrayList;
 import java.util.List;

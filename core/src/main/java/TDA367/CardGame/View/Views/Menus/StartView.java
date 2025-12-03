@@ -1,7 +1,9 @@
-package TDA367.CardGame.View.Views;
+package TDA367.CardGame.View.Views.Menus;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
+import TDA367.CardGame.View.Views.MainView;
+import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * The start menu
  */
-public class StartView implements ViewInterface{
+public class StartView implements ViewInterface {
 
     Column buttons;
 

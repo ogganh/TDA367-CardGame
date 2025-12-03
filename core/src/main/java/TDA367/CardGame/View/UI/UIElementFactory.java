@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.UI;
 
+import TDA367.CardGame.View.UI.cards.Card;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
