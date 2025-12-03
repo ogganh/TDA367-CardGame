@@ -174,6 +174,16 @@ public class GoFish implements GoFishInterface {
         }
         deck.draw(batch);
         buttons.Draw(batch);
+
+        int CurrentIndex = state.GetCurrentPlayer();
+        int OpponentPlayer = (CurrentIndex + 1) % 2;
+
+        String CurrentPlayerText = "Player " + (CurrentIndex + 1);
+        String OpponentPlayerText = "Player" + (OpponentPlayer + 1);
+
+        ViewInformation.font.draw(batch, CurrentPlayerText, 50, 20);
+        ViewInformation.font.draw(batch, OpponentPlayerText, 20, screenHeight - 20);
+
     }
 
     @Override
