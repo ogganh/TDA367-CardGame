@@ -178,11 +178,11 @@ public class GoFish implements GoFishInterface {
         int CurrentIndex = state.GetCurrentPlayer();
         int OpponentPlayer = (CurrentIndex + 1) % 2;
 
-        String CurrentPlayerText = "Player " + (CurrentIndex + 1);
-        String OpponentPlayerText = "Player" + (OpponentPlayer + 1);
+        String CurrentPlayerText = "Player " + (CurrentIndex + 1); //text to show current player
+        String OpponentPlayerText = "Player" + (OpponentPlayer + 1); //text to show opponent player
 
-        ViewInformation.font.draw(batch, CurrentPlayerText, 50, 20);
-        ViewInformation.font.draw(batch, OpponentPlayerText, 20, screenHeight - 20);
+        ViewInformation.font.draw(batch, CurrentPlayerText, 10, 20); //draw current player text
+        ViewInformation.font.draw(batch, OpponentPlayerText, 10, screenHeight - 20); //draw opponent player text
 
     }
 
