@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.UI;
 
+import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -14,10 +15,11 @@ public class Card implements UIElement{
     public Card(Sprite sprite, int index) {
         this.sprite = sprite;
         this.index = index;
+        this.sprite.setScale(ViewInformation.cardScale);
     }
 
     public void Click(){
-        
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,7 +35,7 @@ public class StartView implements ViewInterface{
         ViewInformation.font.getData().setScale(0.5f);
 
         // Column containing buttons
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 50);
+        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 100);
 
         // Start game button
         Button startButton = new Button(
@@ -52,8 +53,24 @@ public class StartView implements ViewInterface{
         });
         startButton.SetScale(8,3);
 
+        Button quitButton = new Button(
+            ViewInformation.font,
+            "Quit",
+            new Sprite(atlas, 32, 0 ,16,16)
+        );
+        // Add an "Action" to the button, a function that is run when clicked
+        quitButton.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action() {
+                Gdx.app.exit();
+            }
+        });
+        quitButton.SetScale(8,3);
+
         // Add the start button the column of buttons
         buttons.AddUIElement(startButton);
+        buttons.AddUIElement(quitButton);
+
     }
 
     /**
