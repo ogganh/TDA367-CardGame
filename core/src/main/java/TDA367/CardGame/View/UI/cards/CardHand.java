@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.UI.cards;
 
+import TDA367.CardGame.View.SoundManager;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,6 +15,7 @@ public class CardHand {
     List<Card> cardHand = new ArrayList<>();
     List<Card> oldHand = new ArrayList<>();
 
+    int lastHovered;
     int hovered;
     int selected;
     //Vector2 mousePosition = new Vector2(0, 0);
@@ -36,6 +38,7 @@ public class CardHand {
         hovered = -1;
         for (int i = 0; i < cardHand.size(); i++) {
             float xPos = CardsXPosition(cardHand.size(), i);
+
             if (mousePosition.y < ViewInformation.cardHeight) {
                 if (i == cardHand.size() - 1) {
                     if (mousePosition.x > xPos && mousePosition.x < xPos + cardHand.get(i).GetSize().x) {
@@ -51,12 +54,25 @@ public class CardHand {
             if (i == hovered) {
                 cardHand.get(i).LerpPosition(
                     xPos,
-                    ViewInformation.cardLift + ViewInformation.cardYPos);
+                    ViewInformation.cardLift + ViewInformation.cardYPos
+                );
+
+                // Spela ljudet bara om vi just började hovera detta kort
+                if (hovered != lastHovered) {
+                    SoundManager.playSelect();
+                    lastHovered = hovered;
+                }
+
             } else {
                 cardHand.get(i).LerpPosition(
-                    xPos, ViewInformation.cardYPos);
+                    xPos, ViewInformation.cardYPos
+                );
             }
+        }
 
+        // Om inget kort är hovered, nollställ lastHovered
+        if (hovered == -1) {
+            lastHovered = -1;
         }
     }
     /**
