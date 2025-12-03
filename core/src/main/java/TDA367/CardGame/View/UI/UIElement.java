@@ -11,5 +11,4 @@ public interface UIElement {
     void SetOrigin(float x, float y);
     void SetRotation(float angle);
     void MouseUpdate(Vector2 mousePos);
-    void Click();
 }

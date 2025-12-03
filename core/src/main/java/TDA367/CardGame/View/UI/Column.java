@@ -1,6 +1,5 @@
 package TDA367.CardGame.View.UI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -70,16 +69,13 @@ public class Column implements UIElement{
     public void SetRotation(float angle) {
 
     }
+
+    /**
+     * Runs the function on every element in the Column
+     */
     public void MouseUpdate(Vector2 mousePos){
         for (int i = 0; i < UIElements.size(); i++) {
             UIElements.get(i).MouseUpdate(mousePos);
-        }
-    }
-
-    public void Click(){
-        for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).Click();
-            Gdx.app.log("Column","Clicked element " + i);
         }
     }
 }

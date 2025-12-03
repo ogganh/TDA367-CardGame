@@ -13,22 +13,26 @@ public class GameState {
     private List<UserPlayer> players = new ArrayList<>();
     private int currentPlayer = 0;
 
-    public int GetCurrentPlayer(){return currentPlayer;}
-    public void SetCurrentPlayer(int player){ currentPlayer = player;}
-
     public void addPile(String name, CardDeck pile) {
         piles.put(name, pile);
     }
+    public void addPlayer(UserPlayer player) {
+        players.add(player);
+    }
+    public void SetCurrentPlayer(int player){ currentPlayer = player;}
 
     public CardDeck getPile(String name) {
         return piles.get(name);
     }
-
-    public void addPlayer(UserPlayer player) {
-        players.add(player);
-    }
-
     public List<UserPlayer> getPlayers() {
         return players;
+    }
+    public int GetCurrentPlayer(){return currentPlayer;}
+
+
+    public void reset() {
+        piles = new HashMap<>();
+        players = new ArrayList<>();
+        currentPlayer = 0;
     }
 }

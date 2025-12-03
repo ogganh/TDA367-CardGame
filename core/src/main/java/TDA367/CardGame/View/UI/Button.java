@@ -30,6 +30,10 @@ public class Button implements UIElement {
         this.sprite = sprite;
     }
 
+    /**
+     * 
+     * @param mousePos
+     */
     public void Hover(Vector2 mousePos){
         if (mousePos == null) return;
         if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
@@ -75,6 +79,10 @@ public class Button implements UIElement {
 
     }
 
+    /**
+     * Calls Button.Hover, and if left clicked runs Button.Click which runs action.Action() if hovering is true
+     * @param mousePos The x, y position of the mouse cursor
+     */
     @Override
     public void MouseUpdate(Vector2 mousePos) {
         Hover(mousePos);

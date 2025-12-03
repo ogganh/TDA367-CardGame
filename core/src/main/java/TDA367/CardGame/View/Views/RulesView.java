@@ -2,7 +2,6 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.Text;
 import TDA367.CardGame.View.ViewInformation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -58,10 +57,5 @@ public class RulesView implements ViewInterface {
     @Override
     public void Draw(SpriteBatch batch) {
         text.Draw(batch);
-    }
-
-    @Override
-    public void Click() {
-
     }
 }

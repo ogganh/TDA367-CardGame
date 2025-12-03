@@ -2,12 +2,14 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * The start menu
+ */
 public class StartView implements ViewInterface{
 
     Column buttons;
@@ -23,45 +25,56 @@ public class StartView implements ViewInterface{
         this.mainView = mainView;
     }
 
+    /**
+     * Initializes the start view. Creates a column currently containing a single start button
+     */
     @Override
     public void CreateView() {
         atlas = new Texture("CardGameUI.png");
         ViewInformation.font.getData().setScale(0.5f);
 
+        // Column containing buttons
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 50);
-        Button btn = new Button(ViewInformation.font,
+
+        // Start game button
+        Button startButton = new Button(
+            ViewInformation.font,
             "Start Game",
-                new Sprite(atlas, 32, 0 ,16,16));
-        btn.ChangeAction(new ButtonAction() {
+            new Sprite(atlas, 32, 0 ,16,16)
+        );
+        // Add an "Action" to the button, a function that is run when clicked
+        startButton.ChangeAction(new ButtonAction() {
             @Override
             public void Action() {
-                Gdx.app.log("StartView","Start Game button clicked");
-                mainView.getController().setup();
+                mainView.getController().setupGame();
                 mainView.GoFish();
             }
         });
-        btn.SetScale(8,3);
-        buttons.AddUIElement(btn);
+        startButton.SetScale(8,3);
+
+        // Add the start button the column of buttons
+        buttons.AddUIElement(startButton);
     }
 
+    /**
+     * No logic is required on a frame by frame basis in the start screen
+     */
     @Override
-    public void Update() {
+    public void Update() {}
 
-    }
-
+    /**
+     * Get the mouse position from the MainView and pass it to the buttons.
+     */
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
         buttons.MouseUpdate(mousePosition);
     }
 
+    /**
+     * Render the button
+     */
     @Override
     public void Draw(SpriteBatch batch) {
         buttons.Draw(batch);
-    }
-
-    @Override
-    public void Click() {
-        Gdx.app.log("StartView","Click event received");
-        buttons.Click();
     }
 }

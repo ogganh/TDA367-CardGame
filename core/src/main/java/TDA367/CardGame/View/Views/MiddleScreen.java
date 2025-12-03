@@ -1,9 +1,7 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.UIElement;
-import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.View.ViewInformation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -40,10 +38,5 @@ public class MiddleScreen implements ViewInterface{
         for (int i = 0; i < elements.size(); i++) {
             elements.get(i).Draw(batch);
         }
-    }
-
-    @Override
-    public void Click() {
-
     }
 }

@@ -4,7 +4,6 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -14,26 +13,28 @@ public class MainView {
     public ViewInterface currentView;
 
     FitViewport viewPort;
-    private static MainView instance;
     private GameController controller;
     private GameState state;
     
 
+    /**
+     * @param viewPort - The applications viewport.
+     * @param state - The game state, used to update graphics according to the current state
+     * @param controller - The game controller, used as middleware when passing input to the model
+     */
     public MainView(FitViewport viewPort, GameState state, GameController controller) {
         currentView = new StartView(this);
         currentView.CreateView();
         this.viewPort = viewPort;
-        instance = this;
 
         this.controller = controller;
         this.state = state;
     }
 
     public GameController getController() { return controller; }
+    public GameState getState() { return state; }
 
-    public static MainView getInstance() {
-        return instance;
-    }
+
     public void StartView(){
         currentView = new StartView(this);
         currentView.CreateView();
@@ -51,13 +52,20 @@ public class MainView {
         currentView.CreateView();
     }
 
+    /**
+     * Core logic loop, runs every frame.
+     * Updates the mouse position and passes it to the current view.
+     * Runs the update loop in the current view.
+     */
     public void Update(){
         Vector3 cursorPosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
         Vector3 worldPosition = viewPort.unproject(cursorPosition);
-
         currentView.MouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
         currentView.Update();
     }
+    /**
+     * The rendering of the view, could probably be moved into or (most likely better) called by MainView.Update instead of GameController.update()
+     */
     public void Draw(SpriteBatch batch){
         viewPort.apply();
         batch.setProjectionMatrix(viewPort.getCamera().combined);

@@ -1,23 +1,12 @@
 package TDA367.CardGame;
-
 import TDA367.CardGame.controller.GameController;
-
-import TDA367.CardGame.View.Views.MainView;
-
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all
  * platforms.
  */
 public class Main extends ApplicationAdapter {
-    FitViewport viewport;
-
-    BitmapFont font;
-    MainView mainView;
-
     GameController gameController;
 
     @Override

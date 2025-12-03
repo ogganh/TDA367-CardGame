@@ -70,11 +70,4 @@ public class Row implements UIElement{
     public void MouseUpdate(Vector2 mousePos) {
 
     }
-
-    @Override
-    public void Click() {
-        for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).Click();
-        }
-    }
 }
