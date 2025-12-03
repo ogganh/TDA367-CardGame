@@ -48,24 +48,19 @@ public class CardHand {
             }
 
             if (i == hovered) {
-                cardHand.get(i).SetPosition(
+                cardHand.get(i).LerpPosition(
                     xPos,
                     ViewInformation.cardLift + ViewInformation.cardYPos);
             } else {
-                cardHand.get(i).SetPosition(
+                cardHand.get(i).LerpPosition(
                     xPos, ViewInformation.cardYPos);
             }
 
         }
     }
-
-    public void InsertCard(int index, Card card){
-
-    }
-    public void RemoveCard(int index){
-
-    }
-
+    /**
+     * Draws the cards to the screen.
+     * */
     public void Draw(SpriteBatch batch){
         for (int i = 0; i < cardHand.size(); i++) {
             if (selected == i) {
@@ -75,17 +70,25 @@ public class CardHand {
             cardHand.get(i).Draw(batch);
         }
     }
-    public void AddCard(int index) {
+    /**
+     * Adds card to the hand, startposition is where the card will appear from.
+     * */
+    public void AddCard(int index, Vector2 startPosition) {
+        for (int i = 0; i < cardHand.size(); i++) {
+            if (cardHand.get(i).GetIndex() == index) return;
+        }
         int y = index / 13;
         int x = index % 13;
+        Card card = new Card(new Sprite(atlas, x * 48, y * 64, 48, 64), index);
+        card.SetPosition(startPosition.x, startPosition.y);
+        cardHand.add(card);
 
-        cardHand.add(new Card(new Sprite(atlas, x * 48, y * 64, 48, 64), index));
     }
-    public void AddCards(List<Integer> cards) {
-        for (int i = 0; i < cards.size(); i++) {
-            AddCard(cards.get(i));
-        }
-    }
+//    public void AddCards(List<Integer> cards) {
+////        for (int i = 0; i < cards.size(); i++) {
+////            AddCard(cards.get(i));
+////        }
+//    }
 
     public void ResetHand() {
         cardHand.clear();
@@ -108,10 +111,17 @@ public class CardHand {
         return cardHand;
     }
 
-    float CardsXPosition(int amountOfCards, int index) {
+    private float CardsXPosition(int amountOfCards, int index) {
         float maxMargin = ViewInformation.screenSize.x / (ViewInformation.cardSpace + amountOfCards);
         float handWidth = MathUtils.clamp((amountOfCards) * maxMargin, 0, ViewInformation.screenSize.x);
         float margin = handWidth / amountOfCards;
         return MathUtils.clamp((ViewInformation.screenSize.x / 2) - (handWidth / 2) + margin * index, 0, ViewInformation.screenSize.x - ViewInformation.cardWidth);
+    }
+
+    private void InsertCard(int index, Card card){
+
+    }
+    private void RemoveCard(int index){
+
     }
 }

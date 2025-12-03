@@ -13,6 +13,10 @@ public interface ViewInterface {
      */
     void Update();
     /**
+     * Updates the state
+     */
+    void UpdateState();
+    /**
      * Handles mouse movement
      * @param mousePosition
      */
@@ -23,6 +27,6 @@ public interface ViewInterface {
      */
     void Draw(SpriteBatch batch);
     /**
-     * 
+     *
      */
 }

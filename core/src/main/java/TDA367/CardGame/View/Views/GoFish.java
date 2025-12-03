@@ -7,6 +7,7 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,32 +15,26 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class GoFish implements GoFishInterface {
     // Specifically for go fish
     CardHand cardHand = new CardHand();
     List<OpponentHand> opponentHands = new ArrayList<>();
+    List<Sprite> thePond = new ArrayList<>();
 
     Column buttons;
     Button btn;
 
-    Sprite deck;
-
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
-
-    Texture atlas = ViewInformation.cardAtlas;
-    Texture deckOfCardsAtlas = ViewInformation.deckOfCardsAtlas;
-
 
     Vector2 mousePosition = new Vector2(0, 0);
 
     GameState state;
     GameController controller;
-    // fishController
     CardConversion conversion;
-
-    // TODO: gör en ny handklass som hanterar logiken med att flytta kort osv
 
     public GoFish(GameState state, GameController controller) {
         this.state = state;
@@ -49,13 +44,21 @@ public class GoFish implements GoFishInterface {
 
     @Override
     public void CreateView() {
-        //outline = new Sprite(atlas, 624, 64, 64, 80); // Outline for the selected card
 
-        deck = new Sprite(deckOfCardsAtlas, 48, 64, 49, 80); // "Pond" sprite
+        // Creates the pond
+        Random rand = new Random();
+        for (int i = 0; i < 52; i++) {
+            thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight));
 
-        deck.setPosition(screenWidth / 2 - deck.getWidth() / 2, screenHeight / 2 - deck.getHeight() / 2);
+            thePond.get(i).setPosition(rand.nextFloat(screenWidth / 3,2 *screenWidth/3),rand.nextFloat(screenHeight / 4,2 *screenHeight/4));
 
-        buttons = new Column(new Vector2(400, 50), 50);
+            thePond.get(i).setScale(0.5f);
+            thePond.get(i).setRotation(rand.nextFloat(0f,180f));
+
+        }
+
+        // Creates column that the buttons will be in
+        buttons = new Column(new Vector2(450, 50), 50);
 
         // Create Guess button
         btn = new Button(
@@ -84,21 +87,28 @@ public class GoFish implements GoFishInterface {
 
     }
 
+
     @Override
     public void Update() {
+        cardHand.Update(mousePosition);
 
+    }
+    int currentPlayer = -1;
+    @Override
+    public void UpdateState(){
         //update player hand
-        cardHand.ResetHand();
+        if (state.GetCurrentPlayer() != currentPlayer) {
+            cardHand.ResetHand();
+        }
 
         int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
         for (int i = 0; i < size; i++) {
             String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
             String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
-            cardHand.AddCard(conversion.CardToInt(suit, rank));
+            cardHand.AddCard(conversion.CardToInt(suit, rank),
+                new Vector2(ViewInformation.screenSize.x/2,ViewInformation.screenSize.y/2));
         }
-
-        cardHand.Update(mousePosition);
-
+        currentPlayer = state.GetCurrentPlayer();
 
         // Update opponents hands
         opponentHands.get(0).ResetHand();
@@ -115,11 +125,16 @@ public class GoFish implements GoFishInterface {
 
     @Override
     public void Draw(SpriteBatch batch) {
-        cardHand.Draw(batch);
+
+        for (int i = 0; i < thePond.size(); i++) {
+            thePond.get(i).draw(batch);
+        }
         for (int i = 0; i < opponentHands.size(); i++) {
             opponentHands.get(i).Draw(batch);
         }
-        deck.draw(batch);
+
+
+        cardHand.Draw(batch);
         buttons.Draw(batch);
     }
 }

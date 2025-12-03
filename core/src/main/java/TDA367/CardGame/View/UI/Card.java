@@ -27,10 +27,27 @@ public class Card implements UIElement{
         sprite.draw(batch);
     }
 
-    // TODO: Lerp liknande setposition
+    /**
+     * Linearly moves the card to its target position
+     *
+     * */
+    public void LerpPosition(float x, float y){
+        Vector2 targetPosition = new Vector2(x,y);
+        Vector2 direction = targetPosition.sub(sprite.getX(), sprite.getY());
+        if (direction.len() <= ViewInformation.lerpSpeed) {
+            sprite.setPosition(x,y);
+            return;
+
+        }
+        direction = direction.nor();
+
+        sprite.setPosition(sprite.getX() + direction.x  * ViewInformation.lerpSpeed, sprite.getY() + direction.y  * ViewInformation.lerpSpeed);
+    }
+
     @Override
     public void SetPosition(float x, float y) {
-        sprite.setPosition(x , y);
+        // position, target position.
+        sprite.setPosition(x,y);
     }
 
     @Override

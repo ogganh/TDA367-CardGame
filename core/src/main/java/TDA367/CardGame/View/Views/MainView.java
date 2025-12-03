@@ -15,7 +15,7 @@ public class MainView {
     FitViewport viewPort;
     private GameController controller;
     private GameState state;
-    
+
 
     /**
      * @param viewPort - The applications viewport.
@@ -42,6 +42,8 @@ public class MainView {
     public void GoFish(){
         currentView = new GoFish(state, controller);
         currentView.CreateView();
+        currentView.UpdateState();
+
     }
     public void Rules(){
         currentView = new RulesView();
@@ -62,6 +64,12 @@ public class MainView {
         Vector3 worldPosition = viewPort.unproject(cursorPosition);
         currentView.MouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
         currentView.Update();
+    }
+    /**
+     * Updates the state
+     */
+    public void UpdateState(){
+        currentView.UpdateState();
     }
     /**
      * The rendering of the view, could probably be moved into or (most likely better) called by MainView.Update instead of GameController.update()

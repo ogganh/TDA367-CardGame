@@ -10,6 +10,8 @@ public class ViewInformation {
     public static int cardWidth = 48;
     public static int cardHeight = 64;
     public static float cardScale = 1f;
+    public static float lerpSpeed = 5;
+
 
     public static float cardSpace = 20;
     public static float cardLift = 20;

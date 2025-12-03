@@ -79,6 +79,11 @@ public class StartView implements ViewInterface{
     @Override
     public void Update() {}
 
+    @Override
+    public void UpdateState() {
+
+    }
+
     /**
      * Get the mouse position from the MainView and pass it to the buttons.
      */
