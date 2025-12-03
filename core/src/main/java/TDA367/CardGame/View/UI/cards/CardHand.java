@@ -59,7 +59,7 @@ public class CardHand {
 
                 // Spela ljudet bara om vi just började hovera detta kort
                 if (hovered != lastHovered) {
-                    SoundManager.playSelect();
+                    SoundManager.playHover();
                     lastHovered = hovered;
                 }
 
@@ -135,6 +135,7 @@ public class CardHand {
      */
     public void SelectCard(){
         selected = hovered;
+        SoundManager.playSelect();
     }
 
     public List<Card> GetCards(){
