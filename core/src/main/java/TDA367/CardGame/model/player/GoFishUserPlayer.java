@@ -7,6 +7,11 @@ import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 
+/**
+ * En specifik GoFish spelare som har poäng och kort (ärvs från UserPlayer).
+ *  Den hanterar även logiken för vad som ska hända vid olika drag i spelet GoFish.
+ */
+
 public class GoFishUserPlayer extends UserPlayer {
 
     private int points; // Tracking how many stacks of 4 of a kind player have put down

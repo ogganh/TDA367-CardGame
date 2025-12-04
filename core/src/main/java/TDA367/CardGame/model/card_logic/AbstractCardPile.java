@@ -3,6 +3,10 @@ package TDA367.CardGame.model.card_logic;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * Abstrakt klass för en kortlek eller hög med kort. 
+ */
+
 public abstract class AbstractCardPile {
 
     ArrayList<Card> cards;

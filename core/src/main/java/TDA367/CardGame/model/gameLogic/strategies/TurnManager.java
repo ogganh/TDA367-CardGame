@@ -1,5 +1,9 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
+/**
+ * Hanterar turordningen för spelare i ett kortspel bserat på antalet spelare.
+ */
+
 public class TurnManager {
     private int current_p_index = 0;
     private final int playerCount;

@@ -3,6 +3,12 @@ import TDA367.CardGame.model.card_logic.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstraktion av en spelare till ett godtyckligt kortspel. Har koll på namn,
+ * kort på hand
+ * och metoder för att lägga till och ta bort dessa.
+ */
+
 public abstract class UserPlayer implements IPlayer{
     private final String name;
     protected final List<Card> hand;

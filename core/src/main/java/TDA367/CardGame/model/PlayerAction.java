@@ -6,6 +6,12 @@ public class PlayerAction {
     private String rank;
     private String suit;
 
+    /**
+     * En playerAction representerar en handling som en spelare kan utföra under
+     * sitt tur i spelet.
+     * Används som argument i GameStrategy.handleTurn-metoden och vidare i exempelsvis GoFishRules.
+     */
+
     public PlayerAction(int playerIndex, String actionType, String rank, String suit) {
         this.playerIndex = playerIndex;
         this.actionType = actionType;
@@ -16,12 +22,15 @@ public class PlayerAction {
     public int getPlayerIndex() {
         return playerIndex;
     }
+
     public String getActionType() {
         return actionType;
     }
+
     public String getRank() {
         return rank;
     }
+
     public String getSuit() {
         return suit;
     }
