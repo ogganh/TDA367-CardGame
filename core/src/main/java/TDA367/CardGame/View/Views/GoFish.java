@@ -175,14 +175,23 @@ public class GoFish implements GoFishInterface {
         deck.draw(batch);
         buttons.Draw(batch);
 
-        int CurrentIndex = state.GetCurrentPlayer();
-        int OpponentPlayer = (CurrentIndex+1) % 2;
+        int CurrentIndex = state.GetCurrentPlayer(); // hämtar index för nuvarande spelare från game state
+        int OpponentIndex = (CurrentIndex+1) % 2; // hämtar index för motståndaren
 
-        String CurrentPlayerText = "Player " + (CurrentIndex+1); //text to show current player
-        String OpponentPlayerText = "Player " + (OpponentPlayer+1); //text to show opponent player
+        String CurrentPlayerText = "Player " + (CurrentIndex+1); //text för att visa nuvarande spelare
+        String OpponentPlayerText = "Player " + (OpponentIndex+1); //text för att visa motståndaren
 
-        ViewInformation.font.draw(batch, CurrentPlayerText, 10, 20); //draw current player text
-        ViewInformation.font.draw(batch, OpponentPlayerText, 10, screenHeight - 20); //draw opponent player text
+        int currentBooks = state.getBookCount(CurrentIndex); // hämtar antal böcker för nuvarande spelare
+        int opponentBooks = state.getBookCount(OpponentIndex); // hämtar antal böcker för motståndaren
+
+        String currentBooksText = "Books: " + currentBooks; //text för att visa antal böcker för spelare har
+        String opponentBooksText = "Books: " + opponentBooks;
+
+        ViewInformation.font.draw(batch, CurrentPlayerText, 10, 40); // ritar texten för spelare
+        ViewInformation.font.draw(batch, currentBooksText, 10, 20); // ritar texten för antal böcker
+
+        ViewInformation.font.draw(batch, OpponentPlayerText, 10, screenHeight - 20);
+        ViewInformation.font.draw(batch, opponentBooksText, 10, screenHeight - 40);
 
     }
 
