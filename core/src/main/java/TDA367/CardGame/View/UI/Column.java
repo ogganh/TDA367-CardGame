@@ -8,15 +8,15 @@ import java.util.List;
 
 public class Column implements UIElement{
     private Vector2 position;
-    private int height;
+    private int spaceBetween;
     private List<UIElement> UIElements = new ArrayList<>();
 
     /**
      * Creates Column for UIelements
      * */
-    public Column(Vector2 position, int height) {
+    public Column(Vector2 position, int spaceBetween) {
         this.position = position;
-        this.height = height;
+        this.spaceBetween = spaceBetween;
     }
 
     public void AddUIElement(UIElement element){
@@ -29,10 +29,10 @@ public class Column implements UIElement{
     }
     private void SpaceElements(){
         int amountElements = UIElements.size();
-        int heightMargin = height / amountElements;
+        //int heightMargin = height / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).SetPosition(position.x, position.y - heightMargin * i + height);
+            UIElements.get(i).SetPosition(position.x, position.y - spaceBetween * i);
         }
     }
     public void SetPosition(int x, int y){
@@ -48,6 +48,7 @@ public class Column implements UIElement{
     @Override
     public void SetPosition(float x, float y) {
         position = new Vector2(x,y);
+        SpaceElements();
     }
 
     @Override
@@ -74,8 +75,8 @@ public class Column implements UIElement{
      * Runs the function on every element in the Column
      */
     public void MouseUpdate(Vector2 mousePos){
-        for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).MouseUpdate(mousePos);
+        for (UIElement uiElement : UIElements) {
+            uiElement.MouseUpdate(mousePos);
         }
     }
 }

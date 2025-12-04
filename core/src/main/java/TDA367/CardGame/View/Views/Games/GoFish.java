@@ -29,6 +29,8 @@ public class GoFish implements ViewInterface {
     Column buttons;
     Button btn;
 
+    Text playerCurrent;
+
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
 
@@ -65,6 +67,8 @@ public class GoFish implements ViewInterface {
         // Creates column that the buttons will be in
         buttons = new Column(new Vector2(450, 50), 50);
 
+        playerCurrent = new Text(ViewInformation.font, String.valueOf(state.GetCurrentPlayer()));
+        playerCurrent.SetPosition(10,20);
         // Create Guess button
         btn = new Button(
                 ViewInformation.font,
@@ -82,6 +86,7 @@ public class GoFish implements ViewInterface {
                 }
             }
         });
+
         btn.SetScale(5, 3);
 
         buttons.AddUIElement(btn);
@@ -95,17 +100,13 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Update() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) UpdateState();
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) UpdateState();
         cardHand.Update(mousePosition);
-
     }
     int currentPlayer = -1;
     @Override
     public void UpdateState(){
-
-
-
-
+        playerCurrent.SetText(String.valueOf(state.GetCurrentPlayer()));
 
         if (state.GetCurrentPlayer() != currentPlayer) {
             cardHand.NextPlayer();
@@ -118,6 +119,8 @@ public class GoFish implements ViewInterface {
 
         //update player hand
         cardHand.ResetHand();
+
+        // TODO: Viewn ska inte ha kontakt med UserPlayer
         int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
         for (int i = 0; i < size; i++) {
             String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
@@ -142,7 +145,7 @@ public class GoFish implements ViewInterface {
     public void MouseUpdate(Vector2 mousePosition) {
         this.mousePosition = mousePosition;
         buttons.MouseUpdate(mousePosition);
-        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.SelectCard();
+        if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.SelectCard();
     }
 
     @Override
@@ -154,7 +157,7 @@ public class GoFish implements ViewInterface {
         for (int i = 0; i < opponentHands.size(); i++) {
             opponentHands.get(i).Draw(batch);
         }
-
+        playerCurrent.Draw(batch);
 
         cardHand.Draw(batch);
         buttons.Draw(batch);

@@ -70,6 +70,9 @@ public class GameController {
             case MIDDLE_SCREEN:
                 view.MiddleScreen();
                 break;
+            case GAME_SELECT:
+                view.GameSelect();
+                break;
         }
     }
 

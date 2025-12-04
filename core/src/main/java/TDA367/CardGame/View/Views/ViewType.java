@@ -4,5 +4,6 @@ public enum ViewType {
     START,
     GO_FISH,
     RULES,
-    MIDDLE_SCREEN
+    MIDDLE_SCREEN,
+    GAME_SELECT,
 }

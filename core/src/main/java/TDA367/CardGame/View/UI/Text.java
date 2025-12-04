@@ -22,6 +22,10 @@ public class Text implements UIElement{
         //layout = new GlyphLayout(font, text);
     }
 
+    public void SetText(String text){
+        this.text = text;
+    }
+
     @Override
     public void Draw(SpriteBatch batch) {
         font.setColor(new Color(255,255,255,255));

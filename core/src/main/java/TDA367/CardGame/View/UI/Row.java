@@ -8,14 +8,14 @@ import java.util.List;
 
 public class Row implements UIElement{
     private Vector2 position;
-    private int width;
+    private int spaceBetween;
     private List<UIElement> UIElements = new ArrayList<>();
 
     /**
      * Creates Row for UIelements
      * */
-    public Row(Vector2 position ,int width) {
-        this.width = width;
+    public Row(Vector2 position ,int spaceBetween) {
+        this.spaceBetween = spaceBetween;
         this.position = position;
     }
 
@@ -29,26 +29,29 @@ public class Row implements UIElement{
     }
     private void SpaceElements(){
         int amountElements = UIElements.size();
-        int widthMargin = width / amountElements;
+        //int widthMargin = spaceBetween / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).SetPosition(position.x + widthMargin * i, position.y);
+            UIElements.get(i).SetPosition(position.x + spaceBetween * i, position.y);
         }
     }
 
     @Override
     public void Draw(SpriteBatch batch) {
-
+        for (UIElement uiElement : UIElements) {
+            uiElement.Draw(batch);
+        }
     }
 
     @Override
     public void SetPosition(float x, float y) {
-
+        position = new Vector2(x,y);
+        SpaceElements();
     }
 
     @Override
     public Vector2 GetPosition() {
-        return null;
+        return position;
     }
 
     @Override
@@ -68,6 +71,8 @@ public class Row implements UIElement{
 
     @Override
     public void MouseUpdate(Vector2 mousePos) {
-
+        for (UIElement uiElement : UIElements) {
+            uiElement.MouseUpdate(mousePos);
+        }
     }
 }

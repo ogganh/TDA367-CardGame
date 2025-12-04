@@ -5,10 +5,13 @@ import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
+import javax.swing.text.View;
 
 /**
  * The start menu
@@ -20,7 +23,6 @@ public class StartView implements ViewInterface {
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
 
-    Texture atlas;
 
     MainView mainView;
 
@@ -33,24 +35,24 @@ public class StartView implements ViewInterface {
      */
     @Override
     public void CreateView() {
-        atlas = new Texture("CardGameUI.png");
         ViewInformation.font.getData().setScale(0.5f);
 
         // Column containing buttons
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2), 100);
+        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
 
         // Start game button
         Button startButton = new Button(
             ViewInformation.font,
             "Start Game",
-            new Sprite(atlas, 32, 0 ,16,16)
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
         // Add an "Action" to the button, a function that is run when clicked
         startButton.ChangeAction(new ButtonAction() {
             @Override
             public void Action() {
-                mainView.getController().setupGame();
-                mainView.GoFish();
+//                mainView.getController().setupGame();
+//                mainView.GoFish();
+                mainView.GameSelect();
             }
         });
         startButton.SetScale(8,3);
@@ -58,7 +60,7 @@ public class StartView implements ViewInterface {
         Button quitButton = new Button(
             ViewInformation.font,
             "Quit",
-            new Sprite(atlas, 32, 0 ,16,16)
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
         // Add an "Action" to the button, a function that is run when clicked
         quitButton.ChangeAction(new ButtonAction() {
@@ -79,7 +81,9 @@ public class StartView implements ViewInterface {
      * No logic is required on a frame by frame basis in the start screen
      */
     @Override
-    public void Update() {}
+    public void Update() {
+
+    }
 
     @Override
     public void UpdateState() {

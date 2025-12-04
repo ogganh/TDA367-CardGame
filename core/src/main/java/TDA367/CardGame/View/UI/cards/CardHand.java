@@ -20,6 +20,7 @@ public class CardHand {
     Texture atlas = ViewInformation.cardAtlas;
     Sprite outline = new Sprite(atlas, 624, 64, 64, 80);
 
+
     public CardHand(){
         outline.setScale(ViewInformation.cardScale);
     }
@@ -58,6 +59,7 @@ public class CardHand {
             }
 
         }
+
     }
     /**
      * Draws the cards to the screen.
@@ -78,13 +80,13 @@ public class CardHand {
      * */
     public void AddCard(int index, Vector2 startPosition) {
 
+        // Check if any cards have been removed
         for (Card card : oldHand) {
             if (card.GetIndex() == index) {
                 cardHand.add(card);
                 return;
             }
         }
-        // kolla om kortet inte finns
 
         int y = index / 13;
         int x = index % 13;
@@ -93,12 +95,6 @@ public class CardHand {
         cardHand.add(card);
 
     }
-//    public void AddCards(List<Integer> cards) {
-////        for (int i = 0; i < cards.size(); i++) {
-////            AddCard(cards.get(i));
-////        }
-//    }
-
     public void ResetHand() {
         oldHand.addAll(cardHand);
         cardHand.clear();
@@ -132,9 +128,22 @@ public class CardHand {
         return MathUtils.clamp((ViewInformation.screenSize.x / 2) - (handWidth / 2) + margin * index, 0, ViewInformation.screenSize.x - ViewInformation.cardWidth);
     }
 
-    private void InsertCard(int index, Card card){
-
-    }
+//    /**
+//     * @param index the index of which the card will be placed
+//     * @param card the card that is inserted
+//     * */
+//    private void InsertCard(int index, Card card){
+//        // flytta all kort från index höger, sedan placera in card
+//        Card temp;
+//        temp = cardHand.get(index +1);
+//        cardHand.set(index +1, cardHand.get(index));
+//        for (int i = index; i < cardHand.size()-1; i++) {
+//            temp = cardHand.get(i +1);
+//            cardHand.set(i +1, cardHand.get(i));
+//        }
+//
+//        cardHand.remove(card);
+//    }
     private void RemoveCard(int index){
 
     }
