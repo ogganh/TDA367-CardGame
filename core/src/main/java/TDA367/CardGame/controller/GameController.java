@@ -87,7 +87,12 @@ public class GameController {
      */
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
         gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
+        if((gameContext.isGameOver())) {
+            setCurrentView(ViewType.START);
+        }
         view.UpdateState();
+        
+        
     }
 
     /**
