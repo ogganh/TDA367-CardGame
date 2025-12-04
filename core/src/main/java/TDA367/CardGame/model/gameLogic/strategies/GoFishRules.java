@@ -20,14 +20,14 @@ public class GoFishRules implements GameStrategy {
 
     public GoFishRules(List<? extends UserPlayer> players, CardDeck deck) {
         if (players.size() < 2) {
-            throw new IllegalArgumentException("GoFishGame requires 2 players");
+            throw new IllegalArgumentException("GoFishGame requires 2 players"); // Minst 2 spelare
         }
 
         this.players = new ArrayList<>();
 
         for (UserPlayer p : players) {
             if (!(p instanceof GoFishUserPlayer)) {
-                throw new IllegalArgumentException("All players must be GoFishUserPlayer");
+                throw new IllegalArgumentException("All players must be GoFishUserPlayer"); // Alla spelare måste vara GoFishUserPlayer
             }
             this.players.add((GoFishUserPlayer) p);
         }
@@ -40,9 +40,9 @@ public class GoFishRules implements GameStrategy {
     public void setup(GameState state) {
         this.state = state;
         deck.shuffle_deck();
-        int cards_per_player = 7;
+        int cards_per_player = 7; // Standard: 7 kort per spelare
 
-        for (int i = 0; i < cards_per_player; i++) {
+        for (int i = 0; i < cards_per_player; i++) { // Initial utdelning
             for (GoFishUserPlayer player : players) {
                 if (!deck.isEmpty()) {
                     Card drawn = deck.remove_card();
@@ -51,31 +51,31 @@ public class GoFishRules implements GameStrategy {
             }
         }
 
-        for (GoFishUserPlayer player : players) {
+        for (GoFishUserPlayer player : players) { // Kolla efter initiala books
             player.collect_books();
         }
     }
 
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
-        int opponentIndex = action.getPlayerIndex();
-        Rank requestedRank = Rank.valueOf(action.getRank());
-        handleTurn(opponentIndex, requestedRank);
+        int opponentIndex = action.getPlayerIndex(); // Index för motståndaren
+        Rank requestedRank = Rank.valueOf(action.getRank()); // Begärt rank
+        handleTurn(opponentIndex, requestedRank); // Hantera turen
     }
 
     @Override
     public boolean isGameOver(GameState state) {
-        // REGLER: Spelet är över om sjön är tom OCH MINST EN spelare har tom hand.
-        if (!deck.isEmpty()) {
+
+        if (!deck.isEmpty()) { // Om sjön inte är tom, är spelet inte över
             return false;
         }
 
         for (GoFishUserPlayer p : players) {
-            if (p.get_hand().isEmpty()) { // Kontrollerar om MINST EN spelare har tom hand
+            if (p.get_hand().isEmpty()) { // Kontrollerar om minst spelare har tom hand
                 return true;
             }
         }
-        return false;
+        return false; // Spelet fortsätter annars
     }
 
     public void endTurn() {
@@ -87,22 +87,17 @@ public class GoFishRules implements GameStrategy {
         // Eventuell logik för att avsluta spelet
     }
 
-    /**
-     * HANTERING AV TOM HAND: Om handen är tom och sjön inte är tom, drar spelaren ett kort OCH TUREN GÅR VIDARE.
-     * @param player Spelaren att kontrollera.
-     * @return true om påfyllning skedde OCH turen byttes.
-     */
     private boolean refillAndEndTurnIfEmpty(GoFishUserPlayer player) {
-        if (player.get_hand().isEmpty()) {
+        if (player.get_hand().isEmpty()) { // Om spelarens hand är tom
             if (deck.isEmpty()) {
-                return false; // Kan inte dra, spelet kan vara över
+                return false; // Inget att dra, turen fortsätter
             }
 
-            Card drawn = deck.remove_card();
-            player.add_card(drawn);
-            player.collect_books();
+            Card drawn = deck.remove_card(); // Dra ett kort från sjön
+            player.add_card(drawn); // Lägg till kortet i spelarens hand
+            player.collect_books(); // Kolla efter böcker
 
-            // DIN REGL: Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i vyn)
+            // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i vyn)
             endTurn();
             return true;
         }
@@ -115,39 +110,39 @@ public class GoFishRules implements GameStrategy {
         GoFishUserPlayer current = players.get(currentIndex);
 
         if (opponentIndex == currentIndex) {
-            throw new IllegalArgumentException("Player can not ask it self");
+            throw new IllegalArgumentException("Player can not ask it self"); // Spelare kan inte fråga sig själv
         }
 
         GoFishUserPlayer opponent = players.get(opponentIndex);
 
         if (opponent.has_rank(String.valueOf(requestedRank))) {
-            // --- LYCKAD FRÅGA: Fick kort (Standard: behåll turen) ---
+
             List<Card> taken = opponent.give_cards(String.valueOf(requestedRank));
             for (Card c : taken) {
-                current.add_card(c);
+                current.add_card(c); // Ge kort till den aktiva spelaren om motståndaren har dem
             }
             current.collect_books();
 
-            // 1. Kolla motståndaren. Om motståndaren fylls på, byts turen.
-            if (refillAndEndTurnIfEmpty(opponent)) {
+
+            if (refillAndEndTurnIfEmpty(opponent)) { // Kolla motståndarens hand, ge kort om han är tom
                 return;
             }
 
-            // 2. Kolla aktiva spelaren. Om den fylls på, byts turen.
-            if (refillAndEndTurnIfEmpty(current)) {
+
+            if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
                 return;
             }
 
-            // Om turen inte bytts ovan: Spelaren behåller turen (standard Go Fish)
+
 
         } else {
-            // --- MISSLYCKAD FRÅGA: Go Fish ---
+
             if (!deck.isEmpty()) {
                 Card drawn = deck.remove_card();
                 current.add_card(drawn);
                 current.collect_books();
 
-                if (refillAndEndTurnIfEmpty(current)){
+                if (refillAndEndTurnIfEmpty(current)){ // Kolla den aktiva spelarens hand, ge kort om han är tom
                     return;
                 }
             }
