@@ -29,8 +29,6 @@ public class GoFish implements ViewInterface {
     Column buttons;
     Button btn;
 
-    Text playerCurrent;
-
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
 
@@ -67,8 +65,6 @@ public class GoFish implements ViewInterface {
         // Creates column that the buttons will be in
         buttons = new Column(new Vector2(450, 50), 50);
 
-        playerCurrent = new Text(ViewInformation.font, String.valueOf(state.GetCurrentPlayer()));
-        playerCurrent.SetPosition(10,20);
         // Create Guess button
         btn = new Button(
                 ViewInformation.font,
@@ -106,8 +102,6 @@ public class GoFish implements ViewInterface {
     int currentPlayer = -1;
     @Override
     public void UpdateState(){
-        playerCurrent.SetText(String.valueOf(state.GetCurrentPlayer()));
-
         if (state.GetCurrentPlayer() != currentPlayer) {
             cardHand.NextPlayer();
         }
@@ -157,9 +151,26 @@ public class GoFish implements ViewInterface {
         for (int i = 0; i < opponentHands.size(); i++) {
             opponentHands.get(i).Draw(batch);
         }
-        playerCurrent.Draw(batch);
 
         cardHand.Draw(batch);
         buttons.Draw(batch);
+
+        int CurrentIndex = state.GetCurrentPlayer(); // hämtar index för nuvarande spelare från game state
+        int OpponentIndex = (CurrentIndex+1) % 2; // hämtar index för motståndaren
+
+        String CurrentPlayerText = "Player " + (CurrentIndex+1); //text för att visa nuvarande spelare
+        String OpponentPlayerText = "Player " + (OpponentIndex+1); //text för att visa motståndaren
+
+        int currentBooks = state.getBookCount(CurrentIndex); // hämtar antal böcker för nuvarande spelare
+        int opponentBooks = state.getBookCount(OpponentIndex); // hämtar antal böcker för motståndaren
+
+        String currentBooksText = "Books: " + currentBooks; //text för att visa antal böcker för spelare har
+        String opponentBooksText = "Books: " + opponentBooks;
+
+        ViewInformation.font.draw(batch, CurrentPlayerText, 10, 40); // ritar texten för spelare
+        ViewInformation.font.draw(batch, currentBooksText, 10, 20); // ritar texten för antal böcker
+
+        ViewInformation.font.draw(batch, OpponentPlayerText, 10, screenHeight - 20);
+        ViewInformation.font.draw(batch, opponentBooksText, 10, screenHeight - 40);
     }
 }
