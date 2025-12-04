@@ -4,13 +4,9 @@ import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import javax.swing.*;
-import javax.swing.text.View;
 
 public class GameSelectView implements ViewInterface {
     MainView mainView;

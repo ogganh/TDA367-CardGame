@@ -2,20 +2,14 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.ButtonAction;
 import TDA367.CardGame.View.UI.Column;
-import TDA367.CardGame.View.UI.UIElement;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.UI.Button;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MiddleScreen implements ViewInterface{
     GameState state;

@@ -5,13 +5,9 @@ import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
-import javax.swing.text.View;
 
 /**
  * The start menu
