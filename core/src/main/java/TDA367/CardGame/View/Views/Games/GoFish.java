@@ -64,7 +64,6 @@ public class GoFish implements ViewInterface {
 
         // Creates column that the buttons will be in
         buttons = new Column(new Vector2(450, 50), 50);
-
         // Create Guess button
         btn = new Button(
                 ViewInformation.font,

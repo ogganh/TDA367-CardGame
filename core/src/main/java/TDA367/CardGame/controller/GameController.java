@@ -32,6 +32,7 @@ public class GameController {
     public GameController() {
         this.spriteBatch = new SpriteBatch();
         SoundManager.load();
+        SoundManager.playBGMusic();
         // Create a MainView, rquires a GameState to update the graphics according to the current state of the game
         // and it also requires the controller to relay inputs.
         this.view = new MainView(viewport, gameState, this);
