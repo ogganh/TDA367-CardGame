@@ -1,5 +1,6 @@
 package TDA367.CardGame.controller;
 
+import TDA367.CardGame.View.SoundManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -30,7 +31,7 @@ public class GameController {
      */
     public GameController() {
         this.spriteBatch = new SpriteBatch();
-
+        SoundManager.load();
         // Create a MainView, rquires a GameState to update the graphics according to the current state of the game
         // and it also requires the controller to relay inputs.
         this.view = new MainView(viewport, gameState, this);
@@ -102,6 +103,7 @@ public class GameController {
      */
     public void dispose() {
         spriteBatch.dispose();
+        SoundManager.dispose();
     }
 
     public FitViewport getViewport() {

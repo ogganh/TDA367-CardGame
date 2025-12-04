@@ -1,5 +1,6 @@
 package TDA367.CardGame.View.UI;
 
+import TDA367.CardGame.View.SoundManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -31,7 +32,7 @@ public class Button implements UIElement {
     }
 
     /**
-     * 
+     *
      * @param mousePos
      */
     public void Hover(Vector2 mousePos){
@@ -51,6 +52,7 @@ public class Button implements UIElement {
         sprite.draw(batch);
         font.setColor(new Color(255,255,255,255));
         font.draw(batch, text, position.x, position.y);
+
     }
 
     @Override
@@ -93,7 +95,9 @@ public class Button implements UIElement {
 
     // Read Clicks on the screen and trigger action if hovering over button
     public void Click() {
-        if (hovering) action.Action();
+        if (hovering) {
+            action.Action();
+        }
     }
 
     public void ChangeAction(ButtonAction action){
