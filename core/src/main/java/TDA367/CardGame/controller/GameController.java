@@ -103,6 +103,11 @@ public class GameController {
      */
     public void update() {
         view.Update();
+
+        if (gameContext != null && gameContext.isGameOver()) {
+            setCurrentView(ViewType.START);
+            return;
+        }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         view.Draw(spriteBatch);
     }

@@ -146,6 +146,10 @@ public class GoFishRules implements GameStrategy {
                 Card drawn = deck.remove_card();
                 current.add_card(drawn);
                 current.collect_books();
+
+                if (refillAndEndTurnIfEmpty(current)){
+                    return;
+                }
             }
             endTurn(); // Turen går alltid vidare efter Go Fish.
         }
