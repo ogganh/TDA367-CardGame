@@ -1,6 +1,6 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
-import TDA367.CardGame.View.Views.GoFishInterface;
+
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.card_logic.Card;
