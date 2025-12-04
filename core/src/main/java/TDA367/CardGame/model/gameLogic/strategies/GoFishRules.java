@@ -1,6 +1,5 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
-
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.card_logic.Card;
@@ -75,6 +74,7 @@ public class GoFishRules implements GameStrategy {
         }
         for (GoFishUserPlayer p : players) {
             if (!p.get_hand().isEmpty()) {
+                System.out.println(p.get_name());
                 return false;
             }
         }
@@ -84,13 +84,15 @@ public class GoFishRules implements GameStrategy {
     public void endTurn() {
         state.openMiddleScreen();
         turnManager.next(); // metod i turnManger som byter aktiv spelare
-        state.SetCurrentPlayer((state.GetCurrentPlayer()+1)%state.getPlayers().size());
+        state.SetCurrentPlayer((state.GetCurrentPlayer() + 1) % state.getPlayers().size());
     }
 
     public void endGame() {
 
     }
-    //om spelaren saknar kort i handen men sjön ej är tom, får spelaren ett kort från sjön.
+
+    // om spelaren saknar kort i handen men sjön ej är tom, får spelaren ett kort
+    // från sjön.
     private void refillIfEmpty(GoFishUserPlayer player) {
         if (player.get_hand().isEmpty() && !deck.isEmpty()) {
             Card drawn = deck.remove_card();
@@ -98,7 +100,6 @@ public class GoFishRules implements GameStrategy {
             player.collect_books();
         }
     }
-
 
     public void handleTurn(int opponentIndex, Rank requestedRank) {
         int currentIndex = turnManager.GetCurrentIndex();

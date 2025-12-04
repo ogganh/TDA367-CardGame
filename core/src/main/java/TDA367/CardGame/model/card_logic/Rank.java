@@ -14,5 +14,4 @@ public enum Rank {
     QUEEN,
     KING,
     ACE
-    
 }

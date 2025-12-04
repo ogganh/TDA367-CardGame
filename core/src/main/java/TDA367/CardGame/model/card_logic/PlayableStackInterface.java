@@ -6,8 +6,5 @@ public interface PlayableStackInterface {
 
     public void add_card(Card new_card);
 
-    public int size();
-
-    public void shuffle_deck(); 
-    
+    public int size();    
 }

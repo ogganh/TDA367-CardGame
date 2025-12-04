@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
+/** GameState har koll på vilka spelare som är registrerade, instanser av korthögar och 
+ * den nuvarande spelaren. 
+ * För att GameState ska kunna användas till många olika kortspel används en 
+ * hasmap för att instansiera fler olika korthögar.
+ */
+
 public class GameState {
     private Map<String, CardDeck> piles = new HashMap<>();
     private List<UserPlayer> players = new ArrayList<>();
