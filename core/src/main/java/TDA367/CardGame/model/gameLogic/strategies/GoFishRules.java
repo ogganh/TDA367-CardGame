@@ -1,5 +1,6 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
+import TDA367.CardGame.View.Views.GoFishInterface;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.card_logic.Card;
@@ -68,8 +69,16 @@ public class GoFishRules implements GameStrategy {
     }
 
     @Override
-    public boolean isGameOver(GameState state) { // spelet är över om korten i sjön är slut
-        return deck.isEmpty();
+    public boolean isGameOver(GameState state) { // spelet är över om korten i sjön är slut och alla spelare saknar krot
+        if (!deck.isEmpty()) {
+            return false;
+        }
+        for (GoFishUserPlayer p : players) {
+            if (!p.get_hand().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void endTurn() {
@@ -80,6 +89,15 @@ public class GoFishRules implements GameStrategy {
     public void endGame() {
 
     }
+    //om spelaren saknar kort i handen men sjön ej är tom, får spelaren ett kort från sjön.
+    private void refillIfEmpty(GoFishUserPlayer player) {
+        if (player.get_hand().isEmpty() && !deck.isEmpty()) {
+            Card drawn = deck.remove_card();
+            player.add_card(drawn);
+            player.collect_books();
+        }
+    }
+
 
     public void handleTurn(int opponentIndex, Rank requestedRank) {
         int currentIndex = turnManager.GetCurrentIndex();
@@ -97,7 +115,9 @@ public class GoFishRules implements GameStrategy {
             for (Card c : taken) {
                 current.add_card(c);
             }
-            current.collect_books();
+            current.collect_books(); // kolla om den aktiva spelaren fått 4 par
+            refillIfEmpty(opponent); // om motståndaren saknar kort i handen
+            refillIfEmpty(current); // om den aktiva spelaren saknar kort i handen
 
         } else {
             if (!deck.isEmpty()) {

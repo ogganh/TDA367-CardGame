@@ -1,6 +1,7 @@
 package TDA367.CardGame.model;
 
 import TDA367.CardGame.model.card_logic.CardDeck;
+import TDA367.CardGame.model.player.GoFishUserPlayer;
 import TDA367.CardGame.model.player.UserPlayer;
 
 import java.util.HashMap;
@@ -28,6 +29,13 @@ public class GameState {
         return players;
     }
     public int GetCurrentPlayer(){return currentPlayer;}
+    public int getBookCount(int playerIndex) {
+        UserPlayer p = players.get(playerIndex);
+        if (p instanceof GoFishUserPlayer) {
+            return ((GoFishUserPlayer) p).get_points();//returnerar antal böcker en spelare har
+        }
+        return 0;
+    }
 
 
     public void reset() {
