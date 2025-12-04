@@ -53,7 +53,7 @@ public class MainView {
         currentView.CreateView();
     }
     public void MiddleScreen(){
-        currentView = new MiddleScreen();
+        currentView = new MiddleScreen(state, controller);
         currentView.CreateView();
     }
     public void GameSelect(){

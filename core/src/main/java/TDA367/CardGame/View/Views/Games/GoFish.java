@@ -6,6 +6,7 @@ import TDA367.CardGame.View.UI.cards.OpponentHand;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.CardConversion;
 import TDA367.CardGame.View.Views.ViewInterface;
+import TDA367.CardGame.View.Views.ViewType;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
@@ -97,6 +98,7 @@ public class GoFish implements ViewInterface {
     public void Update() {
         //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) UpdateState();
         cardHand.Update(mousePosition);
+        if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
     }
     int currentPlayer = -1;
     @Override

@@ -13,6 +13,7 @@ public class GameState {
     private Map<String, CardDeck> piles = new HashMap<>();
     private List<UserPlayer> players = new ArrayList<>();
     private int currentPlayer = 0;
+    private boolean middleScreen = false;
 
     public void addPile(String name, CardDeck pile) {
         piles.put(name, pile);
@@ -21,6 +22,10 @@ public class GameState {
         players.add(player);
     }
     public void SetCurrentPlayer(int player){ currentPlayer = player;}
+
+    public void closeMiddleScreen() { middleScreen = false; }
+    public void openMiddleScreen() { middleScreen = true; }
+    public boolean isMiddleScreenOpen() { return middleScreen; }
 
     public CardDeck getPile(String name) {
         return piles.get(name);
