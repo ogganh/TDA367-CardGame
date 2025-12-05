@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
-/** GameState har koll på vilka spelare som är registrerade, instanser av korthögar och 
- * den nuvarande spelaren. 
- * För att GameState ska kunna användas till många olika kortspel används en 
- * hasmap för att instansiera fler olika korthögar.
+/** GameState keeps track of registered players, instances of card piles, and the current player.
+ * To support multiple card games, a HashMap is used to store different card piles by name.
  */
 
 public class GameState {
@@ -43,7 +41,7 @@ public class GameState {
     public int getBookCount(int playerIndex) {
         UserPlayer p = players.get(playerIndex);
         if (p instanceof GoFishUserPlayer) {
-            return ((GoFishUserPlayer) p).get_points();//returnerar antal böcker en spelare har
+            return ((GoFishUserPlayer) p).get_points(); // returns the number of books a player has
         }
         return 0;
     }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
+/** Methods for enabling and disabling music and sound effects. */
+
 public class SoundManager {
 
     private static Sound hoverSound;

@@ -6,9 +6,9 @@ import TDA367.CardGame.model.gameLogic.strategies.GameStrategy;
 import TDA367.CardGame.model.player.UserPlayer;
 
 /**
- * I enllighet med strategy pattern hanterar denna klass spelets förlopp. Denna styrs av GameCotreoller.
- * Den använder sig av en GameStrategy för att implementera olika spelregler. Exempelvis GoFishRules.
- * Metoderna gör så att staten uppdateras enligt reglerna i den valda strategin.
+ * Following the strategy pattern, this class manages the game's flow. It is controlled by GameController.
+ * It uses a GameStrategy to implement different game rules (for example, GoFishRules).
+ * The methods update the game state according to the selected strategy's rules.
  */
 
 public class GameContext {

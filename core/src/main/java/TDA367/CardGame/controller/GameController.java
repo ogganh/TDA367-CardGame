@@ -44,6 +44,7 @@ public class GameController {
         // temporary setup hardcoded for 2 player GoFish
 
         // Add players and deck to gamestate, should probably be moved into the rules?
+        gameState.reset();
         gameState.addPlayer(new GoFishUserPlayer("Player 1"));
         gameState.addPlayer(new GoFishUserPlayer("Player 2"));
         gameState.addPile("lake", new CardDeck());
@@ -87,12 +88,10 @@ public class GameController {
      */
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
         gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
-        if((gameContext.isGameOver())) {
-            setCurrentView(ViewType.START);
-        }
+
         view.UpdateState();
-        
-        
+
+
     }
 
     /**
@@ -100,6 +99,12 @@ public class GameController {
      */
     public void update() {
         view.Update();
+
+        if (gameContext != null && gameContext.isGameOver()) {
+            setCurrentView(ViewType.START);
+            gameContext = null; // Reset the game context to allow for a new game
+
+        }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         view.Draw(spriteBatch);
     }

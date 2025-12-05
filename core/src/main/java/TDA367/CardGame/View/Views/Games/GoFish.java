@@ -122,7 +122,7 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Update() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.Update(mousePosition);
         if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
     }

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstraktion av en spelare till ett godtyckligt kortspel. Har koll på namn,
- * kort på hand
- * och metoder för att lägga till och ta bort dessa.
+ * Abstraction of a player for a generic card game. Keeps track of the player name,
+ * the cards in hand, and methods to add and remove them.
  */
 
 public abstract class UserPlayer implements IPlayer{
