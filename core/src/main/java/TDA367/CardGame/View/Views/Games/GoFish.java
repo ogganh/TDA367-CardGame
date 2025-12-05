@@ -12,6 +12,7 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -98,7 +99,7 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Update() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.Update(mousePosition);
         if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
     }
