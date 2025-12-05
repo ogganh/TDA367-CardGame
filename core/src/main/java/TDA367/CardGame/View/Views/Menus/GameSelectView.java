@@ -43,13 +43,13 @@ public class GameSelectView implements ViewInterface {
         temp.AddUIElement(gofish);
 
         row.AddUIElement(temp);
-        for (int i = 0; i < 2; i++) {
+/*         for (int i = 0; i < 2; i++) {
             temp = new Column(new Vector2(0,0),20);
             for (int j = 0; j < 5; j++) {
                 temp.AddUIElement(UIElementFactory.CreateText(ViewInformation.font, "Test"));
             }
             row.AddUIElement(temp);
-        }
+        } */
 
     }
 
