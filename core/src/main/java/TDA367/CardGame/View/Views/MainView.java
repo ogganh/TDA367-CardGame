@@ -50,7 +50,7 @@ public class MainView {
 
     }
     public void Rules(){
-        currentView = new RulesView();
+        currentView = new RulesView(this);
         currentView.CreateView();
     }
     public void MiddleScreen(){

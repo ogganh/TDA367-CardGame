@@ -1,21 +1,50 @@
 package TDA367.CardGame.View.Views;
 
+import TDA367.CardGame.Main;
+import TDA367.CardGame.View.UI.Button;
+import TDA367.CardGame.View.UI.ButtonAction;
 import TDA367.CardGame.View.UI.Text;
 import TDA367.CardGame.View.ViewInformation;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class RulesView implements ViewInterface {
-    Text text;
+    private Text text;
+    private Button back;
+    private MainView mainView;
 
-    public RulesView() {
-
+    public RulesView(MainView mainView) {
+        this.mainView = mainView;
     }
 
     @Override
     public void CreateView() {
-        ViewInformation.font.getData().setScale(0.3f);
-        text = new Text(ViewInformation.font,
+
+        // Create Guess button
+        back = new Button(
+            ViewInformation.font,
+            "Back",
+            new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+
+        // Add a "on click" function to the guess button
+        back.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action() {
+                // Send the input to the controller if a card is selected
+                mainView.GoFish();
+            }
+        });
+
+        back.SetScale(3, 2);
+        back.SetPosition(30,ViewInformation.screenSize.y -20);
+
+        //ViewInformation.font.getData().setScale(0.3f);
+        BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
+        txtFont.getData().setScale(0.3f);
+        text = new Text(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +
                 "Start:\n" +
@@ -40,7 +69,7 @@ public class RulesView implements ViewInterface {
                 "   - The game ends when the pond is empty and all sets have been collected.\n" +
                 "\n" +
                 "\n");
-        text.SetPosition(0, ViewInformation.screenSize.y);
+        text.SetPosition(60, ViewInformation.screenSize.y - 20);
 
     }
 
@@ -56,11 +85,12 @@ public class RulesView implements ViewInterface {
 
     @Override
     public void MouseUpdate(Vector2 mousePosition) {
-
+        back.MouseUpdate(mousePosition);
     }
 
     @Override
     public void Draw(SpriteBatch batch) {
         text.Draw(batch);
+        back.Draw(batch);
     }
 }
