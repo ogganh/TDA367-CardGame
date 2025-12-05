@@ -8,7 +8,6 @@ import TDA367.CardGame.model.GameState;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import jdk.jfr.internal.tool.View;
 
 public class EndScoreView implements ViewInterface {
     private GameState state;
