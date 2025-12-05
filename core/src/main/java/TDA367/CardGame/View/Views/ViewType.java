@@ -6,4 +6,5 @@ public enum ViewType {
     RULES,
     MIDDLE_SCREEN,
     GAME_SELECT,
+    END_SCORE,
 }
