@@ -88,11 +88,7 @@ public class GameController {
      */
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
         gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
-        if((gameContext.isGameOver())) {
-            setCurrentView(ViewType.START);
 
-
-        }
         view.UpdateState();
 
 
@@ -106,7 +102,8 @@ public class GameController {
 
         if (gameContext != null && gameContext.isGameOver()) {
             setCurrentView(ViewType.START);
-            return;
+            gameContext = null; // Reset the game context to allow for a new game
+
         }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         view.Draw(spriteBatch);
