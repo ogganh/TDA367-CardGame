@@ -14,6 +14,7 @@ import TDA367.CardGame.model.GameState;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -24,12 +25,14 @@ import java.util.Random;
 
 public class GoFish implements ViewInterface {
     // Specifically for go fish
-    CardHand cardHand = new CardHand();
-    List<OpponentHand> opponentHands = new ArrayList<>();
-    List<Sprite> thePond = new ArrayList<>();
+    private CardHand cardHand = new CardHand();
+    private List<OpponentHand> opponentHands = new ArrayList<>();
+    private List<Sprite> thePond = new ArrayList<>();
 
-    Column buttons;
-    Button btn;
+    private Column buttons;
+    private Button btn;
+
+    private Button rules;
 
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
@@ -90,9 +93,29 @@ public class GoFish implements ViewInterface {
 
         buttons.AddUIElement(btn);
 
+
+        // Create rules button
+        rules = new Button(
+            ViewInformation.font,
+            "",
+            new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480));
+
+        // Add a "on click" function to the guess button
+        rules.ChangeAction(new ButtonAction() {
+            @Override
+            public void Action() {
+                mainView.Rules();
+            }
+        });
+        rules.SetPosition(100,ViewInformation.screenSize.y -40);
+
+        rules.SetScale(0.1f, 0.1f);
+
+
         for (int i = 0; i < state.getPlayers().size() -1; i++) {
             opponentHands.add(new OpponentHand());
         }
+
 
     }
 
@@ -144,6 +167,7 @@ public class GoFish implements ViewInterface {
         this.mousePosition = mousePosition;
         buttons.MouseUpdate(mousePosition);
         if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.SelectCard();
+        rules.MouseUpdate(mousePosition);
     }
 
     @Override
@@ -157,7 +181,10 @@ public class GoFish implements ViewInterface {
         }
 
         cardHand.Draw(batch);
+
         buttons.Draw(batch);
+        rules.Draw(batch);
+
 
         int CurrentIndex = state.GetCurrentPlayer(); // hämtar index för nuvarande spelare från game state
         int OpponentIndex = (CurrentIndex+1) % 2; // hämtar index för motståndaren

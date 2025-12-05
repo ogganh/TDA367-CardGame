@@ -46,8 +46,8 @@ public class Button implements UIElement {
 
     @Override
     public void Draw(SpriteBatch batch) {
-        sprite.setColor(255,255,255,255);
-        if (hovering) sprite.setColor(0,0,0,128);
+        sprite.setColor(1,1,1,1);
+        if (hovering) sprite.setColor(0.5f,0.5f,0.5f,1);
         sprite.draw(batch);
         font.setColor(new Color(255,255,255,255));
         font.draw(batch, text, position.x, position.y);
