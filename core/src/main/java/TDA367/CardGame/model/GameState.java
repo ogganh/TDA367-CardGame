@@ -9,10 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
+/** GameState keeps track of registered players, instances of card piles, and the current player.
+ * To support multiple card games, a HashMap is used to store different card piles by name.
+ */
+
 public class GameState {
     private Map<String, CardDeck> piles = new HashMap<>();
     private List<UserPlayer> players = new ArrayList<>();
     private int currentPlayer = 0;
+    private boolean middleScreen = false;
 
     public void addPile(String name, CardDeck pile) {
         piles.put(name, pile);
@@ -21,6 +26,10 @@ public class GameState {
         players.add(player);
     }
     public void SetCurrentPlayer(int player){ currentPlayer = player;}
+
+    public void closeMiddleScreen() { middleScreen = false; }
+    public void openMiddleScreen() { middleScreen = true; }
+    public boolean isMiddleScreenOpen() { return middleScreen; }
 
     public CardDeck getPile(String name) {
         return piles.get(name);
@@ -32,7 +41,7 @@ public class GameState {
     public int getBookCount(int playerIndex) {
         UserPlayer p = players.get(playerIndex);
         if (p instanceof GoFishUserPlayer) {
-            return ((GoFishUserPlayer) p).get_points();//returnerar antal böcker en spelare har
+            return ((GoFishUserPlayer) p).get_points(); // returns the number of books a player has
         }
         return 0;
     }

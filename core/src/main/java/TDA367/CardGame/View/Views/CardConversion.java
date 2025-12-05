@@ -5,6 +5,12 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
+/** Converts card suits and ranks to integers and vice versa.
+ * This is used to simplify card handling in the game.
+ * The suit is represented as an integer multiple of 13, and the rank is added to it.
+ * For example, "HEARTS" + "ACE" = 0, "DIAMONDS" + "TWO" = 14, etc.
+ */
+
 public class CardConversion {
     Dictionary<String,Integer> suitToInt = new Hashtable<>();
     Dictionary<String,Integer> rankToInt = new Hashtable<>();

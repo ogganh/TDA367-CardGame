@@ -28,7 +28,6 @@ public class Row implements UIElement{
         SpaceElements();
     }
     private void SpaceElements(){
-        int amountElements = UIElements.size();
         //int widthMargin = spaceBetween / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {

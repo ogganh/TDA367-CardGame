@@ -161,7 +161,4 @@ public class CardHand {
 //
 //        cardHand.remove(card);
 //    }
-    private void RemoveCard(int index){
-
-    }
 }

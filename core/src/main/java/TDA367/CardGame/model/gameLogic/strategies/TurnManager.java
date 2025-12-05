@@ -1,5 +1,9 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
+/**
+ * Manages the turn order for players in a card game based on the number of players.
+ */
+
 public class TurnManager {
     private int current_p_index = 0;
     private final int playerCount;

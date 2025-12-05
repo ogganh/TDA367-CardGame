@@ -5,6 +5,12 @@ import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.gameLogic.strategies.GameStrategy;
 import TDA367.CardGame.model.player.UserPlayer;
 
+/**
+ * Following the strategy pattern, this class manages the game's flow. It is controlled by GameController.
+ * It uses a GameStrategy to implement different game rules (for example, GoFishRules).
+ * The methods update the game state according to the selected strategy's rules.
+ */
+
 public class GameContext {
     private GameStrategy rules;
     private GameState state;

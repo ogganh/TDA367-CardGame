@@ -1,15 +1,34 @@
 package TDA367.CardGame.model.card_logic;
-
 import java.util.ArrayList;
 
-public class CardPile extends AbstractCardPile implements PlayableStackInterface {
+/**
+ * Unlike CardDeck, CardPile is not bound to a fixed size or content.
+ * This class can be used to represent a player's hand or other piles in the game.
+ */
 
-    /*
-    Representerar en hög med kort där kort kan läggas till och tas bort. Tänk en hög på ett borde eller en hand. 
-    Inte bunden av något högre värde till skillandf från CardDeck.
-     */
+public class CardPile implements PlayableStackInterface {
+
+    ArrayList<Card> cardsInHand;
 
     public CardPile() {
-        cards = new ArrayList<Card>();
-    }    
+        cardsInHand = new ArrayList<Card>();
+    }
+
+    @Override
+    public Card remove_card() {
+        if (cardsInHand.size() == 0) {
+            return null;
+        }
+        return cardsInHand.remove(cardsInHand.size() - 1);
+    }
+
+    @Override
+    public void add_card(Card new_card) {
+        cardsInHand.add(new_card);
+    }
+
+    @Override
+    public int size() {
+        return cardsInHand.size();
+    }
 }

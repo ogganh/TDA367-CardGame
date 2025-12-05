@@ -1,6 +1,5 @@
 package TDA367.CardGame.View.UI;
 
-import TDA367.CardGame.View.SoundManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

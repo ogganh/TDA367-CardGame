@@ -3,6 +3,11 @@ import TDA367.CardGame.model.card_logic.Card;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstraction of a player for a generic card game. Keeps track of the player name,
+ * the cards in hand, and methods to add and remove them.
+ */
+
 public abstract class UserPlayer implements IPlayer{
     private final String name;
     protected final List<Card> hand;

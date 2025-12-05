@@ -7,6 +7,11 @@ import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 
+/**
+ * A specific GoFish player that has points and cards (extends UserPlayer).
+ * It also handles logic for what should happen on various moves in GoFish.
+ */
+
 public class GoFishUserPlayer extends UserPlayer {
 
     private int points; // Tracking how many stacks of 4 of a kind player have put down

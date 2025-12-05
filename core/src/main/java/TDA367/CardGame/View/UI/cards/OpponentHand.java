@@ -6,7 +6,6 @@ import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ public class OpponentHand {
 
         for (int i = 0; i < opponentHand.size(); i++) {
             float xPos = CardsXPosition(opponentHand.size(), i);
-            Vector2 pos = opponentHand.get(i).GetPosition();
 
             //opponentHand.get(i).SetOrigin(-pos.x + ViewInformation.screenSize.x / 2, -pos.y + ViewInformation.screenSize.y / 2);
             //opponentHand.get(i).SetRotation(angle);
