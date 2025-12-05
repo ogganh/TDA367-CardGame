@@ -28,14 +28,14 @@ public class GoFish implements ViewInterface {
     private CardHand cardHand = new CardHand();
     private List<OpponentHand> opponentHands = new ArrayList<>();
     private List<Sprite> thePond = new ArrayList<>();
-
+    Texture background;
     private Column buttons;
     private Button btn;
 
     private Button rules;
 
-    float screenWidth = ViewInformation.screenSize.x;
-    float screenHeight = ViewInformation.screenSize.y;
+    //float screenWidth = ViewInformation.screenSize.x;
+    //float screenHeight = ViewInformation.screenSize.y;
 
     Vector2 mousePosition = new Vector2(0, 0);
 
@@ -58,13 +58,15 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void CreateView() {
+        background = new Texture("textures/background.png");
+
         // Creates the pond
         Random rand = new Random();
         for (int i = 0; i < 52; i++) {
             thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight));
 
             // Random position and rotation
-            thePond.get(i).setPosition(rand.nextFloat(screenWidth / 3,2 *screenWidth/3),rand.nextFloat(screenHeight / 4,2 *screenHeight/4));
+            thePond.get(i).setPosition(rand.nextFloat(ViewInformation.screenSize.x / 3,2 *ViewInformation.screenSize.x/3),rand.nextFloat(ViewInformation.screenSize.y / 4,2 *ViewInformation.screenSize.y/4));
             thePond.get(i).setScale(0.5f);
             thePond.get(i).setRotation(rand.nextFloat(0f,180f));
         }
@@ -172,6 +174,7 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Draw(SpriteBatch batch) {
+        batch.draw(background,0,0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
 
         for (int i = 0; i < thePond.size(); i++) {
             thePond.get(i).draw(batch);
@@ -201,7 +204,7 @@ public class GoFish implements ViewInterface {
         ViewInformation.font.draw(batch, CurrentPlayerText, 10, 40); // ritar texten för spelare
         ViewInformation.font.draw(batch, currentBooksText, 10, 20); // ritar texten för antal böcker
 
-        ViewInformation.font.draw(batch, OpponentPlayerText, 10, screenHeight - 20);
-        ViewInformation.font.draw(batch, opponentBooksText, 10, screenHeight - 40);
+        ViewInformation.font.draw(batch, OpponentPlayerText, 10, ViewInformation.screenSize.y - 20);
+        ViewInformation.font.draw(batch, opponentBooksText, 10, ViewInformation.screenSize.y - 40);
     }
 }
