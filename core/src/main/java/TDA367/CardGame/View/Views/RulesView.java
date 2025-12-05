@@ -23,17 +23,16 @@ public class RulesView implements ViewInterface {
     @Override
     public void CreateView() {
 
-        // Create Guess button
+        // Create Back button
         back = new Button(
             ViewInformation.font,
             "Back",
             new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
-        // Add a "on click" function to the guess button
+        // Add a "on click" function to the back button
         back.ChangeAction(new ButtonAction() {
             @Override
             public void Action() {
-                // Send the input to the controller if a card is selected
                 mainView.GoFish();
             }
         });
@@ -41,7 +40,6 @@ public class RulesView implements ViewInterface {
         back.SetScale(3, 2);
         back.SetPosition(30,ViewInformation.screenSize.y -20);
 
-        //ViewInformation.font.getData().setScale(0.3f);
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
         txtFont.getData().setScale(0.3f);
         text = new Text(txtFont,
