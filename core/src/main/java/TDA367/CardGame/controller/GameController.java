@@ -76,6 +76,10 @@ public class GameController {
             case GAME_SELECT:
                 view.GameSelect();
                 break;
+
+            case END_SCORE:
+                view.EndScreen();
+                break;
         }
     }
 
@@ -101,7 +105,7 @@ public class GameController {
         view.Update();
 
         if (gameContext != null && gameContext.isGameOver()) {
-            setCurrentView(ViewType.START);
+            setCurrentView(ViewType.END_SCORE);
             gameContext = null; // Reset the game context to allow for a new game
 
         }

@@ -63,7 +63,7 @@ public class EndScoreView implements ViewInterface {
         menu.ChangeAction(new ButtonAction() {
             @Override
             public void Action() {
-                view.GameSelect();
+                view.StartView();
             }
         });
         menu.SetScale(5,3);
