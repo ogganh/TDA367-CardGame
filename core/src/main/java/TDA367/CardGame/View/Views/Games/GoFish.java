@@ -12,7 +12,6 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -92,9 +91,7 @@ public class GoFish implements ViewInterface {
         });
 
         btn.SetScale(5, 3);
-
         buttons.AddUIElement(btn);
-
 
         // Create rules button
         rules = new Button(
@@ -110,15 +107,11 @@ public class GoFish implements ViewInterface {
             }
         });
         rules.SetPosition(100,ViewInformation.screenSize.y -40);
-
         rules.SetScale(0.1f, 0.1f);
-
 
         for (int i = 0; i < state.getPlayers().size() -1; i++) {
             opponentHands.add(new OpponentHand());
         }
-
-
     }
 
 

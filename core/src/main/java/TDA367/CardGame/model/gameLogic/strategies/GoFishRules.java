@@ -79,6 +79,7 @@ public class GoFishRules implements GameStrategy {
     }
 
     public void endTurn() {
+        state.openMiddleScreen();
         turnManager.next();
         state.SetCurrentPlayer((state.GetCurrentPlayer()+1)%state.getPlayers().size());
     }
