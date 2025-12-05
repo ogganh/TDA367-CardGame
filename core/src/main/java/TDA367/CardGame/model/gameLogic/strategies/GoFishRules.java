@@ -20,14 +20,14 @@ public class GoFishRules implements GameStrategy {
 
     public GoFishRules(List<? extends UserPlayer> players, CardDeck deck) {
         if (players.size() < 2) {
-            throw new IllegalArgumentException("GoFishGame requires 2 players");
+            throw new IllegalArgumentException("GoFishGame requires 2 players"); // Minst 2 spelare
         }
 
         this.players = new ArrayList<>();
 
         for (UserPlayer p : players) {
             if (!(p instanceof GoFishUserPlayer)) {
-                throw new IllegalArgumentException("All players must be GoFishUserPlayer");
+                throw new IllegalArgumentException("All players must be GoFishUserPlayer"); // Alla spelare måste vara GoFishUserPlayer
             }
             this.players.add((GoFishUserPlayer) p);
         }
@@ -40,10 +40,9 @@ public class GoFishRules implements GameStrategy {
     public void setup(GameState state) {
         this.state = state;
         deck.shuffle_deck();
-        int cards_per_player = 7;
+        int cards_per_player = 7; // Standard: 7 kort per spelare
 
-        // deal 7 cards per player as long as there are cards in the pool
-        for (int i = 0; i < cards_per_player; i++) {
+        for (int i = 0; i < cards_per_player; i++) { // Initial utdelning
             for (GoFishUserPlayer player : players) {
                 if (!deck.isEmpty()) {
                     Card drawn = deck.remove_card();
@@ -52,105 +51,125 @@ public class GoFishRules implements GameStrategy {
             }
         }
 
-        // check again for any sets of four
-        for (GoFishUserPlayer player : players) {
+        for (GoFishUserPlayer player : players) { // Kolla efter initiala books
             player.collect_books();
         }
     }
 
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
-        // interpret playerIndex in PlayerAction as "which opponent I'm asking"
-        int opponentIndex = action.getPlayerIndex();
-        // rank is a String in PlayerAction
-        Rank requestedRank = Rank.valueOf(action.getRank());
-        handleTurn(opponentIndex, requestedRank);
+        int opponentIndex = action.getPlayerIndex(); // Index för motståndaren
+        Rank requestedRank = Rank.valueOf(action.getRank()); // Begärt rank
+        handleTurn(opponentIndex, requestedRank); // Hantera turen
     }
 
     @Override
-    public boolean isGameOver(GameState state) { // the game is over if the deck is empty and all players have no cards
-        if (!deck.isEmpty()) {
+    public boolean isGameOver(GameState state) {
+
+        if (!deck.isEmpty()) { // Om sjön inte är tom, är spelet inte över
             return false;
         }
+
         for (GoFishUserPlayer p : players) {
-            if (!p.get_hand().isEmpty()) {
-                System.out.println(p.get_name());
-                return false;
+            if (p.get_hand().isEmpty()) { // Kontrollerar om minst spelare har tom hand
+                return true;
             }
         }
-        return true;
+        return false; // Spelet fortsätter annars
     }
 
     public void endTurn() {
-        state.openMiddleScreen();
-        turnManager.next(); // method in TurnManager that switches the active player
-        state.SetCurrentPlayer((state.GetCurrentPlayer() + 1) % state.getPlayers().size());
+        turnManager.next();
+        state.SetCurrentPlayer((state.GetCurrentPlayer()+1)%state.getPlayers().size());
     }
 
     public void endGame() {
-
+        // Eventuell logik för att avsluta spelet
     }
 
-    // if the player has no cards in hand but the deck is not empty, give the player a card
-    // from the deck.
-    private void refillIfEmpty(GoFishUserPlayer player) {
-        if (player.get_hand().isEmpty() && !deck.isEmpty()) {
-            Card drawn = deck.remove_card();
-            player.add_card(drawn);
-            player.collect_books();
+    private boolean refillAndEndTurnIfEmpty(GoFishUserPlayer player) {
+        if (player.get_hand().isEmpty()) { // Om spelarens hand är tom
+            if (deck.isEmpty()) {
+                return false; // Inget att dra, turen fortsätter
+            }
+
+            Card drawn = deck.remove_card(); // Dra ett kort från sjön
+            player.add_card(drawn); // Lägg till kortet i spelarens hand
+            player.collect_books(); // Kolla efter böcker
+
+            // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i vyn)
+            endTurn();
+            return true;
         }
+        return false;
     }
+
 
     public void handleTurn(int opponentIndex, Rank requestedRank) {
         int currentIndex = turnManager.GetCurrentIndex();
         GoFishUserPlayer current = players.get(currentIndex);
 
         if (opponentIndex == currentIndex) {
-            throw new IllegalArgumentException("Player can not ask it self");
+            throw new IllegalArgumentException("Player can not ask it self"); // Spelare kan inte fråga sig själv
         }
 
-        // retrieve the opponent
         GoFishUserPlayer opponent = players.get(opponentIndex);
 
         if (opponent.has_rank(String.valueOf(requestedRank))) {
+
             List<Card> taken = opponent.give_cards(String.valueOf(requestedRank));
             for (Card c : taken) {
-                current.add_card(c);
+                current.add_card(c); // Ge kort till den aktiva spelaren om motståndaren har dem
             }
-            current.collect_books(); // check if the active player collected a book (4 of a kind)
-            refillIfEmpty(opponent); // if the opponent has no cards in hand
-            refillIfEmpty(current); // if the active player has no cards in hand
+            current.collect_books();
+
+
+            if (refillAndEndTurnIfEmpty(opponent)) { // Kolla motståndarens hand, ge kort om han är tom
+                return;
+            }
+
+
+            if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
+                return;
+            }
+
+
 
         } else {
+
             if (!deck.isEmpty()) {
                 Card drawn = deck.remove_card();
                 current.add_card(drawn);
                 current.collect_books();
+
+                if (refillAndEndTurnIfEmpty(current)){ // Kolla den aktiva spelarens hand, ge kort om han är tom
+                    return;
+                }
             }
-            endTurn(); // advance to the next player's turn
+            endTurn(); // Turen går alltid vidare efter Go Fish.
         }
     }
 
-    // the player with the most books (4-of-a-kind) wins
+    // Vinstregler: Den med flest 4-tal (böcker) vinner, oavsett när spelet slutade.
     public GoFishUserPlayer get_winner() {
         GoFishUserPlayer winner = null;
         int bestScore = -1;
         boolean tie = false;
 
         for (GoFishUserPlayer p : players) {
-            int score = p.get_points();
+            int score = p.get_points(); // Antal böcker
 
             if (score > bestScore) {
                 bestScore = score;
                 winner = p;
                 tie = false;
             } else if (score == bestScore) {
-                tie = true; // at least two players have the same score
+                tie = true;
             }
         }
 
         if (tie) {
-            return null; // draw
+            return null; // oavgjort
         } else {
             return winner;
         }
