@@ -57,6 +57,7 @@ public class RulesView implements ViewInterface {
                 "   - If the player does not have the rank, they respond with “Go Fish!”\n" +
                 "   - You then draw 1 card from the pond.\n" +
                 "   - After drawing, your turn always ends and the next player takes their turn.\n" +
+                "   - If a player has an empty hand and there are still cards in the pond, they draw one new card from the pond.\n" +
                 "\n" +
                 "How to Win:\n" +
                 "   - Collect four cards of the same rank to complete a set.\n" +
