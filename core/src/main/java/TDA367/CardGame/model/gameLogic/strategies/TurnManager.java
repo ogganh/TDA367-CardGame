@@ -1,7 +1,7 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
 /**
- * Hanterar turordningen för spelare i ett kortspel bserat på antalet spelare.
+ * Manages the turn order for players in a card game based on the number of players.
  */
 
 public class TurnManager {

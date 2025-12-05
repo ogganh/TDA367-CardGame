@@ -8,9 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class RulesView implements ViewInterface {
     Text text;
 
-    public RulesView() {
-
-    }
+    public RulesView() {}
 
     @Override
     public void CreateView() {

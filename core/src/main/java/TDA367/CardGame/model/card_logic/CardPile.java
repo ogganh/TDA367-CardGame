@@ -2,8 +2,8 @@ package TDA367.CardGame.model.card_logic;
 import java.util.ArrayList;
 
 /**
- * I kontrast till CardDedk är inte CardPile inte bunden till en fast storlek eller innehåll.
- * Denna klass kan användas för att representera en spelares hand eller andra korthög i spelet. 
+ * Unlike CardDeck, CardPile is not bound to a fixed size or content.
+ * This class can be used to represent a player's hand or other piles in the game.
  */
 
 public class CardPile implements PlayableStackInterface {

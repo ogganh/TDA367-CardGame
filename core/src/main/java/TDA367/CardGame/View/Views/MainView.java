@@ -19,12 +19,12 @@ public class MainView {
     private GameController controller;
     private GameState state;
 
-
     /**
      * @param viewPort - The applications viewport.
      * @param state - The game state, used to update graphics according to the current state
      * @param controller - The game controller, used as middleware when passing input to the model
      */
+
     public MainView(FitViewport viewPort, GameState state, GameController controller) {
         currentView = new StartView(this);
         currentView.CreateView();
@@ -60,7 +60,6 @@ public class MainView {
         currentView = new GameSelectView(this);
         currentView.CreateView();
     }
-
     /**
      * Core logic loop, runs every frame.
      * Updates the mouse position and passes it to the current view.
@@ -75,9 +74,7 @@ public class MainView {
     /**
      * Updates the state
      */
-    public void UpdateState(){
-        currentView.UpdateState();
-    }
+    public void UpdateState(){currentView.UpdateState();}
     /**
      * The rendering of the view, could probably be moved into or (most likely better) called by MainView.Update instead of GameController.update()
      */

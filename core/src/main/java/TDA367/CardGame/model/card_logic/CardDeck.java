@@ -2,26 +2,27 @@ package TDA367.CardGame.model.card_logic;
 
 import java.util.ArrayList;
 
-    /** Beskriver en fixerad kortlek för att begränsa så att samma kort inte förekommer mer än en gång.
-    * Tanken är att denna klass fungerar som en kortpool där kort kan dras ifrån och läggas till.
-    * Detta förindrar att samma kort förekommer mer än en gång i spelet.
-    */
+    /**
+     * Represents a fixed deck to ensure the same card does not appear more than once.
+     * This class acts as a card pool from which cards can be drawn and added.
+     * It prevents duplicate cards from appearing in the game.
+     */
 
 
 public class CardDeck extends AbstractCardPile implements PlayableStackInterface {
 
-    // Begränsar maxstorleken på kortleken
+    // Limits the maximum deck size
     private final int DECK_SIZE = 52;
 
-    // Konstruktor som skapar och blandar en ny kortlek
+    // Constructor that creates and shuffles a new deck
     public CardDeck() {
-        cards = new ArrayList<Card>(DECK_SIZE); // Skapa en tom kortlek
-        initialize_deck(); // Fyll kortleken med 52 kort
-        shuffle_deck(); // Blanda kortleken
+        cards = new ArrayList<Card>(DECK_SIZE); // Create an empty deck
+        initialize_deck(); // Fill the deck with 52 cards
+        shuffle_deck(); // Shuffle the deck
     }
 
-    // Initialisera kortleken med 52 kort genom att kombinera alla färger och
-    // valörer
+    // Initialize the deck with 52 cards by combining all suits and
+    // ranks
     private void initialize_deck() {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {

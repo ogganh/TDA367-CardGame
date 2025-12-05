@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/** The view between player turns. Prohibits player from seeing opponents cards. */
+
 public class MiddleScreen implements ViewInterface{
     GameState state;
     GameController controller;

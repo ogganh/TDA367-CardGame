@@ -42,7 +42,7 @@ public class GoFishRules implements GameStrategy {
         deck.shuffle_deck();
         int cards_per_player = 7;
 
-        // delar ut 7 kort per spelare så länge det finns kort i sjön
+        // deal 7 cards per player as long as there are cards in the pool
         for (int i = 0; i < cards_per_player; i++) {
             for (GoFishUserPlayer player : players) {
                 if (!deck.isEmpty()) {
@@ -52,7 +52,7 @@ public class GoFishRules implements GameStrategy {
             }
         }
 
-        // räknar om det finns 4 av samma
+        // check again for any sets of four
         for (GoFishUserPlayer player : players) {
             player.collect_books();
         }
@@ -60,15 +60,15 @@ public class GoFishRules implements GameStrategy {
 
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
-        // tolkar playerIndex i PlayerAction som "vilken motståndare jag frågar"
+        // interpret playerIndex in PlayerAction as "which opponent I'm asking"
         int opponentIndex = action.getPlayerIndex();
-        // rank är en String i PlayerAction
+        // rank is a String in PlayerAction
         Rank requestedRank = Rank.valueOf(action.getRank());
         handleTurn(opponentIndex, requestedRank);
     }
 
     @Override
-    public boolean isGameOver(GameState state) { // spelet är över om korten i sjön är slut och alla spelare saknar krot
+    public boolean isGameOver(GameState state) { // the game is over if the deck is empty and all players have no cards
         if (!deck.isEmpty()) {
             return false;
         }
@@ -83,7 +83,7 @@ public class GoFishRules implements GameStrategy {
 
     public void endTurn() {
         state.openMiddleScreen();
-        turnManager.next(); // metod i turnManger som byter aktiv spelare
+        turnManager.next(); // method in TurnManager that switches the active player
         state.SetCurrentPlayer((state.GetCurrentPlayer() + 1) % state.getPlayers().size());
     }
 
@@ -91,8 +91,8 @@ public class GoFishRules implements GameStrategy {
 
     }
 
-    // om spelaren saknar kort i handen men sjön ej är tom, får spelaren ett kort
-    // från sjön.
+    // if the player has no cards in hand but the deck is not empty, give the player a card
+    // from the deck.
     private void refillIfEmpty(GoFishUserPlayer player) {
         if (player.get_hand().isEmpty() && !deck.isEmpty()) {
             Card drawn = deck.remove_card();
@@ -109,7 +109,7 @@ public class GoFishRules implements GameStrategy {
             throw new IllegalArgumentException("Player can not ask it self");
         }
 
-        // hämta motståndaren
+        // retrieve the opponent
         GoFishUserPlayer opponent = players.get(opponentIndex);
 
         if (opponent.has_rank(String.valueOf(requestedRank))) {
@@ -117,9 +117,9 @@ public class GoFishRules implements GameStrategy {
             for (Card c : taken) {
                 current.add_card(c);
             }
-            current.collect_books(); // kolla om den aktiva spelaren fått 4 par
-            refillIfEmpty(opponent); // om motståndaren saknar kort i handen
-            refillIfEmpty(current); // om den aktiva spelaren saknar kort i handen
+            current.collect_books(); // check if the active player collected a book (4 of a kind)
+            refillIfEmpty(opponent); // if the opponent has no cards in hand
+            refillIfEmpty(current); // if the active player has no cards in hand
 
         } else {
             if (!deck.isEmpty()) {
@@ -127,11 +127,11 @@ public class GoFishRules implements GameStrategy {
                 current.add_card(drawn);
                 current.collect_books();
             }
-            endTurn(); // turnManager.next()
+            endTurn(); // advance to the next player's turn
         }
     }
 
-    // den med flest 4par vinner
+    // the player with the most books (4-of-a-kind) wins
     public GoFishUserPlayer get_winner() {
         GoFishUserPlayer winner = null;
         int bestScore = -1;
@@ -145,12 +145,12 @@ public class GoFishRules implements GameStrategy {
                 winner = p;
                 tie = false;
             } else if (score == bestScore) {
-                tie = true; // minst två har samma score
+                tie = true; // at least two players have the same score
             }
         }
 
         if (tie) {
-            return null; // oavgjort
+            return null; // draw
         } else {
             return winner;
         }

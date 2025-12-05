@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Abstrakt klass för en kortlek eller hög med kort. 
+ * Abstract class for a deck or pile of cards.
  */
 
 public abstract class AbstractCardPile {
 
     ArrayList<Card> cards;
 
-    // Tar bort och returnerar det översta kortet i kortleken, eller null om
-    // kortleken är tom
+    // Removes and returns the top card of the pile, or null if
+    // the pile is empty
     public Card remove_card() {
         if (cards.size() == 0) {
             return null;
@@ -20,17 +20,17 @@ public abstract class AbstractCardPile {
         return cards.remove(cards.size() - 1);
     }
 
-    // Lägger till ett kort i kortleken
+    // Adds a card to the pile
     public void add_card(Card new_card) {
         cards.add(new_card);
     }
 
-    // Returnerar antalet kort i kortleken
+    // Returns the number of cards in the pile
     public int size() {
         return cards.size();
     }
 
-    // Blanda befintliga kort i kortleken
+    // Shuffle existing cards in the pile
     public void shuffle_deck() {
         Collections.shuffle(cards);
     }

@@ -7,9 +7,8 @@ public class PlayerAction {
     private String suit;
 
     /**
-     * En playerAction representerar en handling som en spelare kan utföra under
-     * sitt tur i spelet.
-     * Används som argument i GameStrategy.handleTurn-metoden och vidare i exempelsvis GoFishRules.
+     * A PlayerAction represents an action a player can take during their turn.
+     * Used as an argument in GameStrategy.handleTurn and, for example, in GoFishRules.
      */
 
     public PlayerAction(int playerIndex, String actionType, String rank, String suit) {

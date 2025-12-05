@@ -4,7 +4,7 @@ import TDA367.CardGame.model.card_logic.Card;
 import java.util.List;
 
 /**
- * Interface för en spelare i kortspelet.
+ * Interface for a player in the card game.
  */
 
 public interface IPlayer {

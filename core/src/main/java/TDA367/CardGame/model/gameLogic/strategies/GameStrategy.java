@@ -4,21 +4,21 @@ import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
 
 /**
- * Interface för ett regelverk för olika kortspel. Används av GoFishRules och kan implementeras för andra spel.
+ * Interface for a rule set for different card games. Used by GoFishRules and can be implemented for other games.
  */
 
 public interface GameStrategy {
-    /**  
-     * Initialiserar spelet mha av ett GameState, t.ex. delar ut kort till spelare. 
+    /**
+     * Initializes the game using a GameState, e.g., deals cards to players.
      */
     void setup(GameState state);    
-    /** 
-    * Tar input från klassen PlayerAction och uppdaterar GameState baserat på spelets regler.
-    */
+    /**
+     * Takes input from PlayerAction and updates the GameState according to the game's rules.
+     */
     void handleTurn(GameState state, PlayerAction action);  
     int getCurrentPlayerIndex();
-    /**  
-     * Kallas på via GameController efter varje spelrunda för att kolla om spelet är slut. 
-     * */
+    /**
+     * Called by GameController after each round to check whether the game is over.
+     */
     boolean isGameOver(GameState state);    
 }
