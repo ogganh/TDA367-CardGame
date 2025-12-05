@@ -1,0 +1,408 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide circle
+
+class Main {
+  ~gameController: GameController
+  --
+  +create(): void
+  +render(): void
+  +dispose(): void
+  +resize(width: int, height: int): void
+}
+
+class RulesView {
+  -text: Text
+}
+
+class GameSelectView {
+  ~mainView: MainView
+  ~row: Row = new Row(new Vector2(ViewInformation.screenSize.x / 4, 3 * ViewInformation.screenSize.y / 4), 100)
+  --
+  +GameSelectView(mainView: MainView)
+  +CreateView(): void
+  +Update(): void
+  +UpdateState(): void
+  +MouseUpdate(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+}
+
+class EndScoreView {
+  -state: GameState
+  -view: MainView
+  -menu: Button
+  -columnSpace: int = 40
+  -rowSpace: int = 100
+  --
+  +EndScoreView(state: GameState, mainView: MainView)
+  +CreateView(): void
+  +Update(): void
+  +UpdateState(): void
+  +MouseUpdate(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+}
+
+class StartView {
+  ~screenWidth: float = ViewInformation.screenSize.x
+  ~screenHeight: float = ViewInformation.screenSize.y
+  ~mainView: MainView
+  --
+  +StartView(mainView: MainView)
+  +CreateView(): void
+  +Update(): void
+  +UpdateState(): void
+  +MouseUpdate(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+}
+
+class GoFish {
+  -cardHand: CardHand = new CardHand()
+  -opponentHands: List<OpponentHand> = new ArrayList<>()
+  -thePond: List<Sprite> = new ArrayList<>()
+  -btn: Button
+  -rules: Button
+  ~screenWidth: float = ViewInformation.screenSize.x
+  ~screenHeight: float = ViewInformation.screenSize.y
+  ~mousePosition: Vector2 = new Vector2(0, 0)
+  ~state: GameState
+  ~controller: GameController
+  ~mainView: MainView
+  ~conversion: CardConversion
+  ~sound: Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"))
+  ~bell: Sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"))
+  ~currentPlayer: int = -1
+  --
+  +GoFish(state: GameState, controller: GameController, mainView: MainView)
+  +CreateView(): void
+  +Update(): void
+  +UpdateState(): void
+  +MouseUpdate(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+}
+
+class MiddleScreen {
+  ~state: GameState
+  ~controller: GameController
+  ~screenWidth: float = ViewInformation.screenSize.x
+  ~screenHeight: float = ViewInformation.screenSize.y
+  ~buttons: Column
+  --
+  +MiddleScreen(state: GameState, controller: GameController)
+  +CreateView(): void
+  +Update(): void
+  +UpdateState(): void
+  +MouseUpdate(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+}
+
+class MainView {
+  +currentView: ViewInterface
+  ~viewPort: FitViewport
+  -controller: GameController
+  -state: GameState
+  --
+  +MainView(viewPort: FitViewport, state: GameState, controller: GameController)
+  +StartView(): void
+  +GoFish(): void
+  +Rules(): void
+  +MiddleScreen(): void
+  +GameSelect(): void
+  +EndScreen(): void
+  +Update(): void
+  +UpdateState(): void
+  +Draw(batch: SpriteBatch): void
+}
+
+interface ViewInterface {
+  ~CreateView(): void
+  ~Update(): void
+  ~UpdateState(): void
+  ~MouseUpdate(mousePosition: Vector2): void
+  ~Draw(batch: SpriteBatch): void
+}
+
+interface UIElement {
+  ~Draw(batch: SpriteBatch): void
+  ~MouseUpdate(mousePos: Vector2): void
+}
+
+abstract class UIElementFactory {
+  +{static} CreateText(font: BitmapFont, text: String): UIElement
+  +{static} CreateCard(sprite: Sprite, index: int): UIElement
+  +{static} CreateRow(position: Vector2, width: int): UIElement
+  +{static} CreateColumn(position: Vector2, height: int): UIElement
+}
+
+class Button {
+  ~font: BitmapFont
+  ~text: String
+  ~position: Vector2
+  ~layout: GlyphLayout
+  ~sprite: Sprite
+  ~hovering: boolean = false
+  ~action: ButtonAction
+  --
+  +Button(font: BitmapFont, text: String, sprite: Sprite)
+  +Hover(mousePos: Vector2): void
+  +Draw(batch: SpriteBatch): void
+  +MouseUpdate(mousePos: Vector2): void
+  +Click(): void
+  +ChangeAction(action: ButtonAction): void
+}
+
+class Card {
+  -sprite: Sprite
+  -index: int
+  --
+  +Card(sprite: Sprite, index: int)
+  +Draw(batch: SpriteBatch): void
+  +LerpPosition(x: float, y: float): void
+  +MouseUpdate(mousePos: Vector2): void
+}
+
+class CardHand {
+  ~cardHand: List<Card> = new ArrayList<>()
+  ~oldHand: List<Card> = new ArrayList<>()
+  ~lastHovered: int
+  ~hovered: int
+  ~selected: int
+  ~atlas: Texture = ViewInformation.cardAtlas
+  ~outline: Sprite = new Sprite(atlas, 624, 64, 64, 80)
+  --
+  +CardHand()
+  +Update(mousePosition: Vector2): void
+  +Draw(batch: SpriteBatch): void
+  +AddCard(index: int, startPosition: Vector2): void
+  +ResetHand(): void
+  +NextPlayer(): void
+  +SelectCard(): void
+  -CardsXPosition(amountOfCards: int, index: int): float
+}
+
+class OpponentHand {
+  ~opponentHand: List<UIElement> = new ArrayList<>()
+  --
+  +Update(amountOfCards: int): void
+  +Draw(batch: SpriteBatch): void
+  +ResetHand(): void
+  ~CardsXPosition(amountOfCards: int, index: int): float
+}
+
+abstract class ButtonAction {
+  +Action(): void
+}
+
+class Text {
+  ~font: BitmapFont
+  ~text: String
+  ~position: Vector2
+  ~layout: GlyphLayout
+  --
+  +Text(font: BitmapFont, text: String)
+  +Draw(batch: SpriteBatch): void
+  +MouseUpdate(mousePos: Vector2): void
+}
+
+class GameController {
+  -viewport: FitViewport = new FitViewport(1980 / 4, 1080 / 4)
+  -view: MainView
+  -spriteBatch: SpriteBatch
+  -gameContext: GameContext
+  -gameState: GameState = new GameState()
+  --
+  +GameController()
+  +handleAction(sourcePlayerIndex: int, action: String, rank: String, suit: String): void
+  +update(): void
+  +dispose(): void
+}
+
+class TurnManager {
+  -current_p_index: int = 0
+  -playerCount: int
+  --
+  +TurnManager(playerCount: int)
+  +next(): void
+}
+
+interface GameStrategy {
+  ~setup(state: GameState): void
+  ~handleTurn(state: GameState, action: PlayerAction): void
+  ~isGameOver(state: GameState): boolean
+}
+
+class GoFishRules {
+  -players: List<GoFishUserPlayer>
+  -deck: CardDeck
+  -turnManager: TurnManager
+  -state: GameState
+  --
+  +GoFishRules(players: List<? extends UserPlayer>, deck: CardDeck)
+  +setup(state: GameState): void
+  +handleTurn(state: GameState, action: PlayerAction): void
+  +isGameOver(state: GameState): boolean
+  +endTurn(): void
+  +endGame(): void
+  -refillAndEndTurnIfEmpty(player: GoFishUserPlayer): boolean
+  +handleTurn(opponentIndex: int, requestedRank: Rank): void
+}
+
+class GameContext {
+  -rules: GameStrategy
+  -state: GameState
+  --
+  +GameContext(state: GameState, rules: GameStrategy)
+  +setup(): void
+  +handleTurn(action: PlayerAction): void
+  +isGameOver(): boolean
+}
+
+class GoFishUserPlayer {
+  -points: int
+  --
+  +GoFishUserPlayer(name: String)
+  +inc_points(): void
+  +add_card(card: Card): void
+  +has_rank(rank: String): boolean
+  +give_cards(rank: String): List<Card>
+  +collect_books(): void
+}
+
+interface IPlayer {
+  ~add_card(card: Card): void
+  ~remove_card(card: Card): void
+}
+
+abstract class UserPlayer {
+  -name: String
+  #hand: List<Card>
+  --
+  +UserPlayer(name: String)
+  +add_card(card: Card): void
+  +remove_card(card: Card): void
+}
+
+class Card {
+  -suit: String
+  -rank: String
+  --
+  ~Card(suit: String, rank: String)
+}
+
+interface PlayableStackInterface {
+  +remove_card(): Card
+  +add_card(new_card: Card): void
+  +size(): int
+}
+
+class CardDeck {
+  -DECK_SIZE: int = 52
+  --
+  +CardDeck()
+  -initialize_deck(): void
+  +isEmpty(): boolean
+}
+
+abstract class AbstractCardPile {
+  ~cards: ArrayList<Card>
+  --
+  +remove_card(): Card
+  +add_card(new_card: Card): void
+  +size(): int
+  +shuffle_deck(): void
+  +peak(): Card
+}
+
+class GameState {
+  -piles: Map<String, CardDeck> = new HashMap<>()
+  -players: List<UserPlayer> = new ArrayList<>()
+  -currentPlayer: int = 0
+  -middleScreen: boolean = false
+  --
+  +addPile(name: String, pile: CardDeck): void
+  +addPlayer(player: UserPlayer): void
+  +closeMiddleScreen(): void
+  +openMiddleScreen(): void
+  +isMiddleScreenOpen(): boolean
+  +reset(): void
+}
+
+class PlayerAction {
+  -playerIndex: int
+  -actionType: String
+  -rank: String
+  -suit: String
+  --
+  +PlayerAction(playerIndex: int, actionType: String, rank: String, suit: String)
+}
+
+Main --> GameController
+RulesView ..|> ViewInterface
+RulesView *-- Text
+RulesView *-- Button
+RulesView *-- MainView
+GameSelectView ..|> ViewInterface
+GameSelectView --> MainView
+GameSelectView --> Row
+EndScoreView ..|> ViewInterface
+EndScoreView *-- GameState
+EndScoreView *-- MainView
+EndScoreView *-- Column
+EndScoreView *-- Button
+StartView ..|> ViewInterface
+StartView o-- Column
+StartView --> MainView
+GoFish ..|> ViewInterface
+GoFish *-- CardHand
+GoFish o-- OpponentHand
+GoFish *-- Column
+GoFish *-- Button
+GoFish --> GameState
+GoFish --> GameController
+GoFish --> MainView
+GoFish --> CardConversion
+MiddleScreen ..|> ViewInterface
+MiddleScreen --> GameState
+MiddleScreen --> GameController
+MiddleScreen o-- Column
+MainView --> ViewInterface
+MainView *-- GameController
+MainView *-- GameState
+UIElementFactory ..> UIElement
+Row ..|> UIElement
+Row o-- UIElement
+Button ..|> UIElement
+Button --> ButtonAction
+Card ..|> UIElement
+CardHand o-- Card
+OpponentHand o-- UIElement
+Text ..|> UIElement
+Panel o-- UIElement
+Column ..|> UIElement
+Column o-- UIElement
+GameController *-- MainView
+GameController *-- GameContext
+GameController *-- GameState
+GameStrategy ..> GameState
+GameStrategy ..> PlayerAction
+GoFishRules ..|> GameStrategy
+GoFishRules o-- GoFishUserPlayer
+GoFishRules *-- CardDeck
+GoFishRules *-- TurnManager
+GoFishRules *-- GameState
+GoFishRules ..> PlayerAction
+GameContext *-- GameStrategy
+GameContext *-- GameState
+GameContext ..> PlayerAction
+GameContext ..> UserPlayer
+GoFishUserPlayer --|> UserPlayer
+GoFishUserPlayer ..> Card
+IPlayer ..> Card
+UserPlayer ..|> IPlayer
+UserPlayer o-- Card
+PlayableStackInterface ..> Card
+CardDeck --|> AbstractCardPile
+CardDeck ..|> PlayableStackInterface
+AbstractCardPile o-- Card
+GameState o-- CardDeck
+GameState o-- UserPlayer
+@enduml
