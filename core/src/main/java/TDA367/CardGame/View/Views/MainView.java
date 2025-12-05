@@ -1,6 +1,7 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.Views.Games.GoFish;
+import TDA367.CardGame.View.Views.Menus.EndScoreView;
 import TDA367.CardGame.View.Views.Menus.GameSelectView;
 import TDA367.CardGame.View.Views.Menus.StartView;
 import TDA367.CardGame.controller.GameController;
@@ -43,7 +44,7 @@ public class MainView {
         currentView.CreateView();
     }
     public void GoFish(){
-        currentView = new GoFish(state, controller);
+        currentView = new GoFish(state, controller, this);
         currentView.CreateView();
         currentView.UpdateState();
 
@@ -60,6 +61,11 @@ public class MainView {
         currentView = new GameSelectView(this);
         currentView.CreateView();
     }
+    public void EndScreen(){
+        currentView = new EndScoreView(state, this);
+        currentView.CreateView();
+    }
+
     /**
      * Core logic loop, runs every frame.
      * Updates the mouse position and passes it to the current view.

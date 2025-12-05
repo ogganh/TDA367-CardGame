@@ -5,12 +5,14 @@ import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.UI.cards.OpponentHand;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.CardConversion;
+import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.View.Views.ViewType;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,6 +38,7 @@ public class GoFish implements ViewInterface {
 
     GameState state;
     GameController controller;
+    MainView mainView;
     CardConversion conversion;
 
     // Temp ljud test
@@ -43,9 +46,10 @@ public class GoFish implements ViewInterface {
     Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
 
-    public GoFish(GameState state, GameController controller) {
+    public GoFish(GameState state, GameController controller, MainView mainView) {
         this.state = state;
         this.controller = controller;
+        this.mainView = mainView;
         conversion = new CardConversion();
     }
 
@@ -95,7 +99,7 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void Update() {
-        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) UpdateState();
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.Update(mousePosition);
         if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
     }
