@@ -56,7 +56,7 @@ public class GoFish implements ViewInterface {
     }
 
     @Override
-    public void CreateView() {
+    public void createView() {
         background = new Texture("textures/background.png");
 
         // Creates the pond
@@ -79,19 +79,19 @@ public class GoFish implements ViewInterface {
                 new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
         // Add a "on click" function to the guess button
-        btn.ChangeAction(new ButtonAction() {
+        btn.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
+            public void action() {
                 // Send the input to the controller if a card is selected
-                if (cardHand.GetSelectIndex() > -1) {
-                    controller.handleAction((state.GetCurrentPlayer() + 1) % state.getPlayers().size(), "",
-                            conversion.IntToRank(cardHand.GetSelectedCard()), conversion.IntToSuit(cardHand.GetSelectedCard()));
+                if (cardHand.getSelectIndex() > -1) {
+                    controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
+                            conversion.intToRank(cardHand.getSelectedCard()), conversion.intToSuit(cardHand.getSelectedCard()));
                 }
             }
         });
 
-        btn.SetScale(5, 3);
-        buttons.AddUIElement(btn);
+        btn.setScale(5, 3);
+        buttons.addUIElement(btn);
 
         // Create rules button
         rules = new Button(
@@ -100,14 +100,14 @@ public class GoFish implements ViewInterface {
             new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480));
 
         // Add a "on click" function to the guess button
-        rules.ChangeAction(new ButtonAction() {
+        rules.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
-                mainView.Rules();
+            public void action() {
+                mainView.rules();
             }
         });
-        rules.SetPosition(100,ViewInformation.screenSize.y -40);
-        rules.SetScale(0.1f, 0.1f);
+        rules.setPosition(100,ViewInformation.screenSize.y -40);
+        rules.setScale(0.1f, 0.1f);
 
         for (int i = 0; i < state.getPlayers().size() -1; i++) {
             opponentHands.add(new OpponentHand());
@@ -116,32 +116,32 @@ public class GoFish implements ViewInterface {
 
 
     @Override
-    public void Update() {
+    public void update() {
         //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
-        cardHand.Update(mousePosition);
+        cardHand.update(mousePosition);
         if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
     }
     int currentPlayer = -1;
     @Override
-    public void UpdateState(){
-        if (state.GetCurrentPlayer() != currentPlayer) {
-            cardHand.NextPlayer();
+    public void updateState(){
+        if (state.getCurrentPlayer() != currentPlayer) {
+            cardHand.nextPlayer();
         }
 
         // Temp ljud test
-        if (state.GetCurrentPlayer() == currentPlayer) {
+        if (state.getCurrentPlayer() == currentPlayer) {
             bell.play();
         }
 
         //update player hand
-        cardHand.ResetHand();
+        cardHand.resetHand();
 
         // TODO: Viewn ska inte ha kontakt med UserPlayer
-        int size = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().size();
+        int size = state.getPlayers().get(state.getCurrentPlayer()).getHand().size();
         for (int i = 0; i < size; i++) {
-            String rank = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getRank();
-            String suit = state.getPlayers().get(state.GetCurrentPlayer()).get_hand().get(i).getSuit();
-            cardHand.AddCard(conversion.CardToInt(suit, rank),
+            String rank = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getRank();
+            String suit = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getSuit();
+            cardHand.addCard(conversion.cardToInt(suit, rank),
                 new Vector2(ViewInformation.screenSize.x/2,ViewInformation.screenSize.y/2));
         }
 
@@ -149,40 +149,40 @@ public class GoFish implements ViewInterface {
         sound.play();
 
 
-        currentPlayer = state.GetCurrentPlayer();
+        currentPlayer = state.getCurrentPlayer();
 
         // Update opponents hands
-        opponentHands.get(0).ResetHand();
+        opponentHands.get(0).resetHand();
 
-        opponentHands.get(0).Update(state.getPlayers().get((state.GetCurrentPlayer() + 1) % 2).get_hand().size());
+        opponentHands.get(0).update(state.getPlayers().get((state.getCurrentPlayer() + 1) % 2).getHand().size());
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
+    public void mouseUpdate(Vector2 mousePosition) {
         this.mousePosition = mousePosition;
-        buttons.MouseUpdate(mousePosition);
-        if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.SelectCard();
-        rules.MouseUpdate(mousePosition);
+        buttons.mouseUpdate(mousePosition);
+        if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.selectCard();
+        rules.mouseUpdate(mousePosition);
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         batch.draw(background,0,0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
 
         for (int i = 0; i < thePond.size(); i++) {
             thePond.get(i).draw(batch);
         }
         for (int i = 0; i < opponentHands.size(); i++) {
-            opponentHands.get(i).Draw(batch);
+            opponentHands.get(i).draw(batch);
         }
 
-        cardHand.Draw(batch);
+        cardHand.draw(batch);
 
-        buttons.Draw(batch);
-        rules.Draw(batch);
+        buttons.draw(batch);
+        rules.draw(batch);
 
 
-        int CurrentIndex = state.GetCurrentPlayer(); // hämtar index för nuvarande spelare från game state
+        int CurrentIndex = state.getCurrentPlayer(); // hämtar index för nuvarande spelare från game state
         int OpponentIndex = (CurrentIndex+1) % 2; // hämtar index för motståndaren
 
         String CurrentPlayerText = "Player " + (CurrentIndex+1); //text för att visa nuvarande spelare

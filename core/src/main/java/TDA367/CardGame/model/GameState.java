@@ -25,7 +25,7 @@ public class GameState {
     public void addPlayer(UserPlayer player) {
         players.add(player);
     }
-    public void SetCurrentPlayer(int player){ currentPlayer = player;}
+    public void setCurrentPlayer(int player){ currentPlayer = player;}
 
     public void closeMiddleScreen() { middleScreen = false; }
     public void openMiddleScreen() { middleScreen = true; }
@@ -37,11 +37,11 @@ public class GameState {
     public List<UserPlayer> getPlayers() {
         return players;
     }
-    public int GetCurrentPlayer(){return currentPlayer;}
+    public int getCurrentPlayer(){return currentPlayer;}
     public int getBookCount(int playerIndex) {
         UserPlayer p = players.get(playerIndex);
         if (p instanceof GoFishUserPlayer) {
-            return ((GoFishUserPlayer) p).get_points(); // returns the number of books a player has
+            return ((GoFishUserPlayer) p).getPoints(); // returns the number of books a player has
         }
         return 0;
     }

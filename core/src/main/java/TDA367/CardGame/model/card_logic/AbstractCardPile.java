@@ -13,7 +13,7 @@ public abstract class AbstractCardPile {
 
     // Removes and returns the top card of the pile, or null if
     // the pile is empty
-    public Card remove_card() {
+    public Card removeCard() {
         if (cards.size() == 0) {
             return null;
         }
@@ -21,8 +21,8 @@ public abstract class AbstractCardPile {
     }
 
     // Adds a card to the pile
-    public void add_card(Card new_card) {
-        cards.add(new_card);
+    public void addCard(Card newCard) {
+        cards.add(newCard);
     }
 
     // Returns the number of cards in the pile
@@ -31,11 +31,11 @@ public abstract class AbstractCardPile {
     }
 
     // Shuffle existing cards in the pile
-    public void shuffle_deck() {
+    public void shuffleDeck() {
         Collections.shuffle(cards);
     }
 
-    public Card peak(){
+    public Card peek(){
         if (cards.size() == 0) {
             return null;
         }

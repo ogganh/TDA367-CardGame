@@ -62,23 +62,23 @@ public class GameController {
     public void setCurrentView(ViewType viewType) {
         switch (viewType) {
             case START:
-                view.StartView();
+                view.startView();
                 break;
             case GO_FISH:
-                view.GoFish();
+                view.goFish();
                 break;
             case RULES:
-                view.Rules();
+                view.rules();
                 break;
             case MIDDLE_SCREEN:
-                view.MiddleScreen();
+                view.middleScreen();
                 break;
             case GAME_SELECT:
-                view.GameSelect();
+                view.gameSelect();
                 break;
 
             case END_SCORE:
-                view.EndScreen();
+                view.endScreen();
                 break;
         }
     }
@@ -93,7 +93,7 @@ public class GameController {
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
         gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
 
-        view.UpdateState();
+        view.updateState();
 
 
     }
@@ -110,7 +110,7 @@ public class GameController {
 
         }
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        view.Draw(spriteBatch);
+        view.draw(spriteBatch);
     }
 
     /**

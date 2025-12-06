@@ -35,14 +35,14 @@ public class CardHand {
      * <br></br>
      * Places the opponents hand
      */
-    public void Update(Vector2 mousePosition){
+    public void update(Vector2 mousePosition){
         hovered = -1;
         for (int i = 0; i < cardHand.size(); i++) {
             float xPos = CardsXPosition(cardHand.size(), i);
 
             if (mousePosition.y < ViewInformation.cardHeight) {
                 if (i == cardHand.size() - 1) {
-                    if (mousePosition.x > xPos && mousePosition.x < xPos + cardHand.get(i).GetSize().x) {
+                    if (mousePosition.x > xPos && mousePosition.x < xPos + cardHand.get(i).getSize().x) {
                         hovered = i;
                     }
                 } else {
@@ -53,7 +53,7 @@ public class CardHand {
             }
 
             if (i == hovered) {
-                cardHand.get(i).LerpPosition(
+                cardHand.get(i).lerpPosition(
                     xPos,
                     ViewInformation.cardLift + ViewInformation.cardYPos
                 );
@@ -65,7 +65,7 @@ public class CardHand {
                 }
 
             } else {
-                cardHand.get(i).LerpPosition(
+                cardHand.get(i).lerpPosition(
                     xPos, ViewInformation.cardYPos
                 );
             }
@@ -80,13 +80,13 @@ public class CardHand {
     /**
      * Draws the cards to the screen.
      * */
-    public void Draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch){
         for (int i = 0; i < cardHand.size(); i++) {
             if (selected == i) {
-                outline.setPosition(cardHand.get(i).GetPosition().x - 8, cardHand.get(i).GetPosition().y - 8);
+                outline.setPosition(cardHand.get(i).getPosition().x - 8, cardHand.get(i).getPosition().y - 8);
                 outline.draw(batch);
             }
-            cardHand.get(i).Draw(batch);
+            cardHand.get(i).draw(batch);
         }
     }
     /**
@@ -94,11 +94,11 @@ public class CardHand {
      * @param index The index of the card in texture.
      * @param startPosition The postition the card will appear from.
      * */
-    public void AddCard(int index, Vector2 startPosition) {
+    public void addCard(int index, Vector2 startPosition) {
 
         // Check if any cards have been removed
         for (Card card : oldHand) {
-            if (card.GetIndex() == index) {
+            if (card.getIndex() == index) {
                 cardHand.add(card);
                 return;
             }
@@ -107,34 +107,34 @@ public class CardHand {
         int y = index / 13;
         int x = index % 13;
         Card card = new Card(new Sprite(atlas, x * 48, y * 64, 48, 64), index);
-        card.SetPosition(startPosition.x, startPosition.y);
+        card.setPosition(startPosition.x, startPosition.y);
         cardHand.add(card);
 
     }
-    public void ResetHand() {
+    public void resetHand() {
         oldHand.addAll(cardHand);
         cardHand.clear();
     }
-    public void NextPlayer() {
+    public void nextPlayer() {
         oldHand.clear();
         cardHand.clear();
     }
-    public int GetSelectIndex(){
+    public int getSelectIndex(){
         return selected;
     }
-    public int GetSelectedCard() {
-        return cardHand.get(selected).GetIndex();
+    public int getSelectedCard() {
+        return cardHand.get(selected).getIndex();
     }
 
     /**
      * Selects the currently hovered card
      */
-    public void SelectCard(){
+    public void selectCard(){
         selected = hovered;
         SoundManager.playSelect();
     }
 
-    public List<Card> GetCards(){
+    public List<Card> getCards(){
         return cardHand;
     }
 

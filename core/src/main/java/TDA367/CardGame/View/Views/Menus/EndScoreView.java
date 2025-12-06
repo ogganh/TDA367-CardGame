@@ -26,7 +26,7 @@ public class EndScoreView implements ViewInterface {
     }
 
     @Override
-    public void CreateView() {
+    public void createView() {
         scores = new Column(new Vector2(
             ViewInformation.screenSize.x / 3,
             3 * ViewInformation.screenSize.y / 4 ), columnSpace);
@@ -37,21 +37,21 @@ public class EndScoreView implements ViewInterface {
 
         }
         Row row = new Row(new Vector2(0,0), rowSpace);
-        row.AddUIElement(new Text(ViewInformation.font, "Winner:"));
-        row.AddUIElement(new Text(ViewInformation.font, String.valueOf(winner +1)));
-        scores.AddUIElement(row);
+        row.addUIElement(new Text(ViewInformation.font, "Winner:"));
+        row.addUIElement(new Text(ViewInformation.font, String.valueOf(winner +1)));
+        scores.addUIElement(row);
 
-        Row titles = new Row(new Vector2(0,0), rowSpace);
-        titles.AddUIElement(new Text(ViewInformation.font, "Player"));
-        titles.AddUIElement(new Text(ViewInformation.font, "Books"));
-        scores.AddUIElement(titles);
+        Row titles = new Row(new Vector2(100,100), 100);
+        titles.addUIElement(new Text(ViewInformation.font, "Player"));
+        titles.addUIElement(new Text(ViewInformation.font, "Books"));
+        scores.addUIElement(titles);
 
 
         for (int i = 0; i < state.getPlayers().size(); i++) {
             row = new Row(new Vector2(0,0), rowSpace);
-            row.AddUIElement(new Text(ViewInformation.font, String.valueOf(i)));
-            row.AddUIElement(new Text(ViewInformation.font, String.valueOf(state.getBookCount(i))));
-            scores.AddUIElement(row);
+            row.addUIElement(new Text(ViewInformation.font, String.valueOf(i)));
+            row.addUIElement(new Text(ViewInformation.font, String.valueOf(state.getBookCount(i))));
+            scores.addUIElement(row);
         }
 
         menu = new Button(
@@ -59,36 +59,36 @@ public class EndScoreView implements ViewInterface {
             "Menu",
             new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
-        menu.ChangeAction(new ButtonAction() {
+        menu.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
-                view.StartView();
+            public void action() {
+                view.startView();
             }
         });
-        menu.SetScale(5,3);
-        menu.SetPosition(350, 50);
+        menu.setScale(5,3);
+        menu.setPosition(350, 50);
 
 
     }
 
     @Override
-    public void Update() {
+    public void update() {
 
     }
 
     @Override
-    public void UpdateState() {
+    public void updateState() {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
-        menu.MouseUpdate(mousePosition);
+    public void mouseUpdate(Vector2 mousePosition) {
+        menu.mouseUpdate(mousePosition);
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
-        scores.Draw(batch);
-        menu.Draw(batch);
+    public void draw(SpriteBatch batch) {
+        scores.draw(batch);
+        menu.draw(batch);
     }
 }

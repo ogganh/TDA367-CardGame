@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+/** View when "Rules" button is pressed. GoFish is hard coded. */
+
 public class RulesView implements ViewInterface {
     private Text text;
     private Button back;
@@ -21,7 +23,7 @@ public class RulesView implements ViewInterface {
     }
 
     @Override
-    public void CreateView() {
+    public void createView() {
 
         // Create Back button
         back = new Button(
@@ -30,15 +32,15 @@ public class RulesView implements ViewInterface {
             new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
         // Add a "on click" function to the back button
-        back.ChangeAction(new ButtonAction() {
+        back.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
-                mainView.GoFish();
+            public void action() {
+                mainView.goFish();
             }
         });
 
-        back.SetScale(3, 2);
-        back.SetPosition(30,ViewInformation.screenSize.y -20);
+        back.setScale(3, 2);
+        back.setPosition(30,ViewInformation.screenSize.y -20);
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
         txtFont.getData().setScale(0.3f);
@@ -68,28 +70,28 @@ public class RulesView implements ViewInterface {
                 "   - The game ends when the pond is empty and all sets have been collected.\n" +
                 "\n" +
                 "\n");
-        text.SetPosition(60, ViewInformation.screenSize.y - 20);
+        text.setPosition(60, ViewInformation.screenSize.y - 20);
 
     }
 
     @Override
-    public void Update() {
+    public void update() {
 
     }
 
     @Override
-    public void UpdateState() {
+    public void updateState() {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
-        back.MouseUpdate(mousePosition);
+    public void mouseUpdate(Vector2 mousePosition) {
+        back.mouseUpdate(mousePosition);
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
-        text.Draw(batch);
-        back.Draw(batch);
+    public void draw(SpriteBatch batch) {
+        text.draw(batch);
+        back.draw(batch);
     }
 }

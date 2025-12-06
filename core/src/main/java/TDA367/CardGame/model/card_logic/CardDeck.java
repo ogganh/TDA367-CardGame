@@ -17,13 +17,13 @@ public class CardDeck extends AbstractCardPile implements PlayableStackInterface
     // Constructor that creates and shuffles a new deck
     public CardDeck() {
         cards = new ArrayList<Card>(DECK_SIZE); // Create an empty deck
-        initialize_deck(); // Fill the deck with 52 cards
-        shuffle_deck(); // Shuffle the deck
+        initializeDeck(); // Fill the deck with 52 cards
+        shuffleDeck(); // Shuffle the deck
     }
 
     // Initialize the deck with 52 cards by combining all suits and
     // ranks
-    private void initialize_deck() {
+    private void initializeDeck() {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(new Card(suit.name(), rank.name()));

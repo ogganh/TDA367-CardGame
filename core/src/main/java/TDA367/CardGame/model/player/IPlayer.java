@@ -8,8 +8,8 @@ import java.util.List;
  */
 
 public interface IPlayer {
-    String get_name();
-    void add_card(Card card);
-    void remove_card(Card card);
-    List<Card> get_hand();
+    String getName();
+    void addCard(Card card);
+    void removeCard(Card card);
+    List<Card> getHand();
 }

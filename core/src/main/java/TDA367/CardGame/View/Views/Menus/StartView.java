@@ -30,7 +30,7 @@ public class StartView implements ViewInterface {
      * Initializes the start view. Creates a column currently containing a single start button
      */
     @Override
-    public void CreateView() {
+    public void createView() {
         ViewInformation.font.getData().setScale(0.5f);
 
         // Column containing buttons
@@ -43,15 +43,15 @@ public class StartView implements ViewInterface {
             new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
         // Add an "Action" to the button, a function that is run when clicked
-        startButton.ChangeAction(new ButtonAction() {
+        startButton.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
+            public void action() {
 //                mainView.getController().setupGame();
-//                mainView.GoFish();
-                mainView.GameSelect();
+//                mainView.goFish();
+                mainView.gameSelect();
             }
         });
-        startButton.SetScale(8,3);
+        startButton.setScale(8,3);
 
         Button quitButton = new Button(
             ViewInformation.font,
@@ -59,17 +59,17 @@ public class StartView implements ViewInterface {
             new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
         // Add an "Action" to the button, a function that is run when clicked
-        quitButton.ChangeAction(new ButtonAction() {
+        quitButton.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
+            public void action() {
                 Gdx.app.exit();
             }
         });
-        quitButton.SetScale(8,3);
+        quitButton.setScale(8,3);
 
         // Add the start button the column of buttons
-        buttons.AddUIElement(startButton);
-        buttons.AddUIElement(quitButton);
+        buttons.addUIElement(startButton);
+        buttons.addUIElement(quitButton);
 
     }
 
@@ -77,12 +77,12 @@ public class StartView implements ViewInterface {
      * No logic is required on a frame by frame basis in the start screen
      */
     @Override
-    public void Update() {
+    public void update() {
 
     }
 
     @Override
-    public void UpdateState() {
+    public void updateState() {
 
     }
 
@@ -90,15 +90,15 @@ public class StartView implements ViewInterface {
      * Get the mouse position from the MainView and pass it to the buttons.
      */
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
-        buttons.MouseUpdate(mousePosition);
+    public void mouseUpdate(Vector2 mousePosition) {
+        buttons.mouseUpdate(mousePosition);
     }
 
     /**
      * Render the button
      */
     @Override
-    public void Draw(SpriteBatch batch) {
-        buttons.Draw(batch);
+    public void draw(SpriteBatch batch) {
+        buttons.draw(batch);
     }
 }

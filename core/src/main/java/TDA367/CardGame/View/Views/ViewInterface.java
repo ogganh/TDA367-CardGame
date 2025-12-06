@@ -7,25 +7,25 @@ public interface ViewInterface {
     /**
      * Initialization of the view
      */
-    void CreateView();
+    void createView();
     /**
      * Logic loop
      */
-    void Update();
+    void update();
     /**
      * Updates the state
      */
-    void UpdateState();
+    void updateState();
     /**
      * Handles mouse movement
      * @param mousePosition
      */
-    void MouseUpdate(Vector2 mousePosition);
+    void mouseUpdate(Vector2 mousePosition);
     /**
      * Render loop
      * @param batch
      */
-    void Draw(SpriteBatch batch);
+    void draw(SpriteBatch batch);
     /**
      *
      */

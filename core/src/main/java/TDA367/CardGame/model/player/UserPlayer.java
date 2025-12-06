@@ -18,22 +18,22 @@ public abstract class UserPlayer implements IPlayer{
     }
 
     @Override
-    public String get_name(){
+    public String getName(){
         return this.name;
     }
 
-    public void add_card(Card card){
+    public void addCard(Card card){
         if (card != null){
             this.hand.add(card);
         }
     }
 
-    public void remove_card(Card card){
+    public void removeCard(Card card){
         if (card != null){
             this.hand.remove(card);
         }
     }
-    public List<Card> get_hand(){
+    public List<Card> getHand(){
         return new ArrayList<>(this.hand);
     }
 

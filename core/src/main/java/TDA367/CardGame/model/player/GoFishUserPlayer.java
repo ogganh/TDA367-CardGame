@@ -21,19 +21,19 @@ public class GoFishUserPlayer extends UserPlayer {
         this.points = 0;
     }
 
-    public void inc_points() {
+    public void incPoints() {
         this.points++;
     }
 
-    public int get_points() {
+    public int getPoints() {
         return this.points;
     }
 
-    public void add_card(Card card) {
-        super.add_card(card);
+    public void addCard(Card card) {
+        super.addCard(card);
     }
 
-    public boolean has_rank(String rank) {
+    public boolean hasRank(String rank) {
         for (Card card : this.hand) {
             if (card.getRank().equals(rank)) {
                 return true;
@@ -42,23 +42,23 @@ public class GoFishUserPlayer extends UserPlayer {
         return false;
     }
 
-    public List<Card> give_cards(String rank) {
-        List<Card> cards_same_rank = new ArrayList<>();
-        List<Card> remove_from_hand = new ArrayList<>();
+    public List<Card> giveCards(String rank) {
+        List<Card> cardsSameRank = new ArrayList<>();
+        List<Card> removeFromHand = new ArrayList<>();
 
         for (Card card : this.hand) {
             if (card.getRank().equals(rank)) {
-                cards_same_rank.add(card);
-                remove_from_hand.add(card);
+                cardsSameRank.add(card);
+                removeFromHand.add(card);
             }
         }
-        for (Card card : remove_from_hand) {
+        for (Card card : removeFromHand) {
             this.hand.remove(card);
         }
-        return cards_same_rank;
+        return cardsSameRank;
     }
 
-    public void collect_books() {
+    public void collectBooks() {
         List<String> ranksChecked = new ArrayList<>();
         for (Card card : new ArrayList<>(this.hand)) { // iterate over a copy
             String rank = card.getRank();
@@ -68,14 +68,14 @@ public class GoFishUserPlayer extends UserPlayer {
                 if (count == 4) {
                     // Remove all cards of this rank safely
                     this.hand.removeIf(c -> c.getRank().equals(rank));
-                    this.inc_points();
-                    Gdx.app.log("GoFishUserPlayer", this.get_name() + " collected a book of " + rank + "s. Total points: " + this.get_points());
+                    this.incPoints();
+                    Gdx.app.log("GoFishUserPlayer", this.getName() + " collected a book of " + rank + "s. Total points: " + this.getPoints());
                 }
             }
         }
     }
 
-    public List<Card> get_hand() {
-        return super.get_hand();
+    public List<Card> getHand() {
+        return super.getHand();
     }
 }

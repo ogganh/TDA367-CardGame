@@ -19,59 +19,59 @@ public class Row implements UIElement{
         this.position = position;
     }
 
-    public void AddUIElement(UIElement element){
+    public void addUIElement(UIElement element){
         UIElements.add(element);
-        SpaceElements();
+        spaceElements();
     }
-    public void AddUIElement(List<UIElement> elementList){
+    public void addUIElement(List<UIElement> elementList){
         UIElements.addAll(elementList);
-        SpaceElements();
+        spaceElements();
     }
-    private void SpaceElements(){
+    private void spaceElements(){
         //int widthMargin = spaceBetween / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).SetPosition(position.x + spaceBetween * i, position.y);
+            UIElements.get(i).setPosition(position.x + spaceBetween * i, position.y);
         }
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         for (UIElement uiElement : UIElements) {
-            uiElement.Draw(batch);
+            uiElement.draw(batch);
         }
     }
 
     @Override
-    public void SetPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         position = new Vector2(x,y);
-        SpaceElements();
+        spaceElements();
     }
 
     @Override
-    public Vector2 GetPosition() {
+    public Vector2 getPosition() {
         return position;
     }
 
     @Override
-    public Vector2 GetSize() {
+    public Vector2 getSize() {
         return null;
     }
 
     @Override
-    public void SetOrigin(float x, float y) {
+    public void setOrigin(float x, float y) {
 
     }
 
     @Override
-    public void SetRotation(float angle) {
+    public void setRotation(float angle) {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePos) {
+    public void mouseUpdate(Vector2 mousePos) {
         for (UIElement uiElement : UIElements) {
-            uiElement.MouseUpdate(mousePos);
+            uiElement.mouseUpdate(mousePos);
         }
     }
 }

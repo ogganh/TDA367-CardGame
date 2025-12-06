@@ -1,5 +1,5 @@
 package TDA367.CardGame.View.UI;
 
 public abstract class ButtonAction {
-    public void Action(){}
+    public void action(){}
 }

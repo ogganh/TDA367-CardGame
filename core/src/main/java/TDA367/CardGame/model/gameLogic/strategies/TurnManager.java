@@ -15,7 +15,7 @@ public class TurnManager {
         this.playerCount = playerCount;
     }
 
-    public int GetCurrentIndex(){
+    public int getCurrentIndex(){
         return current_p_index;
     }
 

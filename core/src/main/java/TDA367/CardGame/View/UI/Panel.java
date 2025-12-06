@@ -20,29 +20,29 @@ public class Panel {
 
         UIElements = new ArrayList<>();
     }
-    public void AddUIElement(UIElement element){
+    public void addUIElement(UIElement element){
         UIElements.add(element);
-        SpaceElements();
+        spaceElements();
     }
-    public void AddUIElement(List<UIElement> elementList){
+    public void addUIElement(List<UIElement> elementList){
         UIElements.addAll(elementList);
-        SpaceElements();
+        spaceElements();
     }
-    private void SpaceElements(){
+    private void spaceElements(){
         int amountElements = UIElements.size();
         int heightMargin = height / amountElements;
         int widthMargin = width / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
-            UIElements.get(i).SetPosition(position.x + widthMargin * i, position.y + heightMargin * i);
+            UIElements.get(i).setPosition(position.x + widthMargin * i, position.y + heightMargin * i);
         }
     }
-    public void SetPosition(int x, int y){
+    public void setPosition(int x, int y){
         position = new Vector2(x,y);
     }
-    public void Draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch){
         for (UIElement uiElement : UIElements) {
-            uiElement.Draw(batch);
+            uiElement.draw(batch);
         }
     }
 }

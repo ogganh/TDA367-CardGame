@@ -39,20 +39,20 @@ public class GoFishRules implements GameStrategy {
     @Override
     public void setup(GameState state) {
         this.state = state;
-        deck.shuffle_deck();
-        int cards_per_player = 7; // Standard: 7 kort per spelare
+        deck.shuffleDeck();
+        int cardsPerPlayer = 7; // Standard: 7 kort per spelare
 
-        for (int i = 0; i < cards_per_player; i++) { // Initial utdelning
+        for (int i = 0; i < cardsPerPlayer; i++) { // Initial utdelning
             for (GoFishUserPlayer player : players) {
                 if (!deck.isEmpty()) {
-                    Card drawn = deck.remove_card();
-                    player.add_card(drawn);
+                    Card drawn = deck.removeCard();
+                    player.addCard(drawn);
                 }
             }
         }
 
         for (GoFishUserPlayer player : players) { // Kolla efter initiala books
-            player.collect_books();
+            player.collectBooks();
         }
     }
 
@@ -60,7 +60,7 @@ public class GoFishRules implements GameStrategy {
     public void handleTurn(GameState state, PlayerAction action) {
         int opponentIndex = action.getPlayerIndex(); // Index för motståndaren
         Rank requestedRank = Rank.valueOf(action.getRank()); // Begärt rank
-        handleTurn(opponentIndex, requestedRank); // Hantera turen
+        handleTurnImpl(opponentIndex, requestedRank); // Hantera turen
     }
 
     @Override
@@ -71,7 +71,7 @@ public class GoFishRules implements GameStrategy {
         }
 
         for (GoFishUserPlayer p : players) {
-            if (p.get_hand().isEmpty()) { // Kontrollerar om minst spelare har tom hand
+            if (p.getHand().isEmpty()) { // Kontrollerar om minst spelare har tom hand
                 return true;
             }
         }
@@ -81,7 +81,7 @@ public class GoFishRules implements GameStrategy {
     public void endTurn() {
         state.openMiddleScreen();
         turnManager.next();
-        state.SetCurrentPlayer((state.GetCurrentPlayer()+1)%state.getPlayers().size());
+        state.setCurrentPlayer((state.getCurrentPlayer()+1)%state.getPlayers().size());
     }
 
     public void endGame() {
@@ -89,14 +89,14 @@ public class GoFishRules implements GameStrategy {
     }
 
     private boolean refillAndEndTurnIfEmpty(GoFishUserPlayer player) {
-        if (player.get_hand().isEmpty()) { // Om spelarens hand är tom
+        if (player.getHand().isEmpty()) { // Om spelarens hand är tom
             if (deck.isEmpty()) {
                 return false; // Inget att dra, turen fortsätter
             }
 
-            Card drawn = deck.remove_card(); // Dra ett kort från sjön
-            player.add_card(drawn); // Lägg till kortet i spelarens hand
-            player.collect_books(); // Kolla efter böcker
+            Card drawn = deck.removeCard(); // Dra ett kort från sjön
+            player.addCard(drawn); // Lägg till kortet i spelarens hand
+            player.collectBooks(); // Kolla efter böcker
 
             // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i vyn)
             endTurn();
@@ -106,8 +106,8 @@ public class GoFishRules implements GameStrategy {
     }
 
 
-    public void handleTurn(int opponentIndex, Rank requestedRank) {
-        int currentIndex = turnManager.GetCurrentIndex();
+    public void handleTurnImpl(int opponentIndex, Rank requestedRank) {
+        int currentIndex = turnManager.getCurrentIndex();
         GoFishUserPlayer current = players.get(currentIndex);
 
         if (opponentIndex == currentIndex) {
@@ -116,13 +116,13 @@ public class GoFishRules implements GameStrategy {
 
         GoFishUserPlayer opponent = players.get(opponentIndex);
 
-        if (opponent.has_rank(String.valueOf(requestedRank))) {
+        if (opponent.hasRank(String.valueOf(requestedRank))) {
 
-            List<Card> taken = opponent.give_cards(String.valueOf(requestedRank));
+            List<Card> taken = opponent.giveCards(String.valueOf(requestedRank));
             for (Card c : taken) {
-                current.add_card(c); // Ge kort till den aktiva spelaren om motståndaren har dem
+                current.addCard(c); // Ge kort till den aktiva spelaren om motståndaren har dem
             }
-            current.collect_books();
+            current.collectBooks();
 
 
             if (refillAndEndTurnIfEmpty(opponent)) { // Kolla motståndarens hand, ge kort om han är tom
@@ -139,9 +139,9 @@ public class GoFishRules implements GameStrategy {
         } else {
 
             if (!deck.isEmpty()) {
-                Card drawn = deck.remove_card();
-                current.add_card(drawn);
-                current.collect_books();
+                Card drawn = deck.removeCard();
+                current.addCard(drawn);
+                current.collectBooks();
 
                 if (refillAndEndTurnIfEmpty(current)){ // Kolla den aktiva spelarens hand, ge kort om han är tom
                     return;
@@ -152,13 +152,13 @@ public class GoFishRules implements GameStrategy {
     }
 
     // Vinstregler: Den med flest 4-tal (böcker) vinner, oavsett när spelet slutade.
-    public GoFishUserPlayer get_winner() {
+    public GoFishUserPlayer getWinner() {
         GoFishUserPlayer winner = null;
         int bestScore = -1;
         boolean tie = false;
 
         for (GoFishUserPlayer p : players) {
-            int score = p.get_points(); // Antal böcker
+            int score = p.getPoints(); // Antal böcker
 
             if (score > bestScore) {
                 bestScore = score;
@@ -177,6 +177,6 @@ public class GoFishRules implements GameStrategy {
     }
 
     public int getCurrentPlayerIndex() {
-        return turnManager.GetCurrentIndex();
+        return turnManager.getCurrentIndex();
     }
 }

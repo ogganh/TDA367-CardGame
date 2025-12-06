@@ -22,43 +22,43 @@ public class Text implements UIElement{
         //layout = new GlyphLayout(font, text);
     }
 
-    public void SetText(String text){
+    public void setText(String text){
         this.text = text;
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         font.setColor(new Color(255,255,255,255));
         font.draw(batch, text, position.x, position.y);
     }
 
     @Override
-    public void SetPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         position = new Vector2(x,y);
     }
 
     @Override
-    public Vector2 GetPosition() {
+    public Vector2 getPosition() {
         return null;
     }
 
     @Override
-    public Vector2 GetSize() {
+    public Vector2 getSize() {
         return null;
     }
 
     @Override
-    public void SetOrigin(float x, float y) {
+    public void setOrigin(float x, float y) {
 
     }
 
     @Override
-    public void SetRotation(float angle) {
+    public void setRotation(float angle) {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePos) {
+    public void mouseUpdate(Vector2 mousePos) {
 
     }
 }

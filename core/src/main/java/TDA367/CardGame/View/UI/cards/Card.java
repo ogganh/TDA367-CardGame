@@ -22,7 +22,7 @@ public class Card implements UIElement {
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
 
@@ -31,7 +31,7 @@ public class Card implements UIElement {
      * @param x - target x
      * @param y - target y
      * */
-    public void LerpPosition(float x, float y){
+    public void lerpPosition(float x, float y){
         Vector2 targetPosition = new Vector2(x,y);
         Vector2 direction = targetPosition.sub(sprite.getX(), sprite.getY());
         if (direction.len() <= ViewInformation.lerpSpeed) {
@@ -45,34 +45,34 @@ public class Card implements UIElement {
     }
 
     @Override
-    public void SetPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         // position, target position.
         sprite.setPosition(x,y);
     }
 
     @Override
-    public Vector2 GetPosition() {
+    public Vector2 getPosition() {
         return new Vector2(sprite.getX(), sprite.getY());
     }
 
     @Override
-    public Vector2 GetSize() {
+    public Vector2 getSize() {
         return new Vector2(sprite.getWidth(), sprite.getHeight());
     }
 
-    public void SetOrigin(float x, float y){
+    public void setOrigin(float x, float y){
         sprite.setOrigin(x,y);
     }
-    public void SetRotation(float angle){
+    public void setRotation(float angle){
         sprite.setRotation(angle);
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePos) {
+    public void mouseUpdate(Vector2 mousePos) {
 
     }
 
-    public int GetIndex(){
+    public int getIndex(){
         return index;
     }
 }

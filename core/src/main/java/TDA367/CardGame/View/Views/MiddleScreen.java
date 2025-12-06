@@ -28,7 +28,7 @@ public class MiddleScreen implements ViewInterface{
     }
 
     @Override
-    public void CreateView() {
+    public void createView() {
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
         Button btn = new Button(
             ViewInformation.font,
@@ -36,35 +36,34 @@ public class MiddleScreen implements ViewInterface{
             new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
         // Add a "on click" function to the guess button
-        btn.ChangeAction(new ButtonAction() {
+        btn.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
+            public void action() {
                 // Send the input to the controller if a card is selected
                 state.closeMiddleScreen();
                 controller.setCurrentView(ViewType.GO_FISH);
             }
         });
-        btn.SetScale(10, 10);
-        buttons.AddUIElement(btn);
+        btn.setScale(10, 10);
+        buttons.addUIElement(btn);
     }
 
     @Override
-    public void Update() {
-
-    }
-
-    @Override
-    public void UpdateState() {
+    public void update() {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
-        buttons.MouseUpdate(mousePosition);
+    public void updateState() {
+
+    }
+    @Override
+    public void mouseUpdate(Vector2 mousePosition) {
+        buttons.mouseUpdate(mousePosition);
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
-        buttons.Draw(batch);
+    public void draw(SpriteBatch batch) {
+        buttons.draw(batch);
     }
 }

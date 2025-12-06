@@ -15,7 +15,7 @@ public class CardPile implements PlayableStackInterface {
     }
 
     @Override
-    public Card remove_card() {
+    public Card removeCard() {
         if (cardsInHand.size() == 0) {
             return null;
         }
@@ -23,8 +23,8 @@ public class CardPile implements PlayableStackInterface {
     }
 
     @Override
-    public void add_card(Card new_card) {
-        cardsInHand.add(new_card);
+    public void addCard(Card newCard) {
+        cardsInHand.add(newCard);
     }
 
     @Override

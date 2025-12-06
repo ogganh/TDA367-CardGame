@@ -21,7 +21,7 @@ public class GameSelectView implements ViewInterface {
     }
 
     @Override
-    public void CreateView() {
+    public void createView() {
         Column temp;
         Button gofish = new Button(
             ViewInformation.font,
@@ -29,20 +29,20 @@ public class GameSelectView implements ViewInterface {
             new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
         );
         // Add an "Action" to the button, a function that is run when clicked
-        gofish.ChangeAction(new ButtonAction() {
+        gofish.changeAction(new ButtonAction() {
             @Override
-            public void Action() {
+            public void action() {
                 mainView.getController().setupGame();
-                mainView.GoFish();
+                mainView.goFish();
             }
         });
 
-        gofish.SetScale(5,3);
+        gofish.setScale(5,3);
 
         temp = new Column(new Vector2(0,0),20);
-        temp.AddUIElement(gofish);
+        temp.addUIElement(gofish);
 
-        row.AddUIElement(temp);
+        row.addUIElement(temp);
 /*         for (int i = 0; i < 2; i++) {
             temp = new Column(new Vector2(0,0),20);
             for (int j = 0; j < 5; j++) {
@@ -54,23 +54,23 @@ public class GameSelectView implements ViewInterface {
     }
 
     @Override
-    public void Update() {
+    public void update() {
 
     }
 
     @Override
-    public void UpdateState() {
+    public void updateState() {
 
     }
 
     @Override
-    public void MouseUpdate(Vector2 mousePosition) {
-        row.MouseUpdate(mousePosition);
+    public void mouseUpdate(Vector2 mousePosition) {
+        row.mouseUpdate(mousePosition);
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
-        //column.Draw(batch);
-        row.Draw(batch);
+    public void draw(SpriteBatch batch) {
+        //column.draw(batch);
+        row.draw(batch);
     }
 }

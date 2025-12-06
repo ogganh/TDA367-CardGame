@@ -14,26 +14,26 @@ public class OpponentHand {
     List<UIElement> opponentHand = new ArrayList<>();
 
 
-    public void Update(int amountOfCards){
+    public void update(int amountOfCards){
         opponentHand.clear();
         for (int i = 0; i < amountOfCards; i++) {
-            opponentHand.add(UIElementFactory.CreateCard(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight), -1));
+            opponentHand.add(UIElementFactory.createCard(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight), -1));
         }
 
         for (int i = 0; i < opponentHand.size(); i++) {
             float xPos = CardsXPosition(opponentHand.size(), i);
 
-            //opponentHand.get(i).SetOrigin(-pos.x + ViewInformation.screenSize.x / 2, -pos.y + ViewInformation.screenSize.y / 2);
-            //opponentHand.get(i).SetRotation(angle);
-            opponentHand.get(i).SetPosition(xPos, ViewInformation.screenSize.y - opponentHand.get(i).GetSize().y - ViewInformation.cardYPos);
+            //opponentHand.get(i).setOrigin(-pos.x + ViewInformation.screenSize.x / 2, -pos.y + ViewInformation.screenSize.y / 2);
+            //opponentHand.get(i).setRotation(angle);
+            opponentHand.get(i).setPosition(xPos, ViewInformation.screenSize.y - opponentHand.get(i).getSize().y - ViewInformation.cardYPos);
         }
     }
-    public void Draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch){
         for (int i = 0; i < opponentHand.size(); i++) {
-            opponentHand.get(i).Draw(batch);
+            opponentHand.get(i).draw(batch);
         }
     }
-    public void ResetHand() {
+    public void resetHand() {
         opponentHand.clear();
     }
     float CardsXPosition(int amountOfCards, int index) {

@@ -34,7 +34,7 @@ public class Button implements UIElement {
      *
      * @param mousePos
      */
-    public void Hover(Vector2 mousePos){
+    public void hover(Vector2 mousePos){
         if (mousePos == null) return;
         if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
 
@@ -45,7 +45,7 @@ public class Button implements UIElement {
     }
 
     @Override
-    public void Draw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         sprite.setColor(1,1,1,1);
         if (hovering) sprite.setColor(0.5f,0.5f,0.5f,1);
         sprite.draw(batch);
@@ -55,28 +55,28 @@ public class Button implements UIElement {
     }
 
     @Override
-    public void SetPosition(float x, float y) {
+    public void setPosition(float x, float y) {
         position = new Vector2(x - layout.width / 2,y+ layout.height / 2);
         sprite.setPosition(x - sprite.getWidth()/2,y - sprite.getHeight()/2);
     }
 
     @Override
-    public Vector2 GetPosition() {
+    public Vector2 getPosition() {
         return null;
     }
 
     @Override
-    public Vector2 GetSize() {
+    public Vector2 getSize() {
         return null;
     }
 
     @Override
-    public void SetOrigin(float x, float y) {
+    public void setOrigin(float x, float y) {
 
     }
 
     @Override
-    public void SetRotation(float angle) {
+    public void setRotation(float angle) {
 
     }
 
@@ -85,24 +85,24 @@ public class Button implements UIElement {
      * @param mousePos The x, y position of the mouse cursor
      */
     @Override
-    public void MouseUpdate(Vector2 mousePos) {
-        Hover(mousePos);
+    public void mouseUpdate(Vector2 mousePos) {
+        hover(mousePos);
 
         // Run Click if mouse is clicked
-        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) { Click(); }
+        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) { click(); }
     }
 
     // Read Clicks on the screen and trigger action if hovering over button
-    public void Click() {
+    public void click() {
         if (hovering) {
-            action.Action();
+            action.action();
         }
     }
 
-    public void ChangeAction(ButtonAction action){
+    public void changeAction(ButtonAction action){
         this.action = action;
     }
-    public void SetScale(float x, float y){
+    public void setScale(float x, float y){
         sprite.setScale(x,y);
     }
 }

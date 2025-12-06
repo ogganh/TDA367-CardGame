@@ -28,7 +28,7 @@ public class MainView {
 
     public MainView(FitViewport viewPort, GameState state, GameController controller) {
         currentView = new StartView(this);
-        currentView.CreateView();
+        currentView.createView();
         this.viewPort = viewPort;
 
         this.controller = controller;
@@ -39,31 +39,31 @@ public class MainView {
     public GameState getState() { return state; }
 
 
-    public void StartView(){
+    public void startView(){
         currentView = new StartView(this);
-        currentView.CreateView();
+        currentView.createView();
     }
-    public void GoFish(){
+    public void goFish(){
         currentView = new GoFish(state, controller, this);
-        currentView.CreateView();
-        currentView.UpdateState();
+        currentView.createView();
+        currentView.updateState();
 
     }
-    public void Rules(){
+    public void rules(){
         currentView = new RulesView(this);
-        currentView.CreateView();
+        currentView.createView();
     }
-    public void MiddleScreen(){
+    public void middleScreen(){
         currentView = new MiddleScreen(state, controller);
-        currentView.CreateView();
+        currentView.createView();
     }
-    public void GameSelect(){
+    public void gameSelect(){
         currentView = new GameSelectView(this);
-        currentView.CreateView();
+        currentView.createView();
     }
-    public void EndScreen(){
+    public void endScreen(){
         currentView = new EndScoreView(state, this);
-        currentView.CreateView();
+        currentView.createView();
     }
 
     /**
@@ -74,21 +74,21 @@ public class MainView {
     public void Update(){
         Vector3 cursorPosition = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
         Vector3 worldPosition = viewPort.unproject(cursorPosition);
-        currentView.MouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
-        currentView.Update();
+        currentView.mouseUpdate(new Vector2(worldPosition.x, worldPosition.y));
+        currentView.update();
     }
     /**
      * Updates the state
      */
-    public void UpdateState(){currentView.UpdateState();}
+    public void updateState(){currentView.updateState();}
     /**
-     * The rendering of the view, could probably be moved into or (most likely better) called by MainView.Update instead of GameController.update()
+     * The rendering of the view, could probably be moved into or (most likely better) called by MainView.update instead of GameController.update()
      */
-    public void Draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch){
         viewPort.apply();
         batch.setProjectionMatrix(viewPort.getCamera().combined);
         batch.begin();
-        currentView.Draw(batch);
+        currentView.draw(batch);
         batch.end();
     }
 

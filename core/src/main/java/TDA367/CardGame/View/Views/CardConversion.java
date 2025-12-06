@@ -57,14 +57,14 @@ public class CardConversion {
         rankToInt.put("QUEEN", 11);
         rankToInt.put("KING", 12);
     }
-    public int CardToInt(String suit, String rank){
+    public int cardToInt(String suit, String rank){
         return suitToInt.get(suit) + rankToInt.get(rank);
     }
-    public String IntToSuit(int index){
+    public String intToSuit(int index){
         int suit = index / 13;
         return suits.get(suit);
     }
-    public String IntToRank(int index){
+    public String intToRank(int index){
         int rank = index % 13;
         return ranks.get(rank);
     }
