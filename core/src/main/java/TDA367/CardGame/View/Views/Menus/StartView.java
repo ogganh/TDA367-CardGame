@@ -5,6 +5,7 @@ import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,8 @@ public class StartView implements ViewInterface {
 
     MainView mainView;
 
+    private Texture menuBackground;
+
     public StartView(MainView mainView) {
         this.mainView = mainView;
     }
@@ -32,6 +35,8 @@ public class StartView implements ViewInterface {
     @Override
     public void createView() {
         ViewInformation.font.getData().setScale(0.5f);
+
+        menuBackground = new Texture(Gdx.files.internal("textures/menu_background.png"));
 
         // Column containing buttons
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
@@ -99,6 +104,8 @@ public class StartView implements ViewInterface {
      */
     @Override
     public void draw(SpriteBatch batch) {
+        batch.draw(menuBackground, 0, 0, screenWidth, screenHeight);
+
         buttons.draw(batch);
     }
 }
