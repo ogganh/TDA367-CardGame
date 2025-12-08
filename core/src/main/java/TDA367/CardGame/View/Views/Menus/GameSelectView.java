@@ -4,12 +4,19 @@ import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameSelectView implements ViewInterface {
     MainView mainView;
+
+    private Texture gameSelectBackground;
+
+    float screenWidth = ViewInformation.screenSize.x;
+    float screenHeight = ViewInformation.screenSize.y;
 
     //Column column = new Column(new Vector2(ViewInformation.screenSize.x/2, ViewInformation.screenSize.y/2 + 50), 20);
 
@@ -22,7 +29,10 @@ public class GameSelectView implements ViewInterface {
 
     @Override
     public void createView() {
+
+
         Column temp;
+        gameSelectBackground = new Texture(Gdx.files.internal("textures/gameselect_background.png"));
         Button gofish = new Button(
             ViewInformation.font,
             "GoFish",
@@ -71,6 +81,7 @@ public class GameSelectView implements ViewInterface {
     @Override
     public void draw(SpriteBatch batch) {
         //column.draw(batch);
+        batch.draw(gameSelectBackground, 0, 0, screenWidth, screenHeight);
         row.draw(batch);
     }
 }
