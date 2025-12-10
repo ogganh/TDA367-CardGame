@@ -20,7 +20,6 @@ public class StartView implements ViewInterface {
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
 
-
     MainView mainView;
 
     private Texture menuBackground;
@@ -30,7 +29,8 @@ public class StartView implements ViewInterface {
     }
 
     /**
-     * Initializes the start view. Creates a column currently containing a single start button
+     * Initializes the start view. Creates a column currently containing a single
+     * start button
      */
     @Override
     public void createView() {
@@ -39,30 +39,42 @@ public class StartView implements ViewInterface {
         menuBackground = new Texture(Gdx.files.internal("textures/menu_background.png"));
 
         // Column containing buttons
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
+        buttons = new Column(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
 
         // Start game button
         Button startButton = new Button(
-            ViewInformation.font,
-            "Start Game",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
-        );
+                ViewInformation.font,
+                "Start Game",
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
         // Add an "Action" to the button, a function that is run when clicked
         startButton.changeAction(new ButtonAction() {
             @Override
             public void action() {
-//                mainView.getController().setupGame();
-//                mainView.goFish();
+                // mainView.getController().setupGame();
+                // mainView.goFish();
                 mainView.gameSelect();
             }
         });
-        startButton.setScale(8,3);
+        startButton.setScale(8, 3);
+
+        // Join server button
+        Button joinServerButton = new Button(
+                ViewInformation.font,
+                "Join Game",
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+        // Add an "Action" to the button, a function that is run when clicked
+        joinServerButton.changeAction(new ButtonAction() {
+            @Override
+            public void action() {
+                mainView.joinServerView();
+            }
+        });
+        joinServerButton.setScale(8, 3);
 
         Button quitButton = new Button(
-            ViewInformation.font,
-            "Quit",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
-        );
+                ViewInformation.font,
+                "Quit",
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
         // Add an "Action" to the button, a function that is run when clicked
         quitButton.changeAction(new ButtonAction() {
             @Override
@@ -70,11 +82,12 @@ public class StartView implements ViewInterface {
                 Gdx.app.exit();
             }
         });
-        quitButton.setScale(8,3);
+        quitButton.setScale(8, 3);
 
         // Add the start button the column of buttons
         buttons.addUIElement(startButton);
         buttons.addUIElement(quitButton);
+        buttons.addUIElement(joinServerButton);
 
     }
 
