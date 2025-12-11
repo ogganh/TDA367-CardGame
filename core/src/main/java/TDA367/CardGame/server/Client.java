@@ -1,46 +1,72 @@
 package TDA367.CardGame.server;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Client {
     private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
 
     public void startConnection(String ip, int port) {
         try {
             clientSocket = new Socket(ip, port);
-            this.out = new PrintWriter(clientSocket.getOutputStream(), true);
-            this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            this.out = new ObjectOutputStream(clientSocket.getOutputStream());
+            this.in = new ObjectInputStream(clientSocket.getInputStream());
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void listen() {
+    public void stopConnection() {
+        try {
+            if (in != null)
+                in.close();
+        } catch (IOException ignored) {
+        }
+        try {
+            if (out != null)
+                out.close();
+        } catch (IOException ignored) {
+        }
+        try {
+            if (clientSocket != null)
+                clientSocket.close();
+        } catch (IOException ignored) {
+        }
+    }
 
+    public void listen() {
         // Using thread to run concurrently with scanner
         // Receiving game state updates from server
         Thread serverListener = new Thread(() -> {
             try {
-                String serverMsg;
-                while ((serverMsg = in.readLine()) != null) {
-
-                    System.out.println("Server: " + serverMsg);
+                Object serverObject;
+                while ((serverObject = in.readObject()) != null) {
+                    System.out.println("Server: " + serverObject);
                     // Fill out with commands to state
-
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 // Stream closed or error
             }
         });
         serverListener.setDaemon(true);
         serverListener.start();
+    }
 
+    public synchronized void send(Object o) {
+        try {
+            if (out == null)
+                return;
+            out.writeObject(o);
+            out.flush();
+            out.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Inputs game State update from the client

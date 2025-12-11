@@ -3,6 +3,8 @@ package TDA367.CardGame.server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -12,14 +14,15 @@ import java.net.Socket;
  */
 public class ClientConnection {
     Socket socket;
-    PrintWriter out;
-    BufferedReader in;
+    ObjectOutputStream out;
+    ObjectInputStream in;
 
     ClientConnection(Socket socket) {
         try {
             this.socket = socket;
-            this.out = new PrintWriter(socket.getOutputStream(), true);
-            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.out = new ObjectOutputStream(socket.getOutputStream());
+            this.in = new ObjectInputStream(socket.getInputStream());
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,10 +33,19 @@ public class ClientConnection {
      */
     public void close() {
         try {
-            in.close();
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (in != null)
+                in.close();
+        } catch (IOException ignored) {
+        }
+        try {
+            if (out != null)
+                out.close();
+        } catch (IOException ignored) {
+        }
+        try {
+            if (socket != null)
+                socket.close();
+        } catch (IOException ignored) {
         }
     }
 }

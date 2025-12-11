@@ -40,16 +40,27 @@ public class Server {
         }
     }
 
-    public void send(int targetPlayer, String message) {
-        clients.get(targetPlayer).out.println(String.format("Player %d: %s", targetPlayer, message));
+    public synchronized void send(ClientConnection client, Object o) {
+        try {
+            if (client.out == null)
+                return;
+            client.out.writeObject(o);
+            client.out.flush();
+            client.out.reset(); // avoid retaining object graph between writes
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method for sending message to player (client)
-    public void broadcast(int playerIndex, String message) {
+    public void broadcast(ClientConnection sender, Object o) {
         for (ClientConnection client : clients) {
-            if (clients.indexOf(client) == playerIndex)
+            if (client == sender)
                 continue;
-            client.out.println(String.format("Player %d: %s", playerIndex, message));
+            // send a copy / the message to each client
+            synchronized (client) {
+                send(client, o);
+            }
         }
     }
 
@@ -70,19 +81,24 @@ public class Server {
     }
 
     public void handleMessages() {
-        try {
+        Thread handler = new Thread(() -> {
             while (true) {
-                for (ClientConnection client : clients) {
-                    if (client.in.ready()) {
-                        String msg = client.in.readLine();
-                        Gdx.app.log("Server",
-                                String.format("Received from client %d: %d", clients.indexOf(client), msg));
-                        broadcast(clients.indexOf(client), msg);
+                try {
+                    Object o;
+                    for (ClientConnection client : clients) {
+                        while ((o = client.in.readObject()) != null) {
+                            o = client.in.readObject();
+                            Gdx.app.log("Server",
+                                    String.format("Received from client %d", clients.indexOf(client)));
+                            broadcast(client, o);
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
+        handler.setDaemon(true);
+        handler.start();
     }
 }
