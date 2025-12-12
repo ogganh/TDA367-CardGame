@@ -44,10 +44,12 @@ public class GameController {
         // temporary setup hardcoded for 2 player GoFish
 
         // Add players and deck to gamestate, should probably be moved into the rules?
+        // Delegate this to rules:
         gameState.reset();
         gameState.addPlayer(new GoFishUserPlayer("Player 1"));
         gameState.addPlayer(new GoFishUserPlayer("Player 2"));
         gameState.addPile("lake", new CardDeck());
+
 
         // Create a context with the gamestate and GoFishRules
         gameContext = new GameContext(gameState, new GoFishRules(gameState.getPlayers(), gameState.getPile("lake")));

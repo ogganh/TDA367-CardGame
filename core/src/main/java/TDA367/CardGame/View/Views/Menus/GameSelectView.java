@@ -11,14 +11,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameSelectView implements ViewInterface {
-    MainView mainView;
+    private MainView mainView;
 
     private Texture gameSelectBackground;
 
-    float screenWidth = ViewInformation.screenSize.x;
-    float screenHeight = ViewInformation.screenSize.y;
-
-    //Column column = new Column(new Vector2(ViewInformation.screenSize.x/2, ViewInformation.screenSize.y/2 + 50), 20);
 
     Row row = new Row(new Vector2(ViewInformation.screenSize.x/4, 3 * ViewInformation.screenSize.y/4),
         100);
@@ -53,13 +49,6 @@ public class GameSelectView implements ViewInterface {
         temp.addUIElement(gofish);
 
         row.addUIElement(temp);
-/*         for (int i = 0; i < 2; i++) {
-            temp = new Column(new Vector2(0,0),20);
-            for (int j = 0; j < 5; j++) {
-                temp.AddUIElement(UIElementFactory.CreateText(ViewInformation.font, "Test"));
-            }
-            row.AddUIElement(temp);
-        } */
 
     }
 
@@ -81,7 +70,7 @@ public class GameSelectView implements ViewInterface {
     @Override
     public void draw(SpriteBatch batch) {
         //column.draw(batch);
-        batch.draw(gameSelectBackground, 0, 0, screenWidth, screenHeight);
+        batch.draw(gameSelectBackground, 0, 0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
         row.draw(batch);
     }
 }
