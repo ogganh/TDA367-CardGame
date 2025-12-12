@@ -9,15 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Button implements UIElement {
-    BitmapFont font;
-    String text;
-    Vector2 position;
-    GlyphLayout layout;
+    private BitmapFont font;
+    private String text;
+    private Vector2 position;
+    private GlyphLayout layout;
 
-    Sprite sprite;
+    private Sprite sprite;
 
-    boolean hovering = false;
-    ButtonAction action;
+    private boolean hovering = false;
+    private ButtonAction action;
 
 
     /**

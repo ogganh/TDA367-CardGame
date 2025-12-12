@@ -14,13 +14,13 @@ import com.badlogic.gdx.math.Vector2;
 /** The view between player turns. Prohibits player from seeing opponents cards. */
 
 public class MiddleScreen implements ViewInterface{
-    GameState state;
-    GameController controller;
+    private GameState state;
+    private GameController controller;
 
-    float screenWidth = ViewInformation.screenSize.x;
-    float screenHeight = ViewInformation.screenSize.y;
+    private float screenWidth = ViewInformation.screenSize.x;
+    private float screenHeight = ViewInformation.screenSize.y;
 
-    Column buttons;
+    private Column buttons;
 
     public MiddleScreen(GameState state, GameController controller) {
         this.state = state;
