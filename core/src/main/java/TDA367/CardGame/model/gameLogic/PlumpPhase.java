@@ -1,7 +1,7 @@
 package TDA367.CardGame.model.gameLogic;
 
 public enum PlumpPhase {
-    GUESSINHG,
+    GUESSING,
     PLAYING,
     ROUND_ENDED
 }
