@@ -45,13 +45,25 @@ public class PlumpRules implements GameStrategy {
     @Override
     public void setup(GameState state) {
         this.state = state;
+        cardsPerPlayer = 10;
+        phase = PlumpPhase.GUESSING;
+        resetGuesses(); //måste finnas
+        startRound();
+    }
+    private void startRound() {
         deck.shuffleDeck();
-        resetGuesses(); //måste implementeras
+        clearHands(); //måste finnas
+        resetGuesses();
         deal(cardsPerPlayer);
         state.setCurrentPlayer(turnManager.getCurrentIndex());
-
-
     }
+
+    private void resetGuesses() {
+        for (int i = 0; i < guesses.length; i++) {
+            guesses[i] = -1;
+        }
+    }
+
 
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
