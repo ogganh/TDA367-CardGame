@@ -44,6 +44,12 @@ public class PlumpRules implements GameStrategy {
 
     @Override
     public void setup(GameState state) {
+        this.state = state;
+        deck.shuffleDeck();
+        resetGuesses(); //måste implementeras
+        deal(cardsPerPlayer);
+        state.setCurrentPlayer(turnManager.getCurrentIndex());
+
 
     }
 
