@@ -1,13 +1,12 @@
 package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.Main;
 import TDA367.CardGame.View.UI.Button;
 import TDA367.CardGame.View.UI.ButtonAction;
+import TDA367.CardGame.View.UI.GreenButton;
 import TDA367.CardGame.View.UI.Text;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -26,10 +25,9 @@ public class RulesView implements ViewInterface {
     public void createView() {
 
         // Create Back button
-        back = new Button(
+        back = new GreenButton(
             ViewInformation.font,
-            "Back",
-            new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+            "Back");
 
         // Add a "on click" function to the back button
         back.changeAction(new ButtonAction() {

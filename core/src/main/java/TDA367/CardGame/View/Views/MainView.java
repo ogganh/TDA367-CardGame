@@ -26,14 +26,15 @@ public class MainView {
      * @param controller - The game controller, used as middleware when passing input to the model
      */
 
-    public MainView(FitViewport viewPort, GameState state, GameController controller) {
+    public MainView(FitViewport viewPort, GameState state) {
         currentView = new StartView(this);
         currentView.createView();
         this.viewPort = viewPort;
 
-        this.controller = controller;
         this.state = state;
     }
+
+    public void setController(GameController controller) { this.controller = controller; }
 
     public GameController getController() { return controller; }
     public GameState getState() { return state; }

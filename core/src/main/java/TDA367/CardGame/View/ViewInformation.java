@@ -21,4 +21,5 @@ public class ViewInformation {
     public static Texture cardAtlas = new Texture("card_textures/1.2 Poker cards.png");
     public static Texture deckOfCardsAtlas = new Texture("card_textures/Deck of cards ( full cards ).png");
     public static Texture uiAtlas = new Texture("CardGameUI.png");
+    public static Texture greenButtonTexture = new Texture("textures/green_button.png");
 }
