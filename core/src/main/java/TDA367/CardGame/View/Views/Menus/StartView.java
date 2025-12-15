@@ -71,6 +71,20 @@ public class StartView implements ViewInterface {
         });
         joinServerButton.setScale(8, 3);
 
+        // Host server button
+        Button hostServerButton = new Button(
+                ViewInformation.font,
+                "Host Game",
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+        // Add an "Action" to the button, a function that is run when clicked
+        hostServerButton.changeAction(new ButtonAction() {
+            @Override
+            public void action() {
+                mainView.startServerView();
+            }
+        });
+        hostServerButton.setScale(8, 3);
+
         Button quitButton = new Button(
                 ViewInformation.font,
                 "Quit",
@@ -88,6 +102,7 @@ public class StartView implements ViewInterface {
         buttons.addUIElement(startButton);
         buttons.addUIElement(quitButton);
         buttons.addUIElement(joinServerButton);
+        buttons.addUIElement(hostServerButton);
 
     }
 

@@ -33,12 +33,11 @@ public class GoFish implements ViewInterface {
 
     private Button rules;
 
-    //float screenWidth = ViewInformation.screenSize.x;
-    //float screenHeight = ViewInformation.screenSize.y;
+    // float screenWidth = ViewInformation.screenSize.x;
+    // float screenHeight = ViewInformation.screenSize.y;
 
     Vector2 mousePosition = new Vector2(0, 0);
 
-    GameState state;
     GameController controller;
     MainView mainView;
     CardConversion conversion;
@@ -47,12 +46,14 @@ public class GoFish implements ViewInterface {
     Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
     Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
-
-    public GoFish(GameState state, GameController controller, MainView mainView) {
-        this.state = state;
+    public GoFish(GameController controller, MainView mainView) {
         this.controller = controller;
         this.mainView = mainView;
         conversion = new CardConversion();
+    }
+
+    private GameState state() {
+        return controller.getState();
     }
 
     @Override
@@ -62,12 +63,15 @@ public class GoFish implements ViewInterface {
         // Creates the pond
         Random rand = new Random();
         for (int i = 0; i < 52; i++) {
-            thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4, ViewInformation.cardWidth, ViewInformation.cardHeight));
+            thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4,
+                    ViewInformation.cardWidth, ViewInformation.cardHeight));
 
             // Random position and rotation
-            thePond.get(i).setPosition(rand.nextFloat(ViewInformation.screenSize.x / 3,2 *ViewInformation.screenSize.x/3),rand.nextFloat(ViewInformation.screenSize.y / 4,2 *ViewInformation.screenSize.y/4));
+            thePond.get(i).setPosition(
+                    rand.nextFloat(ViewInformation.screenSize.x / 3, 2 * ViewInformation.screenSize.x / 3),
+                    rand.nextFloat(ViewInformation.screenSize.y / 4, 2 * ViewInformation.screenSize.y / 4));
             thePond.get(i).setScale(0.5f);
-            thePond.get(i).setRotation(rand.nextFloat(0f,180f));
+            thePond.get(i).setRotation(rand.nextFloat(0f, 180f));
         }
 
         // Creates column that the buttons will be in
@@ -84,8 +88,9 @@ public class GoFish implements ViewInterface {
             public void action() {
                 // Send the input to the controller if a card is selected
                 if (cardHand.getSelectIndex() > -1) {
-                    controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
-                            conversion.intToRank(cardHand.getSelectedCard()), conversion.intToSuit(cardHand.getSelectedCard()));
+                    controller.handleAction((state().getCurrentPlayer() + 1) % state().getPlayers().size(), "",
+                            conversion.intToRank(cardHand.getSelectedCard()),
+                            conversion.intToSuit(cardHand.getSelectedCard()));
                 }
             }
         });
@@ -95,9 +100,9 @@ public class GoFish implements ViewInterface {
 
         // Create rules button
         rules = new Button(
-            ViewInformation.font,
-            "",
-            new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480));
+                ViewInformation.font,
+                "",
+                new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480));
 
         // Add a "on click" function to the guess button
         rules.changeAction(new ButtonAction() {
@@ -106,68 +111,75 @@ public class GoFish implements ViewInterface {
                 mainView.rules();
             }
         });
-        rules.setPosition(100,ViewInformation.screenSize.y -40);
+        rules.setPosition(100, ViewInformation.screenSize.y - 40);
         rules.setScale(0.1f, 0.1f);
 
-        for (int i = 0; i < state.getPlayers().size() -1; i++) {
+        for (int i = 0; i < state().getPlayers().size() - 1; i++) {
             opponentHands.add(new OpponentHand());
         }
     }
 
-
     @Override
     public void update() {
-        //if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
+        // if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.update(mousePosition);
-        if (state.isMiddleScreenOpen()) { controller.setCurrentView(ViewType.MIDDLE_SCREEN); }
+        if (state().isMiddleScreenOpen()) {
+            controller.setCurrentView(ViewType.MIDDLE_SCREEN);
+        }
     }
+
     int currentPlayer = -1;
+
     @Override
-    public void updateState(){
-        if (state.getCurrentPlayer() != currentPlayer) {
+    public void updateState() {
+        if (state().getCurrentPlayer() != currentPlayer) {
             cardHand.nextPlayer();
         }
 
         // Temp ljud test
-        if (state.getCurrentPlayer() == currentPlayer) {
+        if (state().getCurrentPlayer() == currentPlayer) {
             bell.play();
         }
 
-        //update player hand
+        // update player hand
         cardHand.resetHand();
 
         // TODO: Viewn ska inte ha kontakt med UserPlayer
-        int size = state.getPlayers().get(state.getCurrentPlayer()).getHand().size();
-        for (int i = 0; i < size; i++) {
-            String rank = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getRank();
-            String suit = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getSuit();
-            cardHand.addCard(conversion.cardToInt(suit, rank),
-                new Vector2(ViewInformation.screenSize.x/2,ViewInformation.screenSize.y/2));
+        if (state().getPlayers().size() > 0) {
+            int size = state().getPlayers().get(state().getCurrentPlayer()).getHand().size();
+            for (int i = 0; i < size; i++) {
+                String rank = state().getPlayers().get(state().getCurrentPlayer()).getHand().get(i).getRank();
+                String suit = state().getPlayers().get(state().getCurrentPlayer()).getHand().get(i).getSuit();
+                cardHand.addCard(conversion.cardToInt(suit, rank),
+                        new Vector2(ViewInformation.screenSize.x / 2, ViewInformation.screenSize.y / 2));
+            }
         }
 
         // Temp ljud test
         sound.play();
 
-
-        currentPlayer = state.getCurrentPlayer();
+        currentPlayer = state().getCurrentPlayer();
 
         // Update opponents hands
-        opponentHands.get(0).resetHand();
-
-        opponentHands.get(0).update(state.getPlayers().get((state.getCurrentPlayer() + 1) % 2).getHand().size());
+        if (opponentHands.size() > 0) {
+            opponentHands.get(0).resetHand();
+            opponentHands.get(0)
+                    .update(state().getPlayers().get((state().getCurrentPlayer() + 1) % 2).getHand().size());
+        }
     }
 
     @Override
     public void mouseUpdate(Vector2 mousePosition) {
         this.mousePosition = mousePosition;
         buttons.mouseUpdate(mousePosition);
-        if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT)) cardHand.selectCard();
+        if (Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT))
+            cardHand.selectCard();
         rules.mouseUpdate(mousePosition);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(background,0,0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
+        batch.draw(background, 0, 0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
 
         for (int i = 0; i < thePond.size(); i++) {
             thePond.get(i).draw(batch);
@@ -181,17 +193,16 @@ public class GoFish implements ViewInterface {
         buttons.draw(batch);
         rules.draw(batch);
 
+        int CurrentIndex = state().getCurrentPlayer(); // hämtar index för nuvarande spelare från game state
+        int OpponentIndex = (CurrentIndex + 1) % 2; // hämtar index för motståndaren
 
-        int CurrentIndex = state.getCurrentPlayer(); // hämtar index för nuvarande spelare från game state
-        int OpponentIndex = (CurrentIndex+1) % 2; // hämtar index för motståndaren
+        String CurrentPlayerText = "Player " + (CurrentIndex + 1); // text för att visa nuvarande spelare
+        String OpponentPlayerText = "Player " + (OpponentIndex + 1); // text för att visa motståndaren
 
-        String CurrentPlayerText = "Player " + (CurrentIndex+1); //text för att visa nuvarande spelare
-        String OpponentPlayerText = "Player " + (OpponentIndex+1); //text för att visa motståndaren
+        int currentBooks = state().getBookCount(CurrentIndex); // hämtar antal böcker för nuvarande spelare
+        int opponentBooks = state().getBookCount(OpponentIndex); // hämtar antal böcker för motståndaren
 
-        int currentBooks = state.getBookCount(CurrentIndex); // hämtar antal böcker för nuvarande spelare
-        int opponentBooks = state.getBookCount(OpponentIndex); // hämtar antal böcker för motståndaren
-
-        String currentBooksText = "Books: " + currentBooks; //text för att visa antal böcker för spelare har
+        String currentBooksText = "Books: " + currentBooks; // text för att visa antal böcker för spelare har
         String opponentBooksText = "Books: " + opponentBooks;
 
         ViewInformation.font.draw(batch, CurrentPlayerText, 10, 40); // ritar texten för spelare

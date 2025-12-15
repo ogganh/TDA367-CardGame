@@ -4,18 +4,85 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import com.badlogic.gdx.Gdx;
+
+import TDA367.CardGame.controller.GameController;
+import TDA367.CardGame.model.GameState;
 
 public class Client {
     private Socket clientSocket;
+    private Thread serverListener;
+    private Thread writerThread;
+    private final ConcurrentLinkedQueue<Object> incoming = new ConcurrentLinkedQueue<>();
+    private final ConcurrentLinkedQueue<Object> outgoing = new ConcurrentLinkedQueue<>();
     private ObjectOutputStream out;
     private ObjectInputStream in;
+    private GameController controller;
+
+    public Client(GameController controller, String ip) {
+        this.controller = controller;
+        this.startConnection(ip, 6666);
+        Gdx.app.log("Client", "Joined server, starting listen...");
+        // Threads are started by startConnection()
+    }
 
     public void startConnection(String ip, int port) {
         try {
             clientSocket = new Socket(ip, port);
-            this.out = new ObjectOutputStream(clientSocket.getOutputStream());
-            this.in = new ObjectInputStream(clientSocket.getInputStream());
-            out.flush();
+            // Start background listener thread to receive messages from server
+            serverListener = new Thread(() -> {
+                try {
+                    this.out = new ObjectOutputStream(clientSocket.getOutputStream());
+                    out.flush();
+                    this.in = new ObjectInputStream(clientSocket.getInputStream());
+                    ServerMessage serverMessage;
+                    while (!Thread.currentThread().isInterrupted()
+                            && (serverMessage = ServerMessage.class.cast(in.readObject())) != null) {
+                        // enqueue for main-thread processing
+                        Gdx.app.log("Client", "Message with code: " + serverMessage.messageCode);
+                        if (serverMessage.messageCode == 0) {
+                            if (String.class.cast(serverMessage.content).equals("setupGame")) {
+                                Gdx.app.log("Client", "Setting up game...");
+                                Gdx.app.postRunnable(() -> {
+                                    controller.setupGame();
+                                });
+                            }
+                        } else if (serverMessage.messageCode == 1) {
+                            controller.setState((GameState) serverMessage.content);
+                        }
+                    }
+                } catch (Exception e) {
+                    Gdx.app.error("Client", "Listener stopped", e);
+                }
+            }, "Client-Listener");
+            serverListener.setDaemon(true);
+            serverListener.start();
+
+            // Start writer thread that drains outgoing queue and writes to the stream
+            writerThread = new Thread(() -> {
+                try {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        Object o = outgoing.poll();
+                        if (o == null) {
+                            Thread.sleep(10);
+                            continue;
+                        }
+                        synchronized (out) {
+                            out.writeObject(new ServerMessage(1, controller.getState()));
+                            out.flush();
+                            out.reset();
+                        }
+                    }
+                } catch (InterruptedException ie) {
+                    // thread interrupted — normal on shutdown
+                } catch (Exception e) {
+                    Gdx.app.error("Client", "Writer stopped", e);
+                }
+            }, "Client-Writer");
+            writerThread.setDaemon(true);
+            writerThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,44 +106,12 @@ public class Client {
         }
     }
 
-    public void listen() {
-        // Using thread to run concurrently with scanner
-        // Receiving game state updates from server
-        Thread serverListener = new Thread(() -> {
-            try {
-                Object serverObject;
-                while ((serverObject = in.readObject()) != null) {
-                    System.out.println("Server: " + serverObject);
-                    // Fill out with commands to state
-                }
-            } catch (Exception e) {
-                // Stream closed or error
-            }
-        });
-        serverListener.setDaemon(true);
-        serverListener.start();
-    }
-
     public synchronized void send(Object o) {
-        try {
-            if (out == null)
-                return;
-            out.writeObject(o);
-            out.flush();
-            out.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        outgoing.add(o);
     }
 
     // Inputs game State update from the client
     public void gameStateInput() {
 
-    }
-
-    public static void main(String[] args) {
-        Client client = new Client();
-        client.startConnection("127.0.0.1", 6666);
-        client.listen();
     }
 }

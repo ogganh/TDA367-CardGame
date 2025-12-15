@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * The start menu
  */
-public class JoinServerView implements ViewInterface {
+public class StartServerView implements ViewInterface {
 
     Column buttons;
 
@@ -24,7 +24,7 @@ public class JoinServerView implements ViewInterface {
 
     private Texture menuBackground;
 
-    public JoinServerView(MainView mainView) {
+    public StartServerView(MainView mainView) {
         this.mainView = mainView;
     }
 
@@ -44,13 +44,13 @@ public class JoinServerView implements ViewInterface {
         // Join server button
         Button joinServerButton = new Button(
                 ViewInformation.font,
-                "Join Game",
+                "Host server",
                 new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
         // Add an "Action" to the button, a function that is run when clicked
         joinServerButton.changeAction(new ButtonAction() {
             @Override
             public void action() {
-                mainView.getController().joinGame();
+                mainView.getController().startServer();
             }
         });
         joinServerButton.setScale(8, 3);

@@ -4,6 +4,7 @@ import TDA367.CardGame.View.Views.Games.GoFish;
 import TDA367.CardGame.View.Views.Menus.EndScoreView;
 import TDA367.CardGame.View.Views.Menus.GameSelectView;
 import TDA367.CardGame.View.Views.Menus.JoinServerView;
+import TDA367.CardGame.View.Views.Menus.StartServerView;
 import TDA367.CardGame.View.Views.Menus.StartView;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
@@ -52,7 +53,7 @@ public class MainView {
     }
 
     public void goFish() {
-        currentView = new GoFish(state, controller, this);
+        currentView = new GoFish(controller, this);
         currentView.createView();
         currentView.updateState();
 
@@ -80,6 +81,11 @@ public class MainView {
 
     public void joinServerView() {
         currentView = new JoinServerView(this);
+        currentView.createView();
+    }
+
+    public void startServerView() {
+        currentView = new StartServerView(this);
         currentView.createView();
     }
 

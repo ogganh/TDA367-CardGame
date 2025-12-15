@@ -9,31 +9,37 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewType;
 import TDA367.CardGame.model.player.GoFishUserPlayer;
+import TDA367.CardGame.server.Client;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.card_logic.CardDeck;
 import TDA367.CardGame.model.gameLogic.GameContext;
 import TDA367.CardGame.model.gameLogic.strategies.GoFishRules;
 
+import TDA367.CardGame.server.*;
 
 /**
- * The GameController instantiates most objects and handles the communication from the view to the model amongst other things.
+ * The GameController instantiates most objects and handles the communication
+ * from the view to the model amongst other things.
  */
 public class GameController {
-    private FitViewport viewport = new FitViewport(1980 / 4, 1080 / 4);    // Window
-    private MainView view;  // Manages the UI
+    private FitViewport viewport = new FitViewport(1980 / 4, 1080 / 4); // Window
+    private MainView view; // Manages the UI
     private SpriteBatch spriteBatch;
-    private GameContext gameContext;    // Manages the rules
-    private GameState gameState = new GameState();  // The state keeps track of the current games data
+    private GameContext gameContext; // Manages the rules
+    private GameState gameState = new GameState(); // The state keeps track of the current games data
+    private Server server;
 
     /**
-     * The controller constructor creates the MainView and sets it to display the start menu
+     * The controller constructor creates the MainView and sets it to display the
+     * start menu
      */
     public GameController() {
         this.spriteBatch = new SpriteBatch();
         SoundManager.load();
         SoundManager.playBGMusic();
-        // Create a MainView, rquires a GameState to update the graphics according to the current state of the game
+        // Create a MainView, rquires a GameState to update the graphics according to
+        // the current state of the game
         // and it also requires the controller to relay inputs.
         this.view = new MainView(viewport, gameState, this);
 
@@ -42,21 +48,24 @@ public class GameController {
 
     public void setupGame() {
         // temporary setup hardcoded for 2 player GoFish
+        Gdx.app.log("Controller", String.valueOf(gameState.getPlayers().size()));
 
         // Add players and deck to gamestate, should probably be moved into the rules?
-        gameState.reset();
-        gameState.addPlayer(new GoFishUserPlayer("Player 1"));
-        gameState.addPlayer(new GoFishUserPlayer("Player 2"));
         gameState.addPile("lake", new CardDeck());
+        Gdx.app.log("Controller", "Created deck");
 
         // Create a context with the gamestate and GoFishRules
         gameContext = new GameContext(gameState, new GoFishRules(gameState.getPlayers(), gameState.getPile("lake")));
+        Gdx.app.log("Controller", "Created gamecontext");
         // Change the view to Go fish
         setCurrentView(ViewType.GO_FISH);
         Gdx.app.log("GameController", "Setting up game with players: " + gameState.getPlayers().toString());
+        Gdx.app.log("GameController", "Setting up game with players: " + gameState.getPlayers().get(0).getHand());
     }
 
-    public GameContext getGameContext() { return gameContext; }
+    public GameContext getGameContext() {
+        return gameContext;
+    }
 
     // Change the current view, can probably be implemented in a better way
     public void setCurrentView(ViewType viewType) {
@@ -84,17 +93,22 @@ public class GameController {
     }
 
     /**
-     * Run by the view when a player is submitting an action, which the controller passes along to the gamecontext (rules) as a PlayerAction object.
+     * Run by the view when a player is submitting an action, which the controller
+     * passes along to the gamecontext (rules) as a PlayerAction object.
+     * 
      * @param sourcePlayerIndex - the player taking the action
-     * @param action - the type of action, currently unused
-     * @param rank - the rank of the card, should preferably be replaced by a Card object to allow for referencing a specific card in games where duplicates may occur
-     * @param suit - the suit of the card, should preferably be replaced by a Card object to allow for referencing a specific card in games where duplicates may occur
+     * @param action            - the type of action, currently unused
+     * @param rank              - the rank of the card, should preferably be
+     *                          replaced by a Card object to allow for referencing a
+     *                          specific card in games where duplicates may occur
+     * @param suit              - the suit of the card, should preferably be
+     *                          replaced by a Card object to allow for referencing a
+     *                          specific card in games where duplicates may occur
      */
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
         gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
 
         view.updateState();
-
 
     }
 
@@ -123,5 +137,25 @@ public class GameController {
 
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    public void startServer() {
+        if (server == null) {
+            server = new Server();
+            server.start(this, 6666);
+        }
+    }
+
+    public void joinGame() {
+        Client client = new Client(this, "127.0.0.1");
+        Gdx.app.log("GameController", "The client joined");
+    }
+
+    public GameState getState() {
+        return gameState;
+    }
+
+    public void setState(GameState content) {
+        gameState = content;
     }
 }
