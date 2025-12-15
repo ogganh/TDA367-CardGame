@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardHand {
-    List<Card> cardHand = new ArrayList<>();
-    List<Card> oldHand = new ArrayList<>();
+    private List<Card> cardHand = new ArrayList<>();
+    private List<Card> oldHand = new ArrayList<>();
 
-    int lastHovered;
-    int hovered;
-    int selected;
+    private int lastHovered;
+    private int hovered;
+    private int selected;
     //Vector2 mousePosition = new Vector2(0, 0);
-    Texture atlas = ViewInformation.cardAtlas;
-    Sprite outline = new Sprite(atlas, 624, 64, 64, 80);
+    private Texture atlas = ViewInformation.cardAtlas;
+    private Sprite outline = new Sprite(atlas, 624, 64, 64, 80);
 
 
     public CardHand(){

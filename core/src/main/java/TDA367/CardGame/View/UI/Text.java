@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Text implements UIElement{
-    BitmapFont font;
-    String text;
-    Vector2 position;
-    GlyphLayout layout;
+    private BitmapFont font;
+    private String text;
+    private Vector2 position;
+    private GlyphLayout layout;
 
     /**
      * Creates Text

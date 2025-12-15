@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OpponentHand {
-    List<UIElement> opponentHand = new ArrayList<>();
+    private List<UIElement> opponentHand = new ArrayList<>();
 
 
     public void update(int amountOfCards){

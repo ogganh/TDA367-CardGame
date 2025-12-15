@@ -27,7 +27,7 @@ public class GoFish implements ViewInterface {
     private CardHand cardHand = new CardHand();
     private List<OpponentHand> opponentHands = new ArrayList<>();
     private List<Sprite> thePond = new ArrayList<>();
-    Texture background;
+    private Texture background;
     private Column buttons;
     private Button btn;
 
@@ -36,16 +36,16 @@ public class GoFish implements ViewInterface {
     // float screenWidth = ViewInformation.screenSize.x;
     // float screenHeight = ViewInformation.screenSize.y;
 
-    Vector2 mousePosition = new Vector2(0, 0);
+    private Vector2 mousePosition = new Vector2(0, 0);
 
-    GameState state;
-    GameController controller;
-    MainView mainView;
-    CardConversion conversion;
+    private GameState state;
+    private GameController controller;
+    private MainView mainView;
+    private CardConversion conversion;
 
     // Temp ljud test
-    Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
-    Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
+    private Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
+    private Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
     public GoFish(GameState state, GameController controller, MainView mainView) {
         this.state = state;

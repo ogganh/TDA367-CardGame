@@ -12,10 +12,10 @@ import java.util.List;
  */
 
 public class CardConversion {
-    Dictionary<String,Integer> suitToInt = new Hashtable<>();
-    Dictionary<String,Integer> rankToInt = new Hashtable<>();
-    List<String> suits = new ArrayList<>();
-    List<String> ranks = new ArrayList<>();
+    private Dictionary<String,Integer> suitToInt = new Hashtable<>();
+    private Dictionary<String,Integer> rankToInt = new Hashtable<>();
+    private List<String> suits = new ArrayList<>();
+    private List<String> ranks = new ArrayList<>();
 
 
     public CardConversion() {

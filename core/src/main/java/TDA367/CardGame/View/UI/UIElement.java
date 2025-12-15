@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public interface UIElement {
-    void draw(SpriteBatch batch);
-    void setPosition(float x, float y);
-    Vector2 getPosition();
-    Vector2 getSize();
-    void setOrigin(float x, float y);
-    void setRotation(float angle);
-    void mouseUpdate(Vector2 mousePos);
+    public void draw(SpriteBatch batch);
+    public void setPosition(float x, float y);
+    public Vector2 getPosition();
+    public Vector2 getSize();
+    public void setOrigin(float x, float y);
+    public void setRotation(float angle);
+    public void mouseUpdate(Vector2 mousePos);
 }

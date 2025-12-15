@@ -14,9 +14,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainView {
-    public ViewInterface currentView;
+    private  ViewInterface currentView;
 
-    FitViewport viewPort;
+    private FitViewport viewPort;
     private GameController controller;
     private GameState state;
 

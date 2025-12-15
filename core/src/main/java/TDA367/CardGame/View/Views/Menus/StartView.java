@@ -14,16 +14,10 @@ import com.badlogic.gdx.math.Vector2;
  * The start menu
  */
 public class StartView implements ViewInterface {
-
-    Column buttons;
-
-    float screenWidth = ViewInformation.screenSize.x;
-    float screenHeight = ViewInformation.screenSize.y;
-
-
-    MainView mainView;
-
+    private MainView mainView;
     private Texture menuBackground;
+
+    private Column buttons;
 
     public StartView(MainView mainView) {
         this.mainView = mainView;
@@ -39,7 +33,7 @@ public class StartView implements ViewInterface {
         menuBackground = new Texture(Gdx.files.internal("textures/menu_background.png"));
 
         // Column containing buttons
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
+        buttons = new Column(new Vector2(ViewInformation.screenSize.x/2, ViewInformation.screenSize.y /2 + 50), 50);
 
         // Start game button
         Button startButton = new GreenButton(
@@ -101,7 +95,7 @@ public class StartView implements ViewInterface {
      */
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(menuBackground, 0, 0, screenWidth, screenHeight);
+        batch.draw(menuBackground, 0, 0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
 
         buttons.draw(batch);
     }

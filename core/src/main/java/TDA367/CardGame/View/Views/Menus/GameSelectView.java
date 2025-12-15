@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameSelectView implements ViewInterface {
-    MainView mainView;
+    private MainView mainView;
 
     private Texture gameSelectBackground;
 
