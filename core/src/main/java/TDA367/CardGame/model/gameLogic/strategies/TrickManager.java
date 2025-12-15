@@ -58,7 +58,7 @@ public class TrickManager {
         for (int i = 1; i < currentTrick.size(); i++) {
             Card currentCard = currentTrick.get(i);
 
-            if (compareCards(currentCard, winningCard)) {
+            if (compareCards(currentCard, winningCard)) { //om false körs ej if satsen--> winningcard blir leadsuit
                 winningCard = currentCard;
                 winnerTrickIndex = i;
             }

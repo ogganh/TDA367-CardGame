@@ -63,6 +63,15 @@ public class PlumpRules implements GameStrategy {
             guesses[i] = -1;
         }
     }
+    private void deal(int cardsPerPlayer) {
+        for (int i = 0; i < cardsPerPlayer; i++) {
+            for (PlumpUserPlayer player : players) {
+                if (!deck.isEmpty()) {
+                    player.addCard(deck.removeCard());
+                }
+            }
+        }
+    }
 
 
     @Override
@@ -79,4 +88,4 @@ public class PlumpRules implements GameStrategy {
     public boolean isGameOver(GameState state) {
         return false;
     }
-}
+
