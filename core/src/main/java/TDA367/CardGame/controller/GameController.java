@@ -1,5 +1,6 @@
 package TDA367.CardGame.controller;
 
+import TDA367.CardGame.Main;
 import TDA367.CardGame.View.SoundManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,22 +21,22 @@ import TDA367.CardGame.model.gameLogic.strategies.GoFishRules;
  * The GameController instantiates most objects and handles the communication from the view to the model amongst other things.
  */
 public class GameController {
-    private FitViewport viewport = new FitViewport(1980 / 4, 1080 / 4);    // Window
+    private FitViewport viewport;    // Window
     private MainView view;  // Manages the UI
     private SpriteBatch spriteBatch;
     private GameContext gameContext;    // Manages the rules
-    private GameState gameState = new GameState();  // The state keeps track of the current games data
+    private GameState gameState;  // The state keeps track of the current games data
 
     /**
      * The controller constructor creates the MainView and sets it to display the start menu
      */
-    public GameController() {
+    public GameController(FitViewport viewport, GameState gameState, MainView mainView) {
+        this.viewport = viewport;
+        this.gameState = gameState;
+        this.view = mainView;
         this.spriteBatch = new SpriteBatch();
         SoundManager.load();
         SoundManager.playBGMusic();
-        // Create a MainView, rquires a GameState to update the graphics according to the current state of the game
-        // and it also requires the controller to relay inputs.
-        this.view = new MainView(viewport, gameState, this);
 
         setCurrentView(ViewType.START); // Enter the start menu
     }

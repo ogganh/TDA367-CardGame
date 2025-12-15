@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import TDA367.CardGame.View.ViewInformation;
+
 public class Button implements UIElement {
     BitmapFont font;
     String text;
@@ -19,10 +21,10 @@ public class Button implements UIElement {
     boolean hovering = false;
     ButtonAction action;
 
-
     /**
-     * Creates a button, sprite represents the background and the area that is clickable
-     * */
+     * Creates a button, sprite represents the background and the area that is
+     * clickable
+     */
     public Button(BitmapFont font, String text, Sprite sprite) {
         this.font = font;
         this.text = text;
@@ -34,30 +36,35 @@ public class Button implements UIElement {
      *
      * @param mousePos
      */
-    public void hover(Vector2 mousePos){
-        if (mousePos == null) return;
-        if (mousePos.x >  sprite.getX() - (sprite.getWidth() * (sprite.getScaleX()-1)/2) && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX()+1)/2)){
+    public void hover(Vector2 mousePos) {
+        if (mousePos == null)
+            return;
+        if (mousePos.x > sprite.getX() - (sprite.getWidth() * (sprite.getScaleX() - 1) / 2)
+                && mousePos.x < sprite.getX() + (sprite.getWidth() * (sprite.getScaleX() + 1) / 2)) {
 
-            if (mousePos.y >  sprite.getY() - (sprite.getHeight() * (sprite.getScaleY()-1)/2) && mousePos.y < sprite.getY() + (sprite.getHeight() * (sprite.getScaleY()+1)/2)){
+            if (mousePos.y > sprite.getY() - (sprite.getHeight() * (sprite.getScaleY() - 1) / 2)
+                    && mousePos.y < sprite.getY() + (sprite.getHeight() * (sprite.getScaleY() + 1) / 2)) {
                 hovering = true;
-            } else hovering = false;
-        } else hovering = false;
+            } else
+                hovering = false;
+        } else
+            hovering = false;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        sprite.setColor(1,1,1,1);
-        if (hovering) sprite.setColor(0.5f,0.5f,0.5f,1);
+        sprite.setColor(1, 1, 1, 1);
+        if (hovering)
+            sprite.setColor(0.5f, 0.5f, 0.5f, 1);
         sprite.draw(batch);
-        font.setColor(new Color(255,255,255,255));
+        font.setColor(new Color(255, 255, 255, 255));
         font.draw(batch, text, position.x, position.y);
-
     }
 
     @Override
     public void setPosition(float x, float y) {
-        position = new Vector2(x - layout.width / 2,y+ layout.height / 2);
-        sprite.setPosition(x - sprite.getWidth()/2,y - sprite.getHeight()/2);
+        position = new Vector2(x - layout.width / 2, y + layout.height / 2);
+        sprite.setPosition(x - sprite.getWidth() / 2, y - sprite.getHeight() / 2);
     }
 
     @Override
@@ -81,7 +88,9 @@ public class Button implements UIElement {
     }
 
     /**
-     * Calls Button.Hover, and if left clicked runs Button.Click which runs action.Action() if hovering is true
+     * Calls Button.Hover, and if left clicked runs Button.Click which runs
+     * action.Action() if hovering is true
+     * 
      * @param mousePos The x, y position of the mouse cursor
      */
     @Override
@@ -89,7 +98,9 @@ public class Button implements UIElement {
         hover(mousePos);
 
         // Run Click if mouse is clicked
-        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) { click(); }
+        if (Gdx.input.isButtonJustPressed(com.badlogic.gdx.Input.Buttons.LEFT)) {
+            click();
+        }
     }
 
     // Read Clicks on the screen and trigger action if hovering over button
@@ -99,10 +110,11 @@ public class Button implements UIElement {
         }
     }
 
-    public void changeAction(ButtonAction action){
+    public void changeAction(ButtonAction action) {
         this.action = action;
     }
-    public void setScale(float x, float y){
-        sprite.setScale(x,y);
+
+    public void setScale(float x, float y) {
+        sprite.setScale(x, y);
     }
 }

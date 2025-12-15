@@ -42,10 +42,9 @@ public class StartView implements ViewInterface {
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
 
         // Start game button
-        Button startButton = new Button(
+        Button startButton = new GreenButton(
             ViewInformation.font,
-            "Start Game",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
+            "Start Game"
         );
         // Add an "Action" to the button, a function that is run when clicked
         startButton.changeAction(new ButtonAction() {
@@ -58,11 +57,9 @@ public class StartView implements ViewInterface {
         });
         startButton.setScale(8,3);
 
-        Button quitButton = new Button(
+        Button quitButton = new GreenButton(
             ViewInformation.font,
-            "Quit",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
-        );
+            "Quit");
         // Add an "Action" to the button, a function that is run when clicked
         quitButton.changeAction(new ButtonAction() {
             @Override
