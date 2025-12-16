@@ -7,4 +7,31 @@ dependencies {
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
+
+  // --- TILLAGDA TEST DEPENDENCIES ---
+
+  // JUnit 5 (Jupiter) - Det huvudsakliga ramverket för att skriva tester
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+  // Mockito Core - För att mocka och stubba beroenden i dina tester
+  testImplementation 'org.mockito:mockito-core:5.10.0'
+
+  // Mockito Junit Jupiter - Gör Mockito enklare att använda med JUnit 5
+  testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'
+}
+
+// --- TILLAGD TEST KONFIGURATION ---
+
+// Denna konfiguration talar om för Gradle att använda JUnit 5-plattformen
+test {
+  useJUnitPlatform()
+
+  // Konfigurerar testrapporter
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+}
+test {
+  useJUnitPlatform()
 }

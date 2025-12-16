@@ -7,6 +7,8 @@ import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.UI.Button;
 
+
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -34,7 +36,7 @@ public class MiddleScreen implements ViewInterface{
         buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
         Button btn = new Button(
             ViewInformation.font,
-            "Next player",
+            "Next player is player " + (state.getCurrentPlayer() + 1),
             new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
         // Add a "on click" function to the guess button
@@ -48,6 +50,7 @@ public class MiddleScreen implements ViewInterface{
         });
         btn.setScale(10, 10);
         buttons.addUIElement(btn);
+
     }
 
     @Override
@@ -66,6 +69,15 @@ public class MiddleScreen implements ViewInterface{
 
     @Override
     public void draw(SpriteBatch batch) {
+
+
+        // Rita knappen först
         buttons.draw(batch);
+
     }
+
+
+
+
+
 }
