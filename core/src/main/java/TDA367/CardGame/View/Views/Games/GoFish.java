@@ -91,17 +91,6 @@ public class GoFish implements ViewInterface {
         }
             );
 
-        // Add a "on click" function to the guess button
-        // btn.changeAction(new ButtonAction() {
-        //     @Override
-        //     public void action() {
-        //         // Send the input to the controller if a card is selected
-        //         if (cardHand.getSelectIndex() > -1) {
-        //             controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
-        //                     conversion.intToRank(cardHand.getSelectedCard()), conversion.intToSuit(cardHand.getSelectedCard()));
-        //         }
-        //     }
-        // });
 
         guessButton.setScale(5, 3);
         buttons.addUIElement(guessButton);
@@ -118,13 +107,6 @@ public class GoFish implements ViewInterface {
             }
         });
 
-        // Add a "on click" function to the guess button
-        // rules.changeAction(new ButtonAction() {
-        //     @Override
-        //     public void action() {
-        //         mainView.rules();
-        //     }
-        // });
         rulesButton.setPosition(100,ViewInformation.screenSize.y -40);
         rulesButton.setScale(0.1f, 0.1f);
 
