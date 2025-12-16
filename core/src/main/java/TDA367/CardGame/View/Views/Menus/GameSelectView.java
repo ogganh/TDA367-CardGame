@@ -34,7 +34,7 @@ public class GameSelectView implements ViewInterface {
     @Override
     public void createView() {
 
-        Column temp;
+        //Column temp;
         gameSelectBackground = new Texture(Gdx.files.internal("textures/gameselect_background.png"));
         Button gofish = new GreenButton(
                 ViewInformation.font,
@@ -48,13 +48,29 @@ public class GameSelectView implements ViewInterface {
                 mainView.goFish();
             }
         });
-
         gofish.setScale(5, 3);
 
-        temp = new Column(new Vector2(0, 0), 20);
-        temp.addUIElement(gofish);
+        Button plump = new GreenButton(
+                ViewInformation.font,
+                "Plump");
+        // Add an "Action" to the button, a function that is run when clicked
+        plump.changeAction(new ButtonAction() {
+            @Override
+            public void action() {
+                //gameController.();
 
-        row.addUIElement(temp);
+                mainView.Plump();
+            }
+        });
+        plump.setScale(5, 3);
+
+        // temp = new Column(new Vector2(0, 0), 20);
+        // temp.addUIElement(gofish);
+        // temp.addUIElement(plump);
+
+        //row.addUIElement(temp);
+        row.addUIElement(gofish);
+        row.addUIElement(plump);
         /*
          * for (int i = 0; i < 2; i++) {
          * temp = new Column(new Vector2(0,0),20);

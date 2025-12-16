@@ -1,6 +1,7 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.Views.Games.GoFish;
+import TDA367.CardGame.View.Views.Games.Plump;
 import TDA367.CardGame.View.Views.Menus.EndScoreView;
 import TDA367.CardGame.View.Views.Menus.GameSelectView;
 import TDA367.CardGame.View.Views.Menus.StartView;
@@ -50,6 +51,12 @@ public class MainView implements ViewController{
         currentView.updateState();
 
     }
+    @Override
+    public void Plump() {
+        currentView = new Plump(state, controller, this);
+        currentView.createView();
+        currentView.updateState();
+    }
     public void rules(){
         currentView = new RulesView(this);
         currentView.createView();
@@ -92,5 +99,7 @@ public class MainView implements ViewController{
         currentView.draw(batch);
         batch.end();
     }
+
+    
 
 }

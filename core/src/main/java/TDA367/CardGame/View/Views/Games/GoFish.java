@@ -29,7 +29,7 @@ public class GoFish implements ViewInterface {
     private List<Sprite> thePond = new ArrayList<>();
     private Texture background;
     private Column buttons;
-    private Button btn;
+    private Button guessButton;
 
     private Button rules;
 
@@ -75,12 +75,12 @@ public class GoFish implements ViewInterface {
         // Creates column that the buttons will be in
         buttons = new Column(new Vector2(450, 50), 50);
         // Create Guess button
-        btn = new GreenButton(
+        guessButton = new GreenButton(
                 ViewInformation.font,
                 "Guess");
                 
         // Add a "on click" function to the guess button
-        btn.changeAction(new ButtonAction() {
+        guessButton.changeAction(new ButtonAction() {
             @Override
             public void action() {
                 // Send the input to the controller if a card is selected
@@ -92,8 +92,8 @@ public class GoFish implements ViewInterface {
             }
         });
 
-        btn.setScale(5, 3);
-        buttons.addUIElement(btn);
+        guessButton.setScale(5, 3);
+        buttons.addUIElement(guessButton);
 
         // Create rules button
         rules = new Button(

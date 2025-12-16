@@ -4,6 +4,7 @@ public interface ViewController {
     public void startView();
 
     public void goFish();
+    public void Plump();
 
     public void rules();
 
