@@ -29,9 +29,8 @@ public class GameState {
     public CardDeck getPile(String name) {return piles.get(name);}
     public List<UserPlayer> getPlayers() {return players;}
     public void setTurnManager(TurnManager turnManager) {this.turnManager = turnManager;}
-    public int getCurrentPlayer() {
-        if (turnManager == null) {
-            throw new IllegalStateException("TurnManager not set");
+    public int getCurrentPlayer() { if (turnManager == null) {
+        throw new IllegalStateException("TurnManager not set");
         }
         return turnManager.getCurrentIndex();
     }
