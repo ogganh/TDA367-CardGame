@@ -16,7 +16,7 @@ public class Button implements UIElement {
     private Vector2 position;
     private GlyphLayout layout;
 
-    private Sprite sprite;
+    protected Sprite sprite;
 
     private boolean hovering = false;
     private ButtonAction action;

@@ -11,7 +11,6 @@ public class GreenButton extends Button {
      */
     public GreenButton(BitmapFont font, String text) {
         super(font, text, new Sprite(ViewInformation.greenButtonTexture));
-
         this.sprite.setSize(14, 15);
         this.sprite.setOriginCenter();
     }
