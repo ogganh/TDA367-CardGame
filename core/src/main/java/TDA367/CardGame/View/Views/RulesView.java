@@ -15,9 +15,9 @@ import com.badlogic.gdx.math.Vector2;
 public class RulesView implements ViewInterface {
     private Text text;
     private Button back;
-    private MainView mainView;
+    private ViewController mainView;
 
-    public RulesView(MainView mainView) {
+    public RulesView(ViewController mainView) {
         this.mainView = mainView;
     }
 

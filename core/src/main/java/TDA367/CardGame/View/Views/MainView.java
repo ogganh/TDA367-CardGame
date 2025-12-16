@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class MainView {
+public class MainView implements ViewController{
     private  ViewInterface currentView;
 
     private FitViewport viewPort;
@@ -55,11 +55,11 @@ public class MainView {
         currentView.createView();
     }
     public void middleScreen(){
-        currentView = new MiddleScreen(state, controller);
+        currentView = new MiddleScreen(this,state, controller);
         currentView.createView();
     }
     public void gameSelect(){
-        currentView = new GameSelectView(this);
+        currentView = new GameSelectView(this, controller);
         currentView.createView();
     }
     public void endScreen(){

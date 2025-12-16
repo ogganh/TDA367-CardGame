@@ -1,6 +1,5 @@
 package TDA367.CardGame.controller;
 
-import TDA367.CardGame.Main;
 import TDA367.CardGame.View.SoundManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import TDA367.CardGame.View.Views.MainView;
-import TDA367.CardGame.View.Views.ViewType;
 import TDA367.CardGame.model.player.GoFishUserPlayer;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.PlayerAction;
@@ -38,7 +36,7 @@ public class GameController {
         SoundManager.load();
         SoundManager.playBGMusic();
 
-        setCurrentView(ViewType.START); // Enter the start menu
+        view.startView();
     }
 
     public void setupGame() {
@@ -47,6 +45,10 @@ public class GameController {
         // Add players and deck to gamestate, should probably be moved into the rules?
         // Delegate this to rules:
         gameState.reset();
+        
+    }
+    public void StartGofish(){
+        setupGame();
         gameState.addPlayer(new GoFishUserPlayer("Player 1"));
         gameState.addPlayer(new GoFishUserPlayer("Player 2"));
         gameState.addPile("lake", new CardDeck());
@@ -55,36 +57,11 @@ public class GameController {
         // Create a context with the gamestate and GoFishRules
         gameContext = new GameContext(gameState, new GoFishRules(gameState.getPlayers(), gameState.getPile("lake")));
         // Change the view to Go fish
-        setCurrentView(ViewType.GO_FISH);
         Gdx.app.log("GameController", "Setting up game with players: " + gameState.getPlayers().toString());
     }
 
+
     public GameContext getGameContext() { return gameContext; }
-
-    // Change the current view, can probably be implemented in a better way
-    public void setCurrentView(ViewType viewType) {
-        switch (viewType) {
-            case START:
-                view.startView();
-                break;
-            case GO_FISH:
-                view.goFish();
-                break;
-            case RULES:
-                view.rules();
-                break;
-            case MIDDLE_SCREEN:
-                view.middleScreen();
-                break;
-            case GAME_SELECT:
-                view.gameSelect();
-                break;
-
-            case END_SCORE:
-                view.endScreen();
-                break;
-        }
-    }
 
     /**
      * Run by the view when a player is submitting an action, which the controller passes along to the gamecontext (rules) as a PlayerAction object.
@@ -108,7 +85,8 @@ public class GameController {
         view.Update();
 
         if (gameContext != null && gameContext.isGameOver()) {
-            setCurrentView(ViewType.END_SCORE);
+            //setCurrentView(ViewType.END_SCORE);
+            view.endScreen();
             gameContext = null; // Reset the game context to allow for a new game
 
         }

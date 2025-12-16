@@ -6,8 +6,8 @@ import TDA367.CardGame.View.UI.cards.OpponentHand;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.CardConversion;
 import TDA367.CardGame.View.Views.MainView;
+import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
-import TDA367.CardGame.View.Views.ViewType;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 
@@ -40,14 +40,14 @@ public class GoFish implements ViewInterface {
 
     private GameState state;
     private GameController controller;
-    private MainView mainView;
+    private ViewController mainView;
     private CardConversion conversion;
 
     // Temp ljud test
     private Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
     private Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
-    public GoFish(GameState state, GameController controller, MainView mainView) {
+    public GoFish(GameState state, GameController controller, ViewController mainView) {
         this.state = state;
         this.controller = controller;
         this.mainView = mainView;
@@ -121,7 +121,7 @@ public class GoFish implements ViewInterface {
         // if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.update(mousePosition);
         if (state.isMiddleScreenOpen()) {
-            controller.setCurrentView(ViewType.MIDDLE_SCREEN);
+            mainView.middleScreen();
         }
     }
 

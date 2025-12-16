@@ -3,6 +3,7 @@ package TDA367.CardGame.View.Views.Menus;
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
+import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,12 +15,12 @@ import com.badlogic.gdx.math.Vector2;
  * The start menu
  */
 public class StartView implements ViewInterface {
-    private MainView mainView;
+    private ViewController mainView;
     private Texture menuBackground;
 
     private Column buttons;
 
-    public StartView(MainView mainView) {
+    public StartView(ViewController mainView) {
         this.mainView = mainView;
     }
 

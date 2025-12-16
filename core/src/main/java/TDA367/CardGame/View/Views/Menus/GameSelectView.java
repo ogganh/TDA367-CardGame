@@ -3,29 +3,32 @@ package TDA367.CardGame.View.Views.Menus;
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
+import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
+import TDA367.CardGame.controller.GameController;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameSelectView implements ViewInterface {
-    private MainView mainView;
+    private ViewController mainView;
 
     private Texture gameSelectBackground;
 
     float screenWidth = ViewInformation.screenSize.x;
     float screenHeight = ViewInformation.screenSize.y;
-
+    GameController gameController;
     // Column column = new Column(new Vector2(ViewInformation.screenSize.x/2,
     // ViewInformation.screenSize.y/2 + 50), 20);
 
     Row row = new Row(new Vector2(ViewInformation.screenSize.x / 4, 3 * ViewInformation.screenSize.y / 4),
             100);
 
-    public GameSelectView(MainView mainView) {
+    public GameSelectView(ViewController mainView, GameController gameController) {
         this.mainView = mainView;
+        this.gameController = gameController;
     }
 
     @Override
@@ -40,7 +43,8 @@ public class GameSelectView implements ViewInterface {
         gofish.changeAction(new ButtonAction() {
             @Override
             public void action() {
-                mainView.getController().setupGame();
+                gameController.StartGofish();
+
                 mainView.goFish();
             }
         });

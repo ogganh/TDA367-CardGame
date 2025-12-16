@@ -21,10 +21,12 @@ public class MiddleScreen implements ViewInterface{
     private float screenHeight = ViewInformation.screenSize.y;
 
     private Column buttons;
+    private ViewController mainView;
 
-    public MiddleScreen(GameState state, GameController controller) {
+    public MiddleScreen(ViewController mainView, GameState state, GameController controller) {
         this.state = state;
         this.controller = controller;
+        this.mainView = mainView;
     }
 
     @Override
@@ -41,7 +43,7 @@ public class MiddleScreen implements ViewInterface{
             public void action() {
                 // Send the input to the controller if a card is selected
                 state.closeMiddleScreen();
-                controller.setCurrentView(ViewType.GO_FISH);
+                mainView.goFish();
             }
         });
         btn.setScale(10, 10);

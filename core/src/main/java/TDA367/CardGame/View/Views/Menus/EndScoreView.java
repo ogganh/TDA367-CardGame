@@ -3,6 +3,7 @@ package TDA367.CardGame.View.Views.Menus;
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.MainView;
+import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.model.GameState;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class EndScoreView implements ViewInterface {
     private GameState state;
-    private MainView view;
+    private ViewController view;
     private Column scores;
 
     private Button menu;
@@ -20,7 +21,7 @@ public class EndScoreView implements ViewInterface {
     private int rowSpace = 100;
 
 
-    public EndScoreView(GameState state, MainView mainView){
+    public EndScoreView(GameState state, ViewController mainView){
         this.state = state;
         this.view = mainView;
     }
