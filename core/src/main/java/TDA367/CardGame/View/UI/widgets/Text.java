@@ -1,10 +1,12 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.widgets;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
+import TDA367.CardGame.View.UI.UIElement;
 
 public class Text implements UIElement{
     private BitmapFont font;
@@ -60,5 +62,17 @@ public class Text implements UIElement{
     @Override
     public void mouseUpdate(Vector2 mousePos) {
 
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
+    }
+
+    @Override
+    public void setScale(float x, float y) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setScale'");
     }
 }

@@ -1,9 +1,10 @@
 package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.Main;
-import TDA367.CardGame.View.UI.Button;
+
+import TDA367.CardGame.View.ViewManager;
 import TDA367.CardGame.View.UI.ButtonAction;
-import TDA367.CardGame.View.UI.Text;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,37 +15,37 @@ import com.badlogic.gdx.math.Vector2;
 /** View when "Rules" button is pressed. GoFish is hard coded. */
 
 public class RulesView implements ViewInterface {
-    private Text text;
-    private Button back;
-    private MainView mainView;
+    private UIElement text;
+    private UIElement back;
+    private ViewManager mainView;
 
-    public RulesView(MainView mainView) {
+    public RulesView(ViewManager mainView) {
         this.mainView = mainView;
     }
 
     @Override
     public void createView() {
-
         // Create Back button
-        back = new Button(
+        back = UIElementFactory.createButton(
             ViewInformation.font,
             "Back",
-            new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
-
-        // Add a "on click" function to the back button
-        back.changeAction(new ButtonAction() {
+            new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16),
+        new ButtonAction() {
             @Override
             public void action() {
                 mainView.goFish();
             }
-        });
+        }
+    );
+
+        // Add a "on click" function to the back button
 
         back.setScale(3, 2);
         back.setPosition(30,ViewInformation.screenSize.y -20);
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
         txtFont.getData().setScale(0.3f);
-        text = new Text(txtFont,
+        text = UIElementFactory.createText(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +
                 "Start:\n" +
@@ -73,7 +74,6 @@ public class RulesView implements ViewInterface {
         text.setPosition(60, ViewInformation.screenSize.y - 20);
 
     }
-
     @Override
     public void update() {
 

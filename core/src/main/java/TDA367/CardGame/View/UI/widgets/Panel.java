@@ -1,7 +1,9 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.widgets;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
+import TDA367.CardGame.View.UI.UIElement;
 
 import java.util.ArrayList;
 import java.util.List;

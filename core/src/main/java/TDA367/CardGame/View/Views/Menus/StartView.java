@@ -1,8 +1,9 @@
 package TDA367.CardGame.View.Views.Menus;
 
 import TDA367.CardGame.View.UI.*;
+
+import TDA367.CardGame.View.ViewManager;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewInterface;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,12 +15,12 @@ import com.badlogic.gdx.math.Vector2;
  * The start menu
  */
 public class StartView implements ViewInterface {
-    private MainView mainView;
+    private ViewManager mainView;
     private Texture menuBackground;
 
-    private Column buttons;
+    private UIElement buttons;
 
-    public StartView(MainView mainView) {
+    public StartView(ViewManager mainView) {
         this.mainView = mainView;
     }
 
@@ -33,37 +34,37 @@ public class StartView implements ViewInterface {
         menuBackground = new Texture(Gdx.files.internal("textures/menu_background.png"));
 
         // Column containing buttons
-        buttons = new Column(new Vector2(ViewInformation.screenSize.x/2, ViewInformation.screenSize.y /2 + 50), 50);
+        buttons = UIElementFactory.createColumn(new Vector2(ViewInformation.screenSize.x/2, ViewInformation.screenSize.y /2 + 50), 50);
 
         // Start game button
-        Button startButton = new Button(
+        UIElement startButton = UIElementFactory.createButton(
             ViewInformation.font,
             "Start Game",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
-        );
-        // Add an "Action" to the button, a function that is run when clicked
-        startButton.changeAction(new ButtonAction() {
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16),
+            new ButtonAction() {
             @Override
             public void action() {
 //                mainView.getController().setupGame();
 //                mainView.goFish();
                 mainView.gameSelect();
             }
-        });
-        startButton.setScale(8,3);
-
-        Button quitButton = new Button(
-            ViewInformation.font,
-            "Quit",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
+        }
         );
         // Add an "Action" to the button, a function that is run when clicked
-        quitButton.changeAction(new ButtonAction() {
+        startButton.setScale(8,3);
+
+        UIElement quitButton = UIElementFactory.createButton(
+            ViewInformation.font,
+            "Quit",
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16),
+            new ButtonAction() {
             @Override
             public void action() {
                 Gdx.app.exit();
             }
-        });
+        }
+        );
+        // Add an "Action" to the button, a function that is run when clicked
         quitButton.setScale(8,3);
 
         // Add the start button the column of buttons

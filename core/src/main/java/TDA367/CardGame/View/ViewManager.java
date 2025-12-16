@@ -1,5 +1,8 @@
-package TDA367.CardGame.View.Views;
+package TDA367.CardGame.View;
 
+import TDA367.CardGame.View.Views.MiddleScreen;
+import TDA367.CardGame.View.Views.RulesView;
+import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.View.Views.Games.GoFish;
 import TDA367.CardGame.View.Views.Menus.EndScoreView;
 import TDA367.CardGame.View.Views.Menus.GameSelectView;
@@ -13,7 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class MainView {
+public class ViewManager {
     private  ViewInterface currentView;
 
     private FitViewport viewPort;
@@ -26,7 +29,7 @@ public class MainView {
      * @param controller - The game controller, used as middleware when passing input to the model
      */
 
-    public MainView(FitViewport viewPort, GameState state, GameController controller) {
+    public ViewManager(FitViewport viewPort, GameState state, GameController controller) {
         currentView = new StartView(this);
         currentView.createView();
         this.viewPort = viewPort;
@@ -54,7 +57,7 @@ public class MainView {
         currentView.createView();
     }
     public void middleScreen(){
-        currentView = new MiddleScreen(state, controller);
+        currentView = new MiddleScreen(state, this);
         currentView.createView();
     }
     public void gameSelect(){

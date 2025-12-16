@@ -11,4 +11,7 @@ public interface UIElement {
     public void setOrigin(float x, float y);
     public void setRotation(float angle);
     public void mouseUpdate(Vector2 mousePos);
+    public void addUIElement(UIElement element);
+    public void setScale(float x, float y);
+
 }

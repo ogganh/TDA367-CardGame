@@ -1,4 +1,4 @@
-package TDA367.CardGame.View.UI;
+package TDA367.CardGame.View.UI.widgets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
+import TDA367.CardGame.View.UI.ButtonAction;
+import TDA367.CardGame.View.UI.UIElement;
 
 public class Button implements UIElement {
     private BitmapFont font;
@@ -23,11 +26,12 @@ public class Button implements UIElement {
     /**
      * Creates a button, sprite represents the background and the area that is clickable
      * */
-    public Button(BitmapFont font, String text, Sprite sprite) {
+    public Button(BitmapFont font, String text, Sprite sprite, ButtonAction action) {
         this.font = font;
         this.text = text;
         layout = new GlyphLayout(font, text);
         this.sprite = sprite;
+        changeAction(action);
     }
 
     /**
@@ -102,7 +106,15 @@ public class Button implements UIElement {
     public void changeAction(ButtonAction action){
         this.action = action;
     }
+
+    @Override
     public void setScale(float x, float y){
         sprite.setScale(x,y);
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
     }
 }
