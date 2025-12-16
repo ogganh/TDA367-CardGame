@@ -39,6 +39,7 @@ public class GoFishRules implements GameStrategy {
     @Override
     public void setup(GameState state) {
         this.state = state;
+        state.setTurnManager(this.turnManager);
         deck.shuffleDeck();
         int cardsPerPlayer = 7; // Standard: 7 kort per spelare
 
@@ -81,7 +82,6 @@ public class GoFishRules implements GameStrategy {
     public void endTurn() {
         state.openMiddleScreen();
         turnManager.next();
-        state.setCurrentPlayer((state.getCurrentPlayer()+1)%state.getPlayers().size());
     }
 
     public void endGame() {
