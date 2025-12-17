@@ -37,7 +37,7 @@ public class GoFishGameplayTest {
 
     /**
      * Testing if a full game can be played
-     * returns true
+     * returns t/f
      */
     @Test
     void fullGame() {
@@ -95,7 +95,7 @@ public class GoFishGameplayTest {
      * Testing progress and books working correctly
      */
     @Test
-    void gameProgresses_andPlayersGainPoints() {
+    void gameProgressesAndPlayersGainPoints() {
         GameState state = new GameState();
         GoFishUserPlayer p1 = new GoFishUserPlayer("P1");
         GoFishUserPlayer p2 = new GoFishUserPlayer("P2");
