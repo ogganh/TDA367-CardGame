@@ -6,6 +6,8 @@ import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.model.GameState;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -14,6 +16,7 @@ public class EndScoreView implements ViewInterface {
     private GameState state;
     private ViewController view;
     private Column scores;
+    private Texture winnerScreenBackground;
 
     private Button menu;
 
@@ -31,6 +34,8 @@ public class EndScoreView implements ViewInterface {
         scores = new Column(new Vector2(
             ViewInformation.screenSize.x / 3,
             3 * ViewInformation.screenSize.y / 4 ), columnSpace);
+
+        winnerScreenBackground = new Texture(Gdx.files.internal("textures/winner_background.png"));
 
         int winner = 0;
         for (int i = 0; i < state.getPlayers().size(); i++) {
@@ -89,6 +94,7 @@ public class EndScoreView implements ViewInterface {
 
     @Override
     public void draw(SpriteBatch batch) {
+        batch.draw(winnerScreenBackground, 0, 0, ViewInformation.screenSize.x, ViewInformation.screenSize.y);
         scores.draw(batch);
         menu.draw(batch);
     }
