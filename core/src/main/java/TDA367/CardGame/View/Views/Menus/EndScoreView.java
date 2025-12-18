@@ -2,7 +2,6 @@ package TDA367.CardGame.View.Views.Menus;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.model.GameState;
@@ -20,8 +19,7 @@ public class EndScoreView implements ViewInterface {
     private int columnSpace = 40;
     private int rowSpace = 100;
 
-
-    public EndScoreView(GameState state, ViewController mainView){
+    public EndScoreView(GameState state, ViewController mainView) {
         this.state = state;
         this.view = mainView;
     }
@@ -34,7 +32,8 @@ public class EndScoreView implements ViewInterface {
 
         int winner = 0;
         for (int i = 0; i < state.getPlayers().size(); i++) {
-            if (state.getBookCount(i) > state.getBookCount(winner)) winner = i;
+            if (state.getBookCount(i) > state.getBookCount(winner))
+                winner = i;
 
         }
         UIElement row = UIElementFactory.createRow(new Vector2(0,0), rowSpace);
@@ -46,7 +45,6 @@ public class EndScoreView implements ViewInterface {
         titles.addUIElement(UIElementFactory.createText(ViewInformation.font, "Player"));
         titles.addUIElement(UIElementFactory.createText(ViewInformation.font, "Books"));
         scores.addUIElement(titles);
-
 
         for (int i = 0; i < state.getPlayers().size(); i++) {
             row = UIElementFactory.createRow(new Vector2(0,0), rowSpace);
@@ -68,7 +66,6 @@ public class EndScoreView implements ViewInterface {
         );
         menu.setScale(5,3);
         menu.setPosition(350, 50);
-
 
     }
 

@@ -17,7 +17,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MiddleScreen implements ViewInterface {
     private GameState state;
-    private GameController controller;
 
     private float screenWidth = ViewInformation.screenSize.x;
     private float screenHeight = ViewInformation.screenSize.y;
@@ -27,7 +26,6 @@ public class MiddleScreen implements ViewInterface {
 
     public MiddleScreen(ViewController mainView, GameState state, GameController controller) {
         this.state = state;
-        this.controller = controller;
         this.mainView = mainView;
     }
 

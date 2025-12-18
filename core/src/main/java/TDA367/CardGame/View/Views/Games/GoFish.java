@@ -5,7 +5,6 @@ import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.UI.cards.OpponentHand;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.Views.CardConversion;
-import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.controller.GameController;
