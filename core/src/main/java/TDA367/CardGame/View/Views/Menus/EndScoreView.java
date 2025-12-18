@@ -55,7 +55,7 @@ public class EndScoreView implements ViewInterface {
 
         for (int i = 0; i < state.getPlayers().size(); i++) {
             row = new Row(new Vector2(0,0), rowSpace);
-            row.addUIElement(new Text(ViewInformation.font, String.valueOf(i)));
+            row.addUIElement(new Text(ViewInformation.font, String.valueOf(i+1)));
             row.addUIElement(new Text(ViewInformation.font, String.valueOf(state.getBookCount(i))));
             scores.addUIElement(row);
         }
