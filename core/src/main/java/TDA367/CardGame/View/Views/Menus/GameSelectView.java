@@ -2,7 +2,6 @@ package TDA367.CardGame.View.Views.Menus;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.controller.GameController;
@@ -34,7 +33,7 @@ public class GameSelectView implements ViewInterface {
     @Override
     public void createView() {
 
-        //Column temp;
+        // Column temp;
         gameSelectBackground = new Texture(Gdx.files.internal("textures/gameselect_background.png"));
         Button gofish = new GreenButton(
                 ViewInformation.font,
@@ -57,7 +56,7 @@ public class GameSelectView implements ViewInterface {
         plump.changeAction(new ButtonAction() {
             @Override
             public void action() {
-                //gameController.();
+                // gameController.();
 
                 mainView.Plump();
             }
@@ -68,7 +67,7 @@ public class GameSelectView implements ViewInterface {
         // temp.addUIElement(gofish);
         // temp.addUIElement(plump);
 
-        //row.addUIElement(temp);
+        // row.addUIElement(temp);
         row.addUIElement(gofish);
         row.addUIElement(plump);
         /*

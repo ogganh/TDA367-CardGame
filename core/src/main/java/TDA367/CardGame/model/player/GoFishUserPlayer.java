@@ -1,7 +1,6 @@
 package TDA367.CardGame.model.player;
 
 import TDA367.CardGame.model.card_logic.Card;
-import TDA367.CardGame.model.card_logic.Rank;
 
 import java.util.List;
 
