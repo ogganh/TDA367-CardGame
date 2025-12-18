@@ -69,7 +69,7 @@ public class GoFishUserPlayer extends UserPlayer {
                     // Remove all cards of this rank safely
                     this.hand.removeIf(c -> c.getRank().equals(rank));
                     this.incPoints();
-                    Gdx.app.log("GoFishUserPlayer", this.getName() + " collected a book of " + rank + "s. Total points: " + this.getPoints());
+
                 }
             }
         }
