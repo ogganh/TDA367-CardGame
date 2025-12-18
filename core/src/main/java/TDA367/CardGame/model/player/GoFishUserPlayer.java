@@ -1,6 +1,8 @@
 package TDA367.CardGame.model.player;
 
 import TDA367.CardGame.model.card_logic.Card;
+import TDA367.CardGame.model.card_logic.Rank;
+
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -69,7 +71,8 @@ public class GoFishUserPlayer extends UserPlayer {
                     // Remove all cards of this rank safely
                     this.hand.removeIf(c -> c.getRank().equals(rank));
                     this.incPoints();
-                    Gdx.app.log("GoFishUserPlayer", this.getName() + " collected a book of " + rank + "s. Total points: " + this.getPoints());
+                    Gdx.app.log("GoFishUserPlayer",
+                            this.getName() + " collected a book of " + rank + "s. Total points: " + this.getPoints());
                 }
             }
         }
@@ -77,5 +80,14 @@ public class GoFishUserPlayer extends UserPlayer {
 
     public List<Card> getHand() {
         return super.getHand();
+    }
+
+    public void sortHand() {
+        this.hand.sort((card1, card2) -> {
+            int rankComparison = Integer.compare(
+                    Rank.rankToValue(card1.getRank()),
+                    Rank.rankToValue(card2.getRank()));
+            return rankComparison;
+        });
     }
 }

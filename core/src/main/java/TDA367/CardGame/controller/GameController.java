@@ -14,19 +14,20 @@ import TDA367.CardGame.model.card_logic.CardDeck;
 import TDA367.CardGame.model.gameLogic.GameContext;
 import TDA367.CardGame.model.gameLogic.strategies.GoFishRules;
 
-
 /**
- * The GameController instantiates most objects and handles the communication from the view to the model amongst other things.
+ * The GameController instantiates most objects and handles the communication
+ * from the view to the model amongst other things.
  */
 public class GameController {
-    private FitViewport viewport;    // Window
-    private MainView view;  // Manages the UI
+    private FitViewport viewport; // Window
+    private MainView view; // Manages the UI
     private SpriteBatch spriteBatch;
-    private GameContext gameContext;    // Manages the rules
-    private GameState gameState;  // The state keeps track of the current games data
+    private GameContext gameContext; // Manages the rules
+    private GameState gameState; // The state keeps track of the current games data
 
     /**
-     * The controller constructor creates the MainView and sets it to display the start menu
+     * The controller constructor creates the MainView and sets it to display the
+     * start menu
      */
     public GameController(FitViewport viewport, GameState gameState, MainView mainView) {
         this.viewport = viewport;
@@ -45,14 +46,14 @@ public class GameController {
         // Add players and deck to gamestate, should probably be moved into the rules?
         // Delegate this to rules:
         gameState.reset();
-        
+
     }
-    public void StartGofish(){
+
+    public void StartGofish() {
         setupGame();
         gameState.addPlayer(new GoFishUserPlayer("Player 1"));
         gameState.addPlayer(new GoFishUserPlayer("Player 2"));
         gameState.addPile("lake", new CardDeck());
-
 
         // Create a context with the gamestate and GoFishRules
         gameContext = new GameContext(gameState, new GoFishRules(gameState.getPlayers(), gameState.getPile("lake")));
@@ -60,21 +61,27 @@ public class GameController {
         Gdx.app.log("GameController", "Setting up game with players: " + gameState.getPlayers().toString());
     }
 
-
-    public GameContext getGameContext() { return gameContext; }
+    public GameContext getGameContext() {
+        return gameContext;
+    }
 
     /**
-     * Run by the view when a player is submitting an action, which the controller passes along to the gamecontext (rules) as a PlayerAction object.
+     * Run by the view when a player is submitting an action, which the controller
+     * passes along to the gamecontext (rules) as a PlayerAction object.
+     * 
      * @param sourcePlayerIndex - the player taking the action
-     * @param action - the type of action, currently unused
-     * @param rank - the rank of the card, should preferably be replaced by a Card object to allow for referencing a specific card in games where duplicates may occur
-     * @param suit - the suit of the card, should preferably be replaced by a Card object to allow for referencing a specific card in games where duplicates may occur
+     * @param action            - the type of action, currently unused
+     * @param rank              - the rank of the card, should preferably be
+     *                          replaced by a Card object to allow for referencing a
+     *                          specific card in games where duplicates may occur
+     * @param suit              - the suit of the card, should preferably be
+     *                          replaced by a Card object to allow for referencing a
+     *                          specific card in games where duplicates may occur
      */
     public void handleAction(int sourcePlayerIndex, String action, String rank, String suit) {
-        gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, null, rank, suit));
+        gameContext.handleTurn(new PlayerAction(sourcePlayerIndex, action, rank, suit));
 
         view.updateState();
-
 
     }
 
@@ -85,7 +92,7 @@ public class GameController {
         view.Update();
 
         if (gameContext != null && gameContext.isGameOver()) {
-            //setCurrentView(ViewType.END_SCORE);
+            // setCurrentView(ViewType.END_SCORE);
             view.endScreen();
             gameContext = null; // Reset the game context to allow for a new game
 
@@ -104,5 +111,14 @@ public class GameController {
 
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    public void endTurn() {
+        try {
+            gameContext.getRules().endTurn();
+            view.updateState();
+        } catch (Exception e) {
+            view.updateState();
+        }
     }
 }

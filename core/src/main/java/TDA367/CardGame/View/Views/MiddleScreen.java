@@ -7,15 +7,15 @@ import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.UI.Button;
 
-
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-/** The view between player turns. Prohibits player from seeing opponents cards. */
+/**
+ * The view between player turns. Prohibits player from seeing opponents cards.
+ */
 
-public class MiddleScreen implements ViewInterface{
+public class MiddleScreen implements ViewInterface {
     private GameState state;
     private GameController controller;
 
@@ -33,11 +33,11 @@ public class MiddleScreen implements ViewInterface{
 
     @Override
     public void createView() {
-        buttons = new Column(new Vector2(screenWidth/2, screenHeight /2 + 50), 50);
+        buttons = new Column(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
         Button btn = new Button(
-            ViewInformation.font,
-            "Next player is player " + (state.getCurrentPlayer() + 1),
-            new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+                ViewInformation.font,
+                "Next player is player " + (state.getCurrentPlayer() + 1),
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
 
         // Add a "on click" function to the guess button
         btn.changeAction(new ButtonAction() {
@@ -62,6 +62,7 @@ public class MiddleScreen implements ViewInterface{
     public void updateState() {
 
     }
+
     @Override
     public void mouseUpdate(Vector2 mousePosition) {
         buttons.mouseUpdate(mousePosition);
@@ -70,14 +71,9 @@ public class MiddleScreen implements ViewInterface{
     @Override
     public void draw(SpriteBatch batch) {
 
-
         // Rita knappen först
         buttons.draw(batch);
 
     }
-
-
-
-
 
 }

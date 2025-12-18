@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
-/** GameState keeps track of registered players, instances of card piles, and the current player.
- * To support multiple card games, a HashMap is used to store different card piles by name.
+/**
+ * GameState keeps track of registered players, instances of card piles, and the
+ * current player.
+ * To support multiple card games, a HashMap is used to store different card
+ * piles by name.
  */
 
 public class GameState {
@@ -20,17 +23,43 @@ public class GameState {
     private List<UserPlayer> players = new ArrayList<>();
     private TurnManager turnManager;
     private boolean middleScreen = false;
+    private LastAction lastAction = new LastAction();
 
-    public void addPile(String name, CardDeck pile) {piles.put(name, pile);}
-    public void addPlayer(UserPlayer player) {players.add(player);}
-    public void closeMiddleScreen() {middleScreen = false;}
-    public void openMiddleScreen() {middleScreen = true;}
-    public boolean isMiddleScreenOpen() {return middleScreen;}
-    public CardDeck getPile(String name) {return piles.get(name);}
-    public List<UserPlayer> getPlayers() {return players;}
-    public void setTurnManager(TurnManager turnManager) {this.turnManager = turnManager;}
-    public int getCurrentPlayer() { if (turnManager == null) {
-        throw new IllegalStateException("TurnManager not set");
+    public void addPile(String name, CardDeck pile) {
+        piles.put(name, pile);
+    }
+
+    public void addPlayer(UserPlayer player) {
+        players.add(player);
+    }
+
+    public void closeMiddleScreen() {
+        middleScreen = false;
+    }
+
+    public void openMiddleScreen() {
+        middleScreen = true;
+    }
+
+    public boolean isMiddleScreenOpen() {
+        return middleScreen;
+    }
+
+    public CardDeck getPile(String name) {
+        return piles.get(name);
+    }
+
+    public List<UserPlayer> getPlayers() {
+        return players;
+    }
+
+    public void setTurnManager(TurnManager turnManager) {
+        this.turnManager = turnManager;
+    }
+
+    public int getCurrentPlayer() {
+        if (turnManager == null) {
+            throw new IllegalStateException("TurnManager not set");
         }
         return turnManager.getCurrentIndex();
     }
@@ -43,12 +72,18 @@ public class GameState {
         return 0;
     }
 
-
     public void reset() {
         piles = new HashMap<>();
         players = new ArrayList<>();
         middleScreen = false;
         turnManager = null;
     }
-}
 
+    public LastAction getLastAction() {
+        return lastAction;
+    }
+
+    public void setLastAction(LastAction a) {
+        this.lastAction = a;
+    }
+}

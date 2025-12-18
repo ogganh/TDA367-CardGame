@@ -1,6 +1,7 @@
 package TDA367.CardGame.model.gameLogic.strategies;
 
 import TDA367.CardGame.model.GameState;
+import TDA367.CardGame.model.LastAction;
 import TDA367.CardGame.model.PlayerAction;
 import TDA367.CardGame.model.card_logic.Card;
 import TDA367.CardGame.model.card_logic.CardDeck;
@@ -9,6 +10,9 @@ import TDA367.CardGame.model.player.GoFishUserPlayer;
 import TDA367.CardGame.model.player.UserPlayer;
 
 import java.util.List;
+
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 
 public class GoFishRules implements GameStrategy {
@@ -17,6 +21,7 @@ public class GoFishRules implements GameStrategy {
     private final CardDeck deck;
     private final TurnManager turnManager;
     private GameState state;
+    private boolean endTurn = false;
 
     public GoFishRules(List<? extends UserPlayer> players, CardDeck deck) {
         if (players.size() < 2) {
@@ -27,7 +32,8 @@ public class GoFishRules implements GameStrategy {
 
         for (UserPlayer p : players) {
             if (!(p instanceof GoFishUserPlayer)) {
-                throw new IllegalArgumentException("All players must be GoFishUserPlayer"); // Alla spelare måste vara GoFishUserPlayer
+                throw new IllegalArgumentException("All players must be GoFishUserPlayer"); // Alla spelare måste vara
+                                                                                            // GoFishUserPlayer
             }
             this.players.add((GoFishUserPlayer) p);
         }
@@ -59,6 +65,11 @@ public class GoFishRules implements GameStrategy {
 
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
+        if (action.getActionType() == "SORT") {
+            GoFishUserPlayer current = players.get(turnManager.getCurrentIndex());
+            current.sortHand();
+            return;
+        }
         int opponentIndex = action.getPlayerIndex(); // Index för motståndaren
         Rank requestedRank = Rank.valueOf(action.getRank()); // Begärt rank
         handleTurnImpl(opponentIndex, requestedRank); // Hantera turen
@@ -80,6 +91,9 @@ public class GoFishRules implements GameStrategy {
     }
 
     public void endTurn() {
+        if (!endTurn) {
+            return; // Turen fortsätter
+        }
         state.openMiddleScreen();
         turnManager.next();
     }
@@ -98,13 +112,13 @@ public class GoFishRules implements GameStrategy {
             player.addCard(drawn); // Lägg till kortet i spelarens hand
             player.collectBooks(); // Kolla efter böcker
 
-            // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i vyn)
+            // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i
+            // vyn)
             endTurn();
             return true;
         }
         return false;
     }
-
 
     public void handleTurnImpl(int opponentIndex, Rank requestedRank) {
         int currentIndex = turnManager.getCurrentIndex();
@@ -117,6 +131,12 @@ public class GoFishRules implements GameStrategy {
         GoFishUserPlayer opponent = players.get(opponentIndex);
 
         if (opponent.hasRank(String.valueOf(requestedRank))) {
+            endTurn = false;
+            LastAction a = new LastAction();
+            a.source = LastAction.SourceType.OPPONENT;
+            a.sourcePlayerIndex = opponentIndex;
+            a.targetPlayerIndex = currentIndex;
+            state.setLastAction(a);
 
             List<Card> taken = opponent.giveCards(String.valueOf(requestedRank));
             for (Card c : taken) {
@@ -124,30 +144,30 @@ public class GoFishRules implements GameStrategy {
             }
             current.collectBooks();
 
-
             if (refillAndEndTurnIfEmpty(opponent)) { // Kolla motståndarens hand, ge kort om han är tom
                 return;
             }
-
 
             if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
                 return;
             }
 
-
-
         } else {
-
+            LastAction a = new LastAction();
+            a.source = LastAction.SourceType.POND;
+            a.sourcePlayerIndex = opponentIndex;
+            a.targetPlayerIndex = currentIndex;
+            state.setLastAction(a);
             if (!deck.isEmpty()) {
                 Card drawn = deck.removeCard();
                 current.addCard(drawn);
                 current.collectBooks();
 
-                if (refillAndEndTurnIfEmpty(current)){ // Kolla den aktiva spelarens hand, ge kort om han är tom
+                if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
                     return;
                 }
             }
-            endTurn(); // Turen går alltid vidare efter Go Fish.
+            endTurn = true; // Turen går alltid vidare efter Go Fish.
         }
     }
 
