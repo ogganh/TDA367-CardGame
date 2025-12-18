@@ -23,7 +23,7 @@ public class GameSelectView implements ViewInterface {
     // Column column = new Column(new Vector2(ViewInformation.screenSize.x/2,
     // ViewInformation.screenSize.y/2 + 50), 20);
 
-    Row row = new Row(new Vector2(ViewInformation.screenSize.x / 4, 3 * ViewInformation.screenSize.y / 4),
+    UIElement row = UIElementFactory.createRow(new Vector2(ViewInformation.screenSize.x / 4, 3 * ViewInformation.screenSize.y / 4),
             100);
 
     public GameSelectView(ViewController mainView, GameController gameController) {
@@ -36,51 +36,35 @@ public class GameSelectView implements ViewInterface {
 
         //Column temp;
         gameSelectBackground = new Texture(Gdx.files.internal("textures/gameselect_background.png"));
-        Button gofish = new GreenButton(
+        UIElement gofish = UIElementFactory.createGreenButton(
                 ViewInformation.font,
-                "GoFish");
-        // Add an "Action" to the button, a function that is run when clicked
-        gofish.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                gameController.StartGofish();
+                "GoFish",
+                new ButtonAction() {
+                    @Override
+                    public void action() {
+                        gameController.StartGofish();
 
-                mainView.goFish();
-            }
-        });
+                        mainView.goFish();
+                    }
+                }
+            );
         gofish.setScale(5, 3);
 
-        Button plump = new GreenButton(
+        UIElement plump = UIElementFactory.createGreenButton(
                 ViewInformation.font,
-                "Plump");
-        // Add an "Action" to the button, a function that is run when clicked
-        plump.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                //gameController.();
+                "Plump",
+                new ButtonAction() {
+                    @Override
+                    public void action() {
+                        //gameController.();
 
-                mainView.Plump();
-            }
+                        mainView.Plump();
+                    }
         });
         plump.setScale(5, 3);
 
-        // temp = new Column(new Vector2(0, 0), 20);
-        // temp.addUIElement(gofish);
-        // temp.addUIElement(plump);
-
-        //row.addUIElement(temp);
         row.addUIElement(gofish);
         row.addUIElement(plump);
-        /*
-         * for (int i = 0; i < 2; i++) {
-         * temp = new Column(new Vector2(0,0),20);
-         * for (int j = 0; j < 5; j++) {
-         * temp.AddUIElement(UIElementFactory.CreateText(ViewInformation.font, "Test"));
-         * }
-         * row.AddUIElement(temp);
-         * }
-         */
-
     }
 
     @Override

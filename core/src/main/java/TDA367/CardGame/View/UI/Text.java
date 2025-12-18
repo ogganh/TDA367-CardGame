@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Text implements UIElement{
+class Text implements UIElement{
     private BitmapFont font;
     private String text;
     private Vector2 position;
@@ -60,5 +60,17 @@ public class Text implements UIElement{
     @Override
     public void mouseUpdate(Vector2 mousePos) {
 
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
+    }
+
+    @Override
+    public void setScale(float x, float y) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setScale'");
     }
 }

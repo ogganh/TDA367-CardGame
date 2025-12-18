@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Panel {
+class Panel {
     private Vector2 position;
     private int height;
     private int width;

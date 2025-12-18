@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class TextInputField implements UIElement{
+class TextInputField implements UIElement{
     private BitmapFont font;
     private String text;
     private Vector2 position;
@@ -149,5 +149,11 @@ public class TextInputField implements UIElement{
     }
     public void setScale(float x, float y) {
         sprite.setScale(x, y);
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
     }
 }

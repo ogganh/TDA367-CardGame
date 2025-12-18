@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import TDA367.CardGame.View.ViewInformation;
 
-public class Button implements UIElement {
+class Button implements UIElement {
     private BitmapFont font;
     private String text;
     private Vector2 position;
@@ -25,11 +25,12 @@ public class Button implements UIElement {
      * Creates a button, sprite represents the background and the area that is
      * clickable
      */
-    public Button(BitmapFont font, String text, Sprite sprite) {
+    public Button(BitmapFont font, String text, Sprite sprite, ButtonAction action) {
         this.font = font;
         this.text = text;
         layout = new GlyphLayout(font, text);
         this.sprite = sprite;
+        changeAction(action);
     }
 
     /**
@@ -116,5 +117,11 @@ public class Button implements UIElement {
 
     public void setScale(float x, float y) {
         sprite.setScale(x, y);
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
     }
 }

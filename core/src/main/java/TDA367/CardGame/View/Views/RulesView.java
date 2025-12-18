@@ -1,9 +1,8 @@
 package TDA367.CardGame.View.Views;
 
-import TDA367.CardGame.View.UI.Button;
 import TDA367.CardGame.View.UI.ButtonAction;
-import TDA367.CardGame.View.UI.GreenButton;
-import TDA367.CardGame.View.UI.Text;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.View.ViewInformation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,8 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 /** View when "Rules" button is pressed. GoFish is hard coded. */
 
 public class RulesView implements ViewInterface {
-    private Text text;
-    private Button back;
+    private UIElement text;
+    private UIElement back;
     private ViewController mainView;
 
     public RulesView(ViewController mainView) {
@@ -25,24 +24,26 @@ public class RulesView implements ViewInterface {
     public void createView() {
 
         // Create Back button
-        back = new GreenButton(
+        back = UIElementFactory.createGreenButton(
             ViewInformation.font,
-            "Back");
-
-        // Add a "on click" function to the back button
-        back.changeAction(new ButtonAction() {
+            "Back",
+            new ButtonAction() {
             @Override
             public void action() {
                 mainView.goFish();
             }
-        });
+        }
+        
+        );
+
+        // Add a "on click" function to the back button
 
         back.setScale(3, 2);
         back.setPosition(30,ViewInformation.screenSize.y -20);
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
         txtFont.getData().setScale(0.3f);
-        text = new Text(txtFont,
+        text = UIElementFactory.createText(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +
                 "Start:\n" +

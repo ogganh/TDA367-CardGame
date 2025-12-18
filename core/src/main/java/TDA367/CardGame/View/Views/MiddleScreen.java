@@ -1,11 +1,11 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.ButtonAction;
-import TDA367.CardGame.View.UI.Column;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.UI.Button;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,7 +22,7 @@ public class MiddleScreen implements ViewInterface {
     private float screenWidth = ViewInformation.screenSize.x;
     private float screenHeight = ViewInformation.screenSize.y;
 
-    private Column buttons;
+    private UIElement buttonsColumn;
     private ViewController mainView;
 
     public MiddleScreen(ViewController mainView, GameState state, GameController controller) {
@@ -33,23 +33,23 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void createView() {
-        buttons = new Column(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
-        Button btn = new Button(
+        buttonsColumn = UIElementFactory.createColumn(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
+        UIElement btn = UIElementFactory.createButton(
                 ViewInformation.font,
                 "Next player is player " + (state.getCurrentPlayer() + 1),
-                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
-
-        // Add a "on click" function to the guess button
-        btn.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                // Send the input to the controller if a card is selected
-                state.closeMiddleScreen();
-                mainView.goFish();
-            }
-        });
+                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16),
+                new ButtonAction() {
+                    @Override
+                    public void action() {
+                        // Send the input to the controller if a card is selected
+                        state.closeMiddleScreen();
+                        mainView.goFish();
+                    }
+                }
+            
+        );
         btn.setScale(10, 10);
-        buttons.addUIElement(btn);
+        buttonsColumn.addUIElement(btn);
 
     }
 
@@ -65,14 +65,13 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void mouseUpdate(Vector2 mousePosition) {
-        buttons.mouseUpdate(mousePosition);
+        buttonsColumn.mouseUpdate(mousePosition);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
 
-        // Rita knappen först
-        buttons.draw(batch);
+        buttonsColumn.draw(batch);
 
     }
 
