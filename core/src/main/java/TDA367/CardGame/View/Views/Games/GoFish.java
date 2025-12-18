@@ -35,9 +35,6 @@ public class GoFish implements ViewInterface {
 
     private Button rules;
 
-    // float screenWidth = ViewInformation.screenSize.x;
-    // float screenHeight = ViewInformation.screenSize.y;
-
     private Vector2 mousePosition = new Vector2(0, 0);
 
     private GameState state;
@@ -145,7 +142,6 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void update() {
-        // if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.update(mousePosition);
         if (state.isMiddleScreenOpen()) {
             mainView.middleScreen();
@@ -168,7 +164,6 @@ public class GoFish implements ViewInterface {
         // update player hand
         cardHand.resetHand();
 
-        // TODO: Viewn ska inte ha kontakt med UserPlayer
         int size = state.getPlayers().get(state.getCurrentPlayer()).getHand().size();
         for (int i = 0; i < size; i++) {
             String rank = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getRank();

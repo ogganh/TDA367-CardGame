@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class UIElementFactory {
-//    public static UIElement CreateButton(BitmapFont font, String text){
-//        return new Button(font, text);
-//    }
     public static UIElement createText(BitmapFont font, String text){
         return new Text(font, text);
     }

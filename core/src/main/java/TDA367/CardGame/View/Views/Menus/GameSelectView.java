@@ -63,22 +63,10 @@ public class GameSelectView implements ViewInterface {
         });
         plump.setScale(5, 3);
 
-        // temp = new Column(new Vector2(0, 0), 20);
-        // temp.addUIElement(gofish);
-        // temp.addUIElement(plump);
 
-        // row.addUIElement(temp);
         row.addUIElement(gofish);
         row.addUIElement(plump);
-        /*
-         * for (int i = 0; i < 2; i++) {
-         * temp = new Column(new Vector2(0,0),20);
-         * for (int j = 0; j < 5; j++) {
-         * temp.AddUIElement(UIElementFactory.CreateText(ViewInformation.font, "Test"));
-         * }
-         * row.AddUIElement(temp);
-         * }
-         */
+
 
     }
 

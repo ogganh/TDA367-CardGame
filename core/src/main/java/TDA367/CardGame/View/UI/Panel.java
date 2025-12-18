@@ -12,7 +12,6 @@ public class Panel {
     private int width;
     private List<UIElement> UIElements;
 
-    //private List<Vector2> relativePositions = new ArrayList<>();
     public Panel(Vector2 position, int width, int height) {
         this.position = position;
         this.height = height;

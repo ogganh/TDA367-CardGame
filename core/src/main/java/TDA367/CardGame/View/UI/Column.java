@@ -28,7 +28,6 @@ public class Column implements UIElement{
         spaceElements();
     }
     private void spaceElements(){
-        //int heightMargin = height / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
             UIElements.get(i).setPosition(position.x, position.y - spaceBetween * i);
