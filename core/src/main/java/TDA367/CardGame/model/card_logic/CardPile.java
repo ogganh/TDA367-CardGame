@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * This class can be used to represent a player's hand or other piles in the game.
  */
 
-public class CardPile implements PlayableStackInterface {
+public class CardPile extends AbstractCardPile {
 
     ArrayList<Card> cardsInHand;
 

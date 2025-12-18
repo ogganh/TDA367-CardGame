@@ -9,7 +9,7 @@ import java.util.ArrayList;
      */
 
 
-public class CardDeck extends AbstractCardPile implements PlayableStackInterface {
+public class CardDeck extends AbstractCardPile {
 
     // Limits the maximum deck size
     private final int DECK_SIZE = 52;
