@@ -42,6 +42,8 @@ public class GoFish implements ViewInterface {
     private ViewController mainView;
     private CardConversion conversion;
 
+    private boolean buttonsEnabled = true;
+
     // Temp ljud test
     private Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
     private Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
@@ -82,8 +84,10 @@ public class GoFish implements ViewInterface {
         sortButton.changeAction(new ButtonAction() {
             @Override
             public void action() {
-                // Send the input to the controller if a card is selected
-                controller.handleAction(currentPlayer, "SORT", null, null);
+                if (buttonsEnabled) {
+                    // Send the input to the controller if a card is selected
+                    controller.handleAction(currentPlayer, "SORT", null, null);
+                }
             }
         });
 
@@ -99,19 +103,24 @@ public class GoFish implements ViewInterface {
         guessButton.changeAction(new ButtonAction() {
             @Override
             public void action() {
-                // Send the input to the controller if a card is selected
-                if (cardHand.getSelectIndex() > -1) {
-                    controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
-                            conversion.intToRank(cardHand.getSelectedCard()),
-                            conversion.intToSuit(cardHand.getSelectedCard()));
-                    // Delay ending the turn slightly so the UI/animations can show the handled
-                    // action
-                    Timer.instance().scheduleTask(new Timer.Task() {
-                        @Override
-                        public void run() {
-                            controller.endTurn();
-                        }
-                    }, 0.75f); // 0.75 seconds = 750 ms
+                if (buttonsEnabled) {
+
+                    buttonsEnabled = false;
+                    // Send the input to the controller if a card is selected
+                    if (cardHand.getSelectIndex() > -1) {
+                        controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
+                                conversion.intToRank(cardHand.getSelectedCard()),
+                                conversion.intToSuit(cardHand.getSelectedCard()));
+                        // Delay ending the turn slightly so the UI/animations can show the handled
+                        // action
+                        Timer.instance().scheduleTask(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                controller.endTurn();
+                                buttonsEnabled = true;
+                            }
+                        }, 0.75f); // 0.75 seconds = 750 ms
+                    }
                 }
             }
         });
