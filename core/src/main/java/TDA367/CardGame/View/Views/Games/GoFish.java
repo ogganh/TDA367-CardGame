@@ -10,6 +10,7 @@ import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.model.LastAction;
+import TDA367.CardGame.View.SoundManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -48,9 +49,6 @@ public class GoFish implements ViewInterface {
 
     private boolean buttonsEnabled = true;
 
-    // Temp ljud test
-    private Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
-    private Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
     public GoFish(GameState state, GameController controller, ViewController mainView) {
         this.state = state;
@@ -76,7 +74,7 @@ public class GoFish implements ViewInterface {
             cardX = rand.nextFloat(ViewInformation.screenSize.x / 3, 2 * ViewInformation.screenSize.x / 3);
             cardY = rand.nextFloat(ViewInformation.screenSize.y / 4, 2 * ViewInformation.screenSize.y / 4);
             thePond.get(i).setPosition(
-                    cardX, 
+                    cardX,
                     cardY
                     );
             thePond.get(i).setScale(0.5f);
@@ -162,43 +160,83 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void updateState() {
+
+        // Byt hand om spelare byts
         if (state.getCurrentPlayer() != currentPlayer) {
             cardHand.nextPlayer();
         }
 
-        // // Temp ljud test
-        // if (state.getCurrentPlayer() == currentPlayer) {
-        //     bell.play();
-        // }
+        // Spela ljud EN GÅNG baserat på senaste handlingen
+        LastAction lastAction = state.getLastAction();
+        boolean fromPond = lastAction.source == LastAction.SourceType.POND;
+        boolean fromOpponent = lastAction.source == LastAction.SourceType.OPPONENT;
 
-        // update player hand
+        if (fromPond) {
+            SoundManager.playPickup();
+        } else if (fromOpponent) {
+            SoundManager.playBell();
+        }
+
+        // Reset last action direkt så ljudet inte spammas
+        if (fromPond || fromOpponent) {
+            LastAction reset = new LastAction();
+            reset.source = LastAction.SourceType.UNKNOWN;
+            state.setLastAction(reset);
+        }
+
+        // Uppdatera spelarens hand
         cardHand.resetHand();
 
-        int size = state.getPlayers().get(state.getCurrentPlayer()).getHand().size();
+        int size = state.getPlayers()
+            .get(state.getCurrentPlayer())
+            .getHand()
+            .size();
+
         for (int i = 0; i < size; i++) {
-            String rank = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getRank();
-            String suit = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getSuit();
-            Vector2 position = new Vector2(ViewInformation.screenSize.x / 2, ViewInformation.screenSize.y / 2);
-            if (state.getLastAction().source == LastAction.SourceType.POND) {
-                LastAction a = new LastAction();
-                a.source = LastAction.SourceType.UNKNOWN;
-                state.setLastAction(a);
-                Sprite pondCard = thePond.removeLast();
+            String rank = state.getPlayers()
+                .get(state.getCurrentPlayer())
+                .getHand()
+                .get(i)
+                .getRank();
+
+            String suit = state.getPlayers()
+                .get(state.getCurrentPlayer())
+                .getHand()
+                .get(i)
+                .getSuit();
+
+            Vector2 position = new Vector2(
+                ViewInformation.screenSize.x / 2,
+                ViewInformation.screenSize.y / 2
+            );
+
+            // Animationens startposition
+            if (fromPond && !thePond.isEmpty()) {
+                Sprite pondCard = thePond.remove(thePond.size() - 1);
                 position = new Vector2(pondCard.getX(), pondCard.getY());
-            } else if (state.getLastAction().source == LastAction.SourceType.OPPONENT) {
-                position = new Vector2(ViewInformation.screenSize.x / 2, ViewInformation.screenSize.y * 7 / 8);
             }
+            else if (fromOpponent) {
+                position = new Vector2(
+                    ViewInformation.screenSize.x / 2,
+                    ViewInformation.screenSize.y * 7 / 8
+                );
+            }
+
             cardHand.addCard(conversion.cardToInt(suit, rank), position);
         }
 
-
         currentPlayer = state.getCurrentPlayer();
 
-        // Update opponents hands
+        // Uppdatera motståndarens hand
         opponentHands.get(0).resetHand();
-
-        opponentHands.get(0).update(state.getPlayers().get((state.getCurrentPlayer() + 1) % 2).getHand().size());
+        opponentHands.get(0).update(
+            state.getPlayers()
+                .get((state.getCurrentPlayer() + 1) % 2)
+                .getHand()
+                .size()
+        );
     }
+
 
     @Override
     public void mouseUpdate(Vector2 mousePosition) {
