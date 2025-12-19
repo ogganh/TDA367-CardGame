@@ -39,9 +39,6 @@ public class GoFish implements ViewInterface {
 
     private UIElement rules;
 
-    // float screenWidth = ViewInformation.screenSize.x;
-    // float screenHeight = ViewInformation.screenSize.y;
-
     private Vector2 mousePosition = new Vector2(0, 0);
 
     private GameState state;
@@ -49,6 +46,11 @@ public class GoFish implements ViewInterface {
     private ViewController mainView;
     private CardConversion conversion;
 
+    private boolean buttonsEnabled = true;
+
+    // Temp ljud test
+    private Sound sound = Gdx.audio.newSound(Gdx.files.internal("sounds/pickupCard.wav"));
+    private Sound bell = Gdx.audio.newSound(Gdx.files.internal("sounds/bell.wav"));
 
     public GoFish(GameState state, GameController controller, ViewController mainView) {
         this.state = state;
@@ -144,7 +146,6 @@ public class GoFish implements ViewInterface {
 
     @Override
     public void update() {
-        // if (Gdx.input.isKeyJustPressed(Input.Keys.G)) mainView.EndScreen();
         cardHand.update(mousePosition);
         if (state.isMiddleScreenOpen()) {
             mainView.middleScreen();

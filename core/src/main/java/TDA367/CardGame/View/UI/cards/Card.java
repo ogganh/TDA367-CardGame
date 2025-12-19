@@ -46,7 +46,6 @@ public class Card implements UIElement {
 
     @Override
     public void setPosition(float x, float y) {
-        // position, target position.
         sprite.setPosition(x,y);
     }
 

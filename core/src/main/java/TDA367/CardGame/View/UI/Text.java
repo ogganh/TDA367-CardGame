@@ -17,7 +17,6 @@ class Text implements UIElement{
         this.text = text;
         this.font = font;
         this.position = new Vector2(0, 0);
-        // layout = new GlyphLayout(font, text);
     }
 
     public void setText(String text) {

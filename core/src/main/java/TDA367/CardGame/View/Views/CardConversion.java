@@ -5,18 +5,19 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-/** Converts card suits and ranks to integers and vice versa.
+/**
+ * Converts card suits and ranks to integers and vice versa.
  * This is used to simplify card handling in the game.
- * The suit is represented as an integer multiple of 13, and the rank is added to it.
+ * The suit is represented as an integer multiple of 13, and the rank is added
+ * to it.
  * For example, "HEARTS" + "ACE" = 0, "DIAMONDS" + "TWO" = 14, etc.
  */
 
 public class CardConversion {
-    private Dictionary<String,Integer> suitToInt = new Hashtable<>();
-    private Dictionary<String,Integer> rankToInt = new Hashtable<>();
+    private Dictionary<String, Integer> suitToInt = new Hashtable<>();
+    private Dictionary<String, Integer> rankToInt = new Hashtable<>();
     private List<String> suits = new ArrayList<>();
     private List<String> ranks = new ArrayList<>();
-
 
     public CardConversion() {
         suits.add("HEARTS");
@@ -38,10 +39,10 @@ public class CardConversion {
         ranks.add("QUEEN");
         ranks.add("KING");
 
-        suitToInt.put("HEARTS" , 0);
-        suitToInt.put("DIAMONDS" , 13);
-        suitToInt.put("SPADES" , 26);
-        suitToInt.put("CLUBS" , 39);
+        suitToInt.put("HEARTS", 0);
+        suitToInt.put("DIAMONDS", 13);
+        suitToInt.put("SPADES", 26);
+        suitToInt.put("CLUBS", 39);
 
         rankToInt.put("ACE", 0);
         rankToInt.put("TWO", 1);
@@ -57,14 +58,21 @@ public class CardConversion {
         rankToInt.put("QUEEN", 11);
         rankToInt.put("KING", 12);
     }
-    public int cardToInt(String suit, String rank){
+
+    public int cardToInt(String suit, String rank) {
         return suitToInt.get(suit) + rankToInt.get(rank);
     }
-    public String intToSuit(int index){
+
+    public int cardToValue(String rank) {
+        return rankToInt.get(rank);
+    }
+
+    public String intToSuit(int index) {
         int suit = index / 13;
         return suits.get(suit);
     }
-    public String intToRank(int index){
+
+    public String intToRank(int index) {
         int rank = index % 13;
         return ranks.get(rank);
     }
