@@ -11,8 +11,6 @@ import TDA367.CardGame.model.player.UserPlayer;
 
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 
 public class GoFishRules implements GameStrategy {

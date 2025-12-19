@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Row implements UIElement{
+class Row implements UIElement{
     private Vector2 position;
     private int spaceBetween;
     private List<UIElement> UIElements = new ArrayList<>();
@@ -28,7 +28,6 @@ public class Row implements UIElement{
         spaceElements();
     }
     private void spaceElements(){
-        //int widthMargin = spaceBetween / amountElements;
 
         for (int i = 0; i < UIElements.size(); i++) {
             UIElements.get(i).setPosition(position.x + spaceBetween * i, position.y);
@@ -73,5 +72,11 @@ public class Row implements UIElement{
         for (UIElement uiElement : UIElements) {
             uiElement.mouseUpdate(mousePos);
         }
+    }
+
+    @Override
+    public void setScale(float x, float y) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setScale'");
     }
 }

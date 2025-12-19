@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class UIElementFactory {
-//    public static UIElement CreateButton(BitmapFont font, String text){
-//        return new Button(font, text);
-//    }
     public static UIElement createText(BitmapFont font, String text){
         return new Text(font, text);
     }
@@ -20,5 +17,14 @@ public abstract class UIElementFactory {
     }
     public static UIElement createColumn(Vector2 position, int height){
         return new Column(position,height);
+    }
+    public static UIElement createButton(BitmapFont font, String text, Sprite sprite, ButtonAction action){
+        return new Button(font, text, sprite, action);
+    }
+    public static UIElement createGreenButton(BitmapFont font, String text, ButtonAction action){
+        return new GreenButton(font, text, action);
+    }
+    public static UIElement createTextInputField(BitmapFont font, String text, int MaxChars, Sprite sprite){
+        return new TextInputField(font, text, MaxChars, sprite);
     }
 }

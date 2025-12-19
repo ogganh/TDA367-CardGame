@@ -6,13 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Panel {
+class Panel {
     private Vector2 position;
     private int height;
     private int width;
     private List<UIElement> UIElements;
 
-    //private List<Vector2> relativePositions = new ArrayList<>();
     public Panel(Vector2 position, int width, int height) {
         this.position = position;
         this.height = height;

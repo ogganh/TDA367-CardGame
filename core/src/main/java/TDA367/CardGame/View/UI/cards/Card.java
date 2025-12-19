@@ -46,7 +46,6 @@ public class Card implements UIElement {
 
     @Override
     public void setPosition(float x, float y) {
-        // position, target position.
         sprite.setPosition(x,y);
     }
 
@@ -74,5 +73,17 @@ public class Card implements UIElement {
 
     public int getIndex(){
         return index;
+    }
+
+    @Override
+    public void addUIElement(UIElement element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addUIElement'");
+    }
+
+    @Override
+    public void setScale(float x, float y) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setScale'");
     }
 }

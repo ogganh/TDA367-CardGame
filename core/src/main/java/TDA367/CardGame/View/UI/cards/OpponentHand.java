@@ -23,6 +23,7 @@ public class OpponentHand {
         for (int i = 0; i < opponentHand.size(); i++) {
             float xPos = CardsXPosition(opponentHand.size(), i);
 
+            // For future multiplayer implementation:
             //opponentHand.get(i).setOrigin(-pos.x + ViewInformation.screenSize.x / 2, -pos.y + ViewInformation.screenSize.y / 2);
             //opponentHand.get(i).setRotation(angle);
             opponentHand.get(i).setPosition(xPos, ViewInformation.screenSize.y - opponentHand.get(i).getSize().y - ViewInformation.cardYPos);

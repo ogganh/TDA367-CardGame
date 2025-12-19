@@ -1,12 +1,11 @@
 package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.ButtonAction;
-import TDA367.CardGame.View.UI.Column;
-import TDA367.CardGame.View.UI.GreenButton;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.UI.Button;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,25 +19,23 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MiddleScreen implements ViewInterface {
     private GameState state;
-    private GameController controller;
 
     private float screenWidth = ViewInformation.screenSize.x;
     private float screenHeight = ViewInformation.screenSize.y;
     private Texture middleScreenBackground;
 
-    private Column buttons;
+    private UIElement buttonsColumn;
     private ViewController mainView;
 
     public MiddleScreen(ViewController mainView, GameState state, GameController controller) {
         this.state = state;
-        this.controller = controller;
         this.mainView = mainView;
     }
 
     @Override
     public void createView() {
-        buttons = new Column(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
-        GreenButton btn = new GreenButton(
+            buttonsColumn = UIElementFactory.createColumn(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
+            UIElement btn = UIElementFactory.createButton(
             ViewInformation.font,
             "Next player is player " + (state.getCurrentPlayer() + 1)
         );
@@ -57,7 +54,7 @@ public class MiddleScreen implements ViewInterface {
             }
         });
         btn.setScale(15, 4);
-        buttons.addUIElement(btn);
+        buttonsColumn.addUIElement(btn);
 
     }
 
@@ -73,15 +70,14 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void mouseUpdate(Vector2 mousePosition) {
-        buttons.mouseUpdate(mousePosition);
+        buttonsColumn.mouseUpdate(mousePosition);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         batch.draw(middleScreenBackground, 0, 0, screenWidth, screenHeight);
 
-        // Rita knappen först
-        buttons.draw(batch);
+        buttonsColumn.draw(batch);
 
     }
 

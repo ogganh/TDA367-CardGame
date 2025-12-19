@@ -2,7 +2,6 @@ package TDA367.CardGame.View.Views.Menus;
 
 import TDA367.CardGame.View.UI.*;
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.Views.MainView;
 import TDA367.CardGame.View.Views.ViewController;
 import TDA367.CardGame.View.Views.ViewInterface;
 import TDA367.CardGame.model.GameState;
@@ -15,23 +14,22 @@ import com.badlogic.gdx.math.Vector2;
 public class EndScoreView implements ViewInterface {
     private GameState state;
     private ViewController view;
-    private Column scores;
     private Texture winnerScreenBackground;
+    private UIElement scores;
 
-    private Button menu;
+    private UIElement menu;
 
     private int columnSpace = 40;
     private int rowSpace = 100;
 
-
-    public EndScoreView(GameState state, ViewController mainView){
+    public EndScoreView(GameState state, ViewController mainView) {
         this.state = state;
         this.view = mainView;
     }
 
     @Override
     public void createView() {
-        scores = new Column(new Vector2(
+        scores = UIElementFactory.createColumn(new Vector2(
             ViewInformation.screenSize.x / 3,
             3 * ViewInformation.screenSize.y / 4 ), columnSpace);
 
@@ -39,41 +37,40 @@ public class EndScoreView implements ViewInterface {
 
         int winner = 0;
         for (int i = 0; i < state.getPlayers().size(); i++) {
-            if (state.getBookCount(i) > state.getBookCount(winner)) winner = i;
+            if (state.getBookCount(i) > state.getBookCount(winner))
+                winner = i;
 
         }
-        Row row = new Row(new Vector2(0,0), rowSpace);
-        row.addUIElement(new Text(ViewInformation.font, "Winner:"));
-        row.addUIElement(new Text(ViewInformation.font, String.valueOf(winner +1)));
+        UIElement row = UIElementFactory.createRow(new Vector2(0,0), rowSpace);
+        row.addUIElement(UIElementFactory.createText(ViewInformation.font, "Winner:"));
+        row.addUIElement(UIElementFactory.createText(ViewInformation.font, String.valueOf(winner +1)));
         scores.addUIElement(row);
 
-        Row titles = new Row(new Vector2(100,100), 100);
-        titles.addUIElement(new Text(ViewInformation.font, "Player"));
-        titles.addUIElement(new Text(ViewInformation.font, "Books"));
+        UIElement titles = UIElementFactory.createRow(new Vector2(100,100), 100);
+        titles.addUIElement(UIElementFactory.createText(ViewInformation.font, "Player"));
+        titles.addUIElement(UIElementFactory.createText(ViewInformation.font, "Books"));
         scores.addUIElement(titles);
 
-
         for (int i = 0; i < state.getPlayers().size(); i++) {
-            row = new Row(new Vector2(0,0), rowSpace);
-            row.addUIElement(new Text(ViewInformation.font, String.valueOf(i+1)));
-            row.addUIElement(new Text(ViewInformation.font, String.valueOf(state.getBookCount(i))));
+            row = UIElementFactory.createRow(new Vector2(0,0), rowSpace);
+            row.addUIElement(UIElementFactory.createText(ViewInformation.font, String.valueOf(i+1)));
+            row.addUIElement(UIElementFactory.createText(ViewInformation.font, String.valueOf(state.getBookCount(i))));
             scores.addUIElement(row);
         }
 
-        menu = new Button(
+        menu = UIElementFactory.createButton(
             ViewInformation.font,
             "Menu",
-            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16)
-        );
-        menu.changeAction(new ButtonAction() {
+            new Sprite(ViewInformation.uiAtlas, 32, 0 ,16,16),
+            new ButtonAction() {
             @Override
             public void action() {
                 view.startView();
             }
-        });
+        }
+        );
         menu.setScale(5,3);
         menu.setPosition(350, 50);
-
 
     }
 
