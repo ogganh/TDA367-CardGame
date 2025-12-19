@@ -42,6 +42,7 @@ public class RulesView implements ViewInterface {
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
         txtFont.getData().setScale(0.25f);
+
         text = new Text(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +
