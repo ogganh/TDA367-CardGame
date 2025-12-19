@@ -21,17 +21,21 @@ public class GoFishRules implements GameStrategy {
     private GameState state;
     private boolean endTurn = false;
 
+    /**
+     * Creates a GoFishRules instance with a list of players and a deck.
+     * Requires at least 2 players and that all players are GoFishUserPlayer.
+     */
+
     public GoFishRules(List<? extends UserPlayer> players, CardDeck deck) {
         if (players.size() < 2) {
-            throw new IllegalArgumentException("GoFishGame requires 2 players"); // Minst 2 spelare
+            throw new IllegalArgumentException("GoFishGame requires 2 players");
         }
 
         this.players = new ArrayList<>();
 
         for (UserPlayer p : players) {
             if (!(p instanceof GoFishUserPlayer)) {
-                throw new IllegalArgumentException("All players must be GoFishUserPlayer"); // Alla spelare måste vara
-                                                                                            // GoFishUserPlayer
+                throw new IllegalArgumentException("All players must be GoFishUserPlayer");
             }
             this.players.add((GoFishUserPlayer) p);
         }
@@ -40,6 +44,10 @@ public class GoFishRules implements GameStrategy {
         this.turnManager = new TurnManager(this.players.size());
     }
 
+    /**
+     * Sets up the initial game state: shuffles the deck, deals 7 cards per player,
+     * and lets each player collect any initial books.
+     */
     @Override
     public void setup(GameState state) {
         this.state = state;
@@ -47,7 +55,7 @@ public class GoFishRules implements GameStrategy {
         deck.shuffleDeck();
         int cardsPerPlayer = 7; // Standard: 7 kort per spelare
 
-        for (int i = 0; i < cardsPerPlayer; i++) { // Initial utdelning
+        for (int i = 0; i < cardsPerPlayer; i++) {
             for (GoFishUserPlayer player : players) {
                 if (!deck.isEmpty()) {
                     Card drawn = deck.removeCard();
@@ -56,11 +64,16 @@ public class GoFishRules implements GameStrategy {
             }
         }
 
-        for (GoFishUserPlayer player : players) { // Kolla efter initiala books
+        for (GoFishUserPlayer player : players) {
             player.collectBooks();
         }
     }
 
+    /**
+     * Handles a player's action for the current turn.
+     * If the action is SORT, the current player sorts their hand.
+     * Otherwise the current player asks an opponent for a specific rank.
+     */
     @Override
     public void handleTurn(GameState state, PlayerAction action) {
         if (action.getActionType() == "SORT") {
@@ -68,62 +81,76 @@ public class GoFishRules implements GameStrategy {
             current.sortHand();
             return;
         }
-        int opponentIndex = action.getPlayerIndex(); // Index för motståndaren
-        Rank requestedRank = Rank.valueOf(action.getRank()); // Begärt rank
-        handleTurnImpl(opponentIndex, requestedRank); // Hantera turen
+        int opponentIndex = action.getPlayerIndex();
+        Rank requestedRank = Rank.valueOf(action.getRank());
+        handleTurnImpl(opponentIndex, requestedRank);
     }
 
+    /**
+     * Checks if the game is over.
+     * The game ends when the deck is empty and at least one player has an empty hand.
+     */
     @Override
     public boolean isGameOver(GameState state) {
 
-        if (!deck.isEmpty()) { // Om sjön inte är tom, är spelet inte över
+        if (!deck.isEmpty()) {
             return false;
         }
 
         for (GoFishUserPlayer p : players) {
-            if (p.getHand().isEmpty()) { // Kontrollerar om minst spelare har tom hand
+            if (p.getHand().isEmpty()) {
                 return true;
             }
         }
-        return false; // Spelet fortsätter annars
+        return false;
     }
+
+    /**
+     * Ends the current player's turn if endTurn is true.
+     * Opens the middle screen and advances to the next player.
+     */
 
     public void endTurn() {
         if (!endTurn) {
-            return; // Turen fortsätter
+            return;
         }
         state.openMiddleScreen();
         turnManager.next();
     }
 
-    public void endGame() {
-        // Eventuell logik för att avsluta spelet
-    }
-
+    /**
+     * If the given player has an empty hand, draws one card from the deck (if possible),
+     * collects books, and ends the turn.
+     * Returns true if a refill happened and the turn was ended.
+     */
     private boolean refillAndEndTurnIfEmpty(GoFishUserPlayer player) {
-        if (player.getHand().isEmpty()) { // Om spelarens hand är tom
+        if (player.getHand().isEmpty()) {
             if (deck.isEmpty()) {
-                return false; // Inget att dra, turen fortsätter
+                return false;
             }
 
-            Card drawn = deck.removeCard(); // Dra ett kort från sjön
-            player.addCard(drawn); // Lägg till kortet i spelarens hand
-            player.collectBooks(); // Kolla efter böcker
+            Card drawn = deck.removeCard();
+            player.addCard(drawn);
+            player.collectBooks();
 
-            // Om man drar på grund av tom hand, går turen vidare (för att undvika låsning i
-            // vyn)
             endTurn();
             return true;
         }
         return false;
     }
 
+    /**
+     * Core Go Fish logic: the current player asks opponentIndex for requestedRank.
+     * If the opponent has the rank, cards are transferred and the current player continues.
+     * Otherwise the current player draws from the deck and the turn will end.
+     */
+
     public void handleTurnImpl(int opponentIndex, Rank requestedRank) {
         int currentIndex = turnManager.getCurrentIndex();
         GoFishUserPlayer current = players.get(currentIndex);
 
         if (opponentIndex == currentIndex) {
-            throw new IllegalArgumentException("Player can not ask it self"); // Spelare kan inte fråga sig själv
+            throw new IllegalArgumentException("Player can not ask it self");
         }
 
         GoFishUserPlayer opponent = players.get(opponentIndex);
@@ -138,15 +165,15 @@ public class GoFishRules implements GameStrategy {
 
             List<Card> taken = opponent.giveCards(String.valueOf(requestedRank));
             for (Card c : taken) {
-                current.addCard(c); // Ge kort till den aktiva spelaren om motståndaren har dem
+                current.addCard(c);
             }
             current.collectBooks();
 
-            if (refillAndEndTurnIfEmpty(opponent)) { // Kolla motståndarens hand, ge kort om han är tom
+            if (refillAndEndTurnIfEmpty(opponent)) {
                 return;
             }
 
-            if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
+            if (refillAndEndTurnIfEmpty(current)) {
                 return;
             }
 
@@ -161,22 +188,27 @@ public class GoFishRules implements GameStrategy {
                 current.addCard(drawn);
                 current.collectBooks();
 
-                if (refillAndEndTurnIfEmpty(current)) { // Kolla den aktiva spelarens hand, ge kort om han är tom
+                if (refillAndEndTurnIfEmpty(current)) {
                     return;
                 }
             }
-            endTurn = true; // Turen går alltid vidare efter Go Fish.
+            endTurn = true;
         }
     }
 
-    // Vinstregler: Den med flest 4-tal (böcker) vinner, oavsett när spelet slutade.
+    /**
+     * Finds the winner by highest points.
+     * Returns null if two or more players share the highest score (tie).
+     */
+
+
     public GoFishUserPlayer getWinner() {
         GoFishUserPlayer winner = null;
         int bestScore = -1;
         boolean tie = false;
 
         for (GoFishUserPlayer p : players) {
-            int score = p.getPoints(); // Antal böcker
+            int score = p.getPoints();
 
             if (score > bestScore) {
                 bestScore = score;
@@ -188,7 +220,7 @@ public class GoFishRules implements GameStrategy {
         }
 
         if (tie) {
-            return null; // oavgjort
+            return null;
         } else {
             return winner;
         }

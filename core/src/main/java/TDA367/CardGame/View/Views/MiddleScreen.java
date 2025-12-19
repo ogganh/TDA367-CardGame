@@ -7,6 +7,8 @@ import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,6 +22,7 @@ public class MiddleScreen implements ViewInterface {
 
     private float screenWidth = ViewInformation.screenSize.x;
     private float screenHeight = ViewInformation.screenSize.y;
+    private Texture middleScreenBackground;
 
     private UIElement buttonsColumn;
     private ViewController mainView;
@@ -31,22 +34,26 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void createView() {
-        buttonsColumn = UIElementFactory.createColumn(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
-        UIElement btn = UIElementFactory.createButton(
-                ViewInformation.font,
-                "Next player is player " + (state.getCurrentPlayer() + 1),
-                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16),
-                new ButtonAction() {
-                    @Override
-                    public void action() {
-                        // Send the input to the controller if a card is selected
-                        state.closeMiddleScreen();
-                        mainView.goFish();
-                    }
-                }
-            
+            buttonsColumn = UIElementFactory.createColumn(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
+            UIElement btn = UIElementFactory.createButton(
+            ViewInformation.font,
+            "Next player is player " + (state.getCurrentPlayer() + 1)
         );
-        btn.setScale(10, 10);
+
+
+
+        middleScreenBackground = new Texture(Gdx.files.internal("textures/middlescreen_background.png"));
+
+        // Add a "on click" function to the guess button
+        btn.changeAction(new ButtonAction() {
+            @Override
+            public void action() {
+                // Send the input to the controller if a card is selected
+                state.closeMiddleScreen();
+                mainView.goFish();
+            }
+        });
+        btn.setScale(15, 4);
         buttonsColumn.addUIElement(btn);
 
     }
@@ -68,6 +75,7 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void draw(SpriteBatch batch) {
+        batch.draw(middleScreenBackground, 0, 0, screenWidth, screenHeight);
 
         buttonsColumn.draw(batch);
 
