@@ -2,6 +2,7 @@ package TDA367.CardGame.View.Views;
 
 import TDA367.CardGame.View.UI.ButtonAction;
 import TDA367.CardGame.View.UI.Column;
+import TDA367.CardGame.View.UI.GreenButton;
 import TDA367.CardGame.controller.GameController;
 import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
@@ -37,10 +38,13 @@ public class MiddleScreen implements ViewInterface {
     @Override
     public void createView() {
         buttons = new Column(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
-        Button btn = new Button(
-                ViewInformation.font,
-                "Next player is player " + (state.getCurrentPlayer() + 1),
-                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+        GreenButton btn = new GreenButton(
+            ViewInformation.font,
+            "Next player is player " + (state.getCurrentPlayer() + 1)
+        );
+
+
+
         middleScreenBackground = new Texture(Gdx.files.internal("textures/middlescreen_background.png"));
 
         // Add a "on click" function to the guess button
@@ -52,7 +56,7 @@ public class MiddleScreen implements ViewInterface {
                 mainView.goFish();
             }
         });
-        btn.setScale(10, 10);
+        btn.setScale(15, 4);
         buttons.addUIElement(btn);
 
     }
