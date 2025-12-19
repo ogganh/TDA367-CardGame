@@ -42,7 +42,7 @@ public class RulesView implements ViewInterface {
         back.setPosition(30,ViewInformation.screenSize.y -20);
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
-        txtFont.getData().setScale(0,25f);
+        txtFont.getData().setScale(0.25f);
         text = UIElementFactory.createText(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +

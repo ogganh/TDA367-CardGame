@@ -31,10 +31,10 @@ public class PlumpRules implements GameStrategy {
 
         this.players = new ArrayList<>();
         for (UserPlayer p : players) {
-            if (!(p instanceof PlumpUserPlayer)) {
+            //if (!(p instanceof PlumpUserPlayer)) {
                 throw new IllegalArgumentException("All players must be PlumpUserPlayer");
-            }
-            this.players.add((PlumpUserPlayer) p);
+            //}
+            //this.players.add((PlumpUserPlayer) p);
         }
 
         this.deck = deck;
@@ -52,10 +52,10 @@ public class PlumpRules implements GameStrategy {
     }
     private void startRound() {
         deck.shuffleDeck();
-        clearHands();
+        //clearHands();
         resetGuesses();
         deal(cardsPerPlayer);
-        state.setCurrentPlayer(turnManager.getCurrentIndex());
+       // state.setCurrentPlayer(turnManager.getCurrentIndex());
     }
 
     private void resetGuesses() {
@@ -67,7 +67,7 @@ public class PlumpRules implements GameStrategy {
         for (int i = 0; i < cardsPerPlayer; i++) {
             for (PlumpUserPlayer player : players) {
                 if (!deck.isEmpty()) {
-                    player.addCard(deck.removeCard());
+                    //player.addCard(deck.removeCard());
                 }
             }
         }
@@ -80,6 +80,11 @@ public class PlumpRules implements GameStrategy {
     }
 
     @Override
+    public void endTurn() {
+
+    }
+
+    @Override
     public int getCurrentPlayerIndex() {
         return 0;
     }
@@ -87,5 +92,5 @@ public class PlumpRules implements GameStrategy {
     @Override
     public boolean isGameOver(GameState state) {
         return false;
-    }
+    }}
 
