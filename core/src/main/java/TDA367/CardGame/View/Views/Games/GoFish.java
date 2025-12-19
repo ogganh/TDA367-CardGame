@@ -65,14 +65,20 @@ public class GoFish implements ViewInterface {
 
         // Creates the pond
         Random rand = new Random();
+
+        float cardX = 0;
+        float cardY = 0;
+
         for (int i = 0; i < 52; i++) {
             thePond.add(new Sprite(ViewInformation.cardAtlas, 0, ViewInformation.cardHeight * 4,
                     ViewInformation.cardWidth, ViewInformation.cardHeight));
-
             // Random position and rotation
+            cardX = rand.nextFloat(ViewInformation.screenSize.x / 3, 2 * ViewInformation.screenSize.x / 3);
+            cardY = rand.nextFloat(ViewInformation.screenSize.y / 4, 2 * ViewInformation.screenSize.y / 4);
             thePond.get(i).setPosition(
-                    rand.nextFloat(ViewInformation.screenSize.x / 3, 2 * ViewInformation.screenSize.x / 3),
-                    rand.nextFloat(ViewInformation.screenSize.y / 4, 2 * ViewInformation.screenSize.y / 4));
+                    cardX, 
+                    cardY
+                    );
             thePond.get(i).setScale(0.5f);
             thePond.get(i).setRotation(rand.nextFloat(0f, 180f));
         }
@@ -115,7 +121,7 @@ public class GoFish implements ViewInterface {
                             public void run() {
                                 controller.endTurn();
                             }
-                        }, 0.75f); // 0.75 seconds = 750 ms
+                        }, ViewInformation.delaySeconds); // 0.75 seconds = 750 ms
                     }
                 }
         });
@@ -174,7 +180,10 @@ public class GoFish implements ViewInterface {
             String suit = state.getPlayers().get(state.getCurrentPlayer()).getHand().get(i).getSuit();
             Vector2 position = new Vector2(ViewInformation.screenSize.x / 2, ViewInformation.screenSize.y / 2);
             if (state.getLastAction().source == LastAction.SourceType.POND) {
-                Sprite pondCard = thePond.remove(0);
+                LastAction a = new LastAction();
+                a.source = LastAction.SourceType.UNKNOWN;
+                state.setLastAction(a);
+                Sprite pondCard = thePond.removeLast();
                 position = new Vector2(pondCard.getX(), pondCard.getY());
             } else if (state.getLastAction().source == LastAction.SourceType.OPPONENT) {
                 position = new Vector2(ViewInformation.screenSize.x / 2, ViewInformation.screenSize.y * 7 / 8);
