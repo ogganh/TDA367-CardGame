@@ -177,12 +177,7 @@ public class GoFish implements ViewInterface {
             SoundManager.playBell();
         }
 
-        // Reset last action direkt så ljudet inte spammas
-        if (fromPond || fromOpponent) {
-            LastAction reset = new LastAction();
-            reset.source = LastAction.SourceType.UNKNOWN;
-            state.setLastAction(reset);
-        }
+        
 
         // Uppdatera spelarens hand
         cardHand.resetHand();
@@ -211,7 +206,10 @@ public class GoFish implements ViewInterface {
             );
 
             // Animationens startposition
-            if (fromPond && !thePond.isEmpty()) {
+            if (state.getLastAction().source == LastAction.SourceType.POND && !thePond.isEmpty()) {
+                LastAction a = new LastAction();
+                a.source = LastAction.SourceType.UNKNOWN;
+                state.setLastAction(a);
                 Sprite pondCard = thePond.remove(thePond.size() - 1);
                 position = new Vector2(pondCard.getX(), pondCard.getY());
             }
@@ -225,6 +223,14 @@ public class GoFish implements ViewInterface {
             cardHand.addCard(conversion.cardToInt(suit, rank), position);
         }
 
+        // Reset last action direkt så ljudet inte spammas
+        if (fromPond || fromOpponent) {
+            LastAction reset = new LastAction();
+            reset.source = LastAction.SourceType.UNKNOWN;
+            state.setLastAction(reset);
+        }
+
+        
         currentPlayer = state.getCurrentPlayer();
 
         // Uppdatera motståndarens hand
