@@ -35,24 +35,23 @@ public class MiddleScreen implements ViewInterface {
     @Override
     public void createView() {
             buttonsColumn = UIElementFactory.createColumn(new Vector2(screenWidth / 2, screenHeight / 2 + 50), 50);
-            UIElement btn = UIElementFactory.createButton(
+            UIElement btn = UIElementFactory.createGreenButton(
             ViewInformation.font,
-            "Next player is player " + (state.getCurrentPlayer() + 1)
+            "Next player is player " + (state.getCurrentPlayer() + 1), new ButtonAction() {
+                @Override
+                public void action() {
+                    // Send the input to the controller if a card is selected
+                    state.closeMiddleScreen();
+                    mainView.goFish();
+                }
+            }
         );
 
 
 
         middleScreenBackground = new Texture(Gdx.files.internal("textures/middlescreen_background.png"));
 
-        // Add a "on click" function to the guess button
-        btn.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                // Send the input to the controller if a card is selected
-                state.closeMiddleScreen();
-                mainView.goFish();
-            }
-        });
+
         btn.setScale(15, 4);
         buttonsColumn.addUIElement(btn);
 
