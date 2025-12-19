@@ -18,7 +18,7 @@ public class PlumpRules implements GameStrategy {
     private final TurnManager turnManager;
     private final CardDeck deck;
 
-    private GameState state; // inte final
+    private GameState state;
     private PlumpPhase phase = PlumpPhase.GUESSING;
 
     private int[] guesses;
@@ -52,7 +52,7 @@ public class PlumpRules implements GameStrategy {
     }
     private void startRound() {
         deck.shuffleDeck();
-        clearHands(); //måste finnas i plumpuserplayer
+        clearHands();
         resetGuesses();
         deal(cardsPerPlayer);
         state.setCurrentPlayer(turnManager.getCurrentIndex());
@@ -67,7 +67,7 @@ public class PlumpRules implements GameStrategy {
         for (int i = 0; i < cardsPerPlayer; i++) {
             for (PlumpUserPlayer player : players) {
                 if (!deck.isEmpty()) {
-                    player.addCard(deck.removeCard()); //måste finnas i plumpuserplayer
+                    player.addCard(deck.removeCard());
                 }
             }
         }
