@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import TDA367.CardGame.View.ViewInformation;
-import TDA367.CardGame.View.UI.Button;
 import TDA367.CardGame.View.UI.ButtonAction;
-import TDA367.CardGame.View.UI.GreenButton;
-import TDA367.CardGame.View.UI.TextInputField;
+import TDA367.CardGame.View.UI.UIElement;
+import TDA367.CardGame.View.UI.UIElementFactory;
 import TDA367.CardGame.View.UI.cards.CardHand;
 import TDA367.CardGame.View.Views.CardConversion;
 import TDA367.CardGame.View.Views.ViewController;
@@ -28,9 +27,9 @@ public class Plump implements ViewInterface {
 
     private CardHand cardHand = new CardHand();
 
-    private Button placeButton;
+    private UIElement placeButton;
 
-    private TextInputField textInput;
+    private UIElement textInput;
 
     public Plump(GameState state, GameController controller, ViewController mainView) {
         this.state = state;
@@ -40,30 +39,35 @@ public class Plump implements ViewInterface {
 
     @Override
     public void createView() {
-        textInput = new TextInputField(
-                ViewInformation.font,
-                "0",
-                2,
-                new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+        textInput = UIElementFactory.createTextInputField(
+            ViewInformation.font,
+             "0",
+              2,
+               new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16)
+            );
         textInput.setPosition(50, 50);
         textInput.setScale(3, 3);
 
-        placeButton = new GreenButton(
-                ViewInformation.font,
-                "Place");
 
-        // Add a "on click" function to the guess button
-        placeButton.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                // Send the input to the controller if a card is selected
-                if (cardHand.getSelectIndex() > -1) {
-                    controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
-                            conversion.intToRank(cardHand.getSelectedCard()),
-                            conversion.intToSuit(cardHand.getSelectedCard()));
+        placeButton = UIElementFactory.createGreenButton(
+                ViewInformation.font,
+                "Place",
+                new ButtonAction() {
+                @Override
+                public void action() {
+                    // Send the input to the controller if a card is selected
+                    if (cardHand.getSelectIndex() > -1) {
+                        controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
+                                conversion.intToRank(cardHand.getSelectedCard()),
+                                conversion.intToSuit(cardHand.getSelectedCard()));
+                        }
+                    }
                 }
-            }
-        });
+            
+            );
+                
+        // Add a "on click" function to the guess button
+
         placeButton.setPosition(400, 50);
         placeButton.setScale(5, 3);
 

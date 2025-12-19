@@ -18,4 +18,13 @@ public abstract class UIElementFactory {
     public static UIElement createColumn(Vector2 position, int height){
         return new Column(position,height);
     }
+    public static UIElement createButton(BitmapFont font, String text, Sprite sprite, ButtonAction action){
+        return new Button(font, text, sprite, action);
+    }
+    public static UIElement createGreenButton(BitmapFont font, String text, ButtonAction action){
+        return new GreenButton(font, text, action);
+    }
+    public static UIElement createTextInputField(BitmapFont font, String text, int MaxChars, Sprite sprite){
+        return new TextInputField(font, text, MaxChars, sprite);
+    }
 }

@@ -28,12 +28,16 @@ public class GoFish implements ViewInterface {
     private CardHand cardHand = new CardHand();
     private List<OpponentHand> opponentHands = new ArrayList<>();
     private List<Sprite> thePond = new ArrayList<>();
-    private Texture background;
-    private Column buttons;
-    private Button guessButton;
-    private Button sortButton;
 
-    private Button rules;
+
+    private Texture background;
+
+
+    private UIElement buttons;
+    private UIElement guessButton;
+    private UIElement sortButton;
+
+    private UIElement rules;
 
     private Vector2 mousePosition = new Vector2(0, 0);
 
@@ -74,38 +78,31 @@ public class GoFish implements ViewInterface {
         }
 
         // Creates column that the buttons will be in
-        buttons = new Column(new Vector2(450, 100), 50);
+        buttons = UIElementFactory.createColumn(new Vector2(450, 100), 50);
 
         // Create Sort button
-        sortButton = new GreenButton(
+        sortButton = UIElementFactory.createGreenButton(
                 ViewInformation.font,
-                "Sort");
-        // Add a "on click" function to the sort button
-        sortButton.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                if (buttonsEnabled) {
-                    // Send the input to the controller if a card is selected
-                    controller.handleAction(currentPlayer, "SORT", null, null);
+                "Sort",
+                new ButtonAction() {
+                    @Override
+                    public void action() {
+                        // Send the input to the controller if a card is selected
+                        controller.handleAction(currentPlayer, "SORT", null, null);
+                    }
                 }
-            }
-        });
-
+            );
+        // Add a "on click" function to the sort button
         sortButton.setScale(5, 3);
         buttons.addUIElement(sortButton);
 
         // Create Guess button
-        guessButton = new GreenButton(
-                ViewInformation.font,
-                "Guess");
-
-        // Add a "on click" function to the guess button
-        guessButton.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                if (buttonsEnabled) {
-
-                    buttonsEnabled = false;
+        guessButton = UIElementFactory.createGreenButton(
+            ViewInformation.font,
+            "Guess",
+            new ButtonAction() {
+                @Override
+                public void action() {
                     // Send the input to the controller if a card is selected
                     if (cardHand.getSelectIndex() > -1) {
                         controller.handleAction((state.getCurrentPlayer() + 1) % state.getPlayers().size(), "",
@@ -117,30 +114,28 @@ public class GoFish implements ViewInterface {
                             @Override
                             public void run() {
                                 controller.endTurn();
-                                buttonsEnabled = true;
                             }
                         }, 0.75f); // 0.75 seconds = 750 ms
                     }
                 }
-            }
         });
 
         guessButton.setScale(5, 3);
         buttons.addUIElement(guessButton);
 
         // Create rules button
-        rules = new Button(
+        rules = UIElementFactory.createButton(
                 ViewInformation.font,
                 "",
-                new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480));
+                new Sprite(new Texture("textures/rule_book.png"), 0, 0, 480, 480),
+                new ButtonAction() {
+                    @Override
+                    public void action() {
+                        mainView.rules();
+                    }
+                }
+        );
 
-        // Add a "on click" function to the guess button
-        rules.changeAction(new ButtonAction() {
-            @Override
-            public void action() {
-                mainView.rules();
-            }
-        });
         rules.setPosition(100, ViewInformation.screenSize.y - 40);
         rules.setScale(0.1f, 0.1f);
 
@@ -165,10 +160,10 @@ public class GoFish implements ViewInterface {
             cardHand.nextPlayer();
         }
 
-        // Temp ljud test
-        if (state.getCurrentPlayer() == currentPlayer) {
-            bell.play();
-        }
+        // // Temp ljud test
+        // if (state.getCurrentPlayer() == currentPlayer) {
+        //     bell.play();
+        // }
 
         // update player hand
         cardHand.resetHand();
@@ -187,8 +182,6 @@ public class GoFish implements ViewInterface {
             cardHand.addCard(conversion.cardToInt(suit, rank), position);
         }
 
-        // Temp ljud test
-        sound.play();
 
         currentPlayer = state.getCurrentPlayer();
 
