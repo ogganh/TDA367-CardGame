@@ -7,6 +7,8 @@ import TDA367.CardGame.model.GameState;
 import TDA367.CardGame.View.ViewInformation;
 import TDA367.CardGame.View.UI.Button;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -21,6 +23,7 @@ public class MiddleScreen implements ViewInterface {
 
     private float screenWidth = ViewInformation.screenSize.x;
     private float screenHeight = ViewInformation.screenSize.y;
+    private Texture middleScreenBackground;
 
     private Column buttons;
     private ViewController mainView;
@@ -38,6 +41,7 @@ public class MiddleScreen implements ViewInterface {
                 ViewInformation.font,
                 "Next player is player " + (state.getCurrentPlayer() + 1),
                 new Sprite(ViewInformation.uiAtlas, 32, 0, 16, 16));
+        middleScreenBackground = new Texture(Gdx.files.internal("textures/middlescreen_background.png"));
 
         // Add a "on click" function to the guess button
         btn.changeAction(new ButtonAction() {
@@ -70,6 +74,7 @@ public class MiddleScreen implements ViewInterface {
 
     @Override
     public void draw(SpriteBatch batch) {
+        batch.draw(middleScreenBackground, 0, 0, screenWidth, screenHeight);
 
         // Rita knappen först
         buttons.draw(batch);
