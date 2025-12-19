@@ -41,7 +41,7 @@ public class RulesView implements ViewInterface {
         back.setPosition(30,ViewInformation.screenSize.y -20);
 
         BitmapFont txtFont = new BitmapFont(Gdx.files.internal("fonts/arial.fnt"), false);;
-        txtFont.getData().setScale(0.3f);
+        txtFont.getData().setScale(0.25f);
         text = new Text(txtFont,
             "Rules : Go Fish\n" +
                 "\n" +
@@ -68,7 +68,7 @@ public class RulesView implements ViewInterface {
                 "   - The game ends when the pond is empty and all sets have been collected.\n" +
                 "\n" +
                 "\n");
-        text.setPosition(60, ViewInformation.screenSize.y - 20);
+        text.setPosition(60, ViewInformation.screenSize.y + 10);
 
     }
 
